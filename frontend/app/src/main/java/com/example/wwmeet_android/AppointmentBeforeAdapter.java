@@ -17,9 +17,9 @@ import java.util.List;
 
 public class AppointmentBeforeAdapter extends RecyclerView.Adapter<AppointmentBeforeAdapter.ViewHolder> {
     List<Appointment> appointmentList = new ArrayList<>();
-
     Context context;
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    OnItemClickEventListener listener;
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView nameTextView;
         private TextView limitTimeTextView;
 
@@ -27,6 +27,16 @@ public class AppointmentBeforeAdapter extends RecyclerView.Adapter<AppointmentBe
             super(itemView);
             nameTextView = itemView.findViewById(R.id.list_item_appointment_name);
             limitTimeTextView = itemView.findViewById(R.id.list_item_vote_limit);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION){
+                        listener.onItemClick(v, pos);
+                    }
+                }
+            });
         }
     }
 
@@ -63,5 +73,13 @@ public class AppointmentBeforeAdapter extends RecyclerView.Adapter<AppointmentBe
     @Override
     public int getItemCount() {
         return appointmentList.size();
+    }
+
+    public interface OnItemClickEventListener{
+        void onItemClick(View view, int position);
+    }
+
+    public void setItemClickListener(OnItemClickEventListener listener) {
+        this.listener = listener;
     }
 }

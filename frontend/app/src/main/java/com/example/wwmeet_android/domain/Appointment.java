@@ -14,6 +14,15 @@ public class Appointment {
     public Appointment() {
     }
 
+    public Appointment(String code, String name, int numberPeople, String local, LocalDateTime appointDate, LocalDateTime limitDate) {
+        this.code = code;
+        this.name = name;
+        this.numberPeople = numberPeople;
+        this.local = local;
+        this.appointDate = appointDate;
+        this.limitDate = limitDate;
+    }
+
     public Long getId() {
         return id;
     }
