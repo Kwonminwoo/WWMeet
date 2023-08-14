@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.wwmeet_android.domain.Appointment;
 
@@ -35,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         AppointmentBeforeAdapter beforeAdapter = new AppointmentBeforeAdapter();
-        appointmentList.add(new Appointment("1234123", "hello", 2, "강남", LocalDateTime.now(), LocalDateTime.now()));
-        beforeAdapter.setList(appointmentList); // 실제 데이터로 바꿔야 함 Todo
+//        appointmentList.add(new Appointment("1234123", "hello", 2, "강남", LocalDateTime.now(), LocalDateTime.now()));
+//        beforeAdapter.setList(appointmentList); // 실제 데이터로 바꿔야 함 Todo
         recyclerView.setAdapter(beforeAdapter);
 
         beforeAdapter.setItemClickListener(new AppointmentBeforeAdapter.OnItemClickEventListener() {
