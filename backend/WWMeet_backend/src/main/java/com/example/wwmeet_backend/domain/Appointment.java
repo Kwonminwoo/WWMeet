@@ -12,8 +12,8 @@ import java.util.List;
 @Table(
         indexes = {
             @Index(columnList = "id"),
-            @Index(columnList = "name"),
-            @Index(columnList = "code")
+            @Index(columnList = "appointment_name"),
+            @Index(columnList = "appointment_code")
         }
 )
 public class Appointment {
@@ -21,20 +21,24 @@ public class Appointment {
     private Long id;
 
     @Setter
-    private String name; // 약속 이름
+    @Column(name = "appointment_name")
+    private String appointmentName; // 약속 이름
 
     @Setter
-    private String place; // 약속 장소
+    @Column(name = "appointment_place")
+    private String appointmentPlace; // 약속 장소
 
     @Setter
-    private String code; // 방 코드 번호
+    @Column(name = "appointment_code")
+    private String appointmentCode; // 코드 번호
 
     @Setter
     @Column(name = "people_num")
     private int peopleNum; // 약속 인원
     
     @Setter
-    private LocalDateTime date; // 약속 날짜
+    @Column(name = "appointment_date")
+    private LocalDateTime appointmentDate; // 약속 날짜
 
     @OneToMany(mappedBy = "appointment")
     private List<Vote> voteList;
