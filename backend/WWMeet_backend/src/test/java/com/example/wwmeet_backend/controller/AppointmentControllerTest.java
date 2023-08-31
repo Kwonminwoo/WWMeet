@@ -27,7 +27,7 @@ class AppointmentControllerTest {
         List<Appointment> testList = new ArrayList<>();
         testList.add(new Appointment(1L, "test appointment", "두정", "test1", 3, null, null));
 
-        given(appointmentService.findAllAppointment())
+        given(appointmentService.findAllAppointment(anyList()))
                 .willReturn(testList);
 
         mvc.perform(

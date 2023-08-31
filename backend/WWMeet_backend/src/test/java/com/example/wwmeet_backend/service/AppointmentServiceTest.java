@@ -28,9 +28,11 @@ class AppointmentServiceTest {
 
         AppointmentService service = new AppointmentService(appointmentRepository); // 서비스 로직의 테스트가 이루어짐...
 
-        List<Appointment> findAppointmentList = service.findAllAppointment();
+        List<String> appointmentCodeList = new ArrayList<>();
+        appointmentCodeList.add("test1");
+
+        List<Appointment> findAppointmentList = service.findAllAppointment(appointmentCodeList);
         Assertions.assertThat(findAppointmentList.size()).isEqualTo(1);
         Assertions.assertThat(findAppointmentList.get(0).getCode()).isEqualTo("test1");
-
     }
 }

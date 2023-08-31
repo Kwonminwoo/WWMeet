@@ -25,13 +25,11 @@ class AppointmentRepositoryTest {
     @Test
     void findAllAppointment(){
         Appointment appointment = new Appointment(1L, "test name", "두정", "find1", 2, null, null);
-        List<String> roomCodeList = new ArrayList<>();
-        roomCodeList.add("find1");
-        roomCodeList.add("find2");
-        roomCodeList.add("find3");
+
+        String findCode = "find1";
 
         Appointment savedAppointment = appointmentRepository.save(appointment);
-        List<Appointment> findAppointmentList = appointmentRepository.findByRoomCode(roomCodeList);
+        List<Appointment> findAppointmentList = appointmentRepository.findByAppointmentCode(findCode);
 
         Assertions.assertThat(findAppointmentList.size()).isEqualTo(1);
         Assertions.assertThat(findAppointmentList.get(0)).isSameAs(savedAppointment);
