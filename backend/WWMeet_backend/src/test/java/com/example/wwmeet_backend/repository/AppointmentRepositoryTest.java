@@ -9,8 +9,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 //@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // 실제 디비를 선택하는 것
 // NONE는 실제 resource에 있는 Database를 이용하는 것.
@@ -29,9 +29,9 @@ class AppointmentRepositoryTest {
         String findCode = "find1";
 
         Appointment savedAppointment = appointmentRepository.save(appointment);
-        List<Appointment> findAppointmentList = appointmentRepository.findByAppointmentCode(findCode);
+        Optional<Appointment> findAppointmentOptional = appointmentRepository.findByAppointmentCode(findCode);
+        Appointment findAppointmnet = findAppointmentOptional.orElseThrow(() -> new NoSuchElementException());
 
-        Assertions.assertThat(findAppointmentList.size()).isEqualTo(1);
-        Assertions.assertThat(findAppointmentList.get(0)).isSameAs(savedAppointment);
+        Assertions.assertThat(findAppointmnet).isSameAs(savedAppointment);
     }
 }

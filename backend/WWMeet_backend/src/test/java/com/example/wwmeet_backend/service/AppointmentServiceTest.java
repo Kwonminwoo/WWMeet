@@ -10,7 +10,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -20,11 +22,10 @@ class AppointmentServiceTest {
 
     @Test
     void findAllAppointment(){
-        List<Appointment> appointmentList = new ArrayList<>();
-        appointmentList.add(new Appointment(1L, "test appointment", "두정", "test1", 3, null, null));
+        Appointment appointment = new Appointment(1L, "test appointment", "두정", "test1", 3, null, null);
 
-        given(appointmentRepository.findAll())
-                .willReturn(appointmentList);
+        given(appointmentRepository.findByAppointmentCode(anyString()))
+                .willReturn(Optional.of(appointment));
 
         AppointmentService service = new AppointmentService(appointmentRepository); // 서비스 로직의 테스트가 이루어짐...
 
@@ -33,6 +34,6 @@ class AppointmentServiceTest {
 
         List<Appointment> findAppointmentList = service.findAllAppointment(appointmentCodeList);
         Assertions.assertThat(findAppointmentList.size()).isEqualTo(1);
-        Assertions.assertThat(findAppointmentList.get(0).getCode()).isEqualTo("test1");
+        Assertions.assertThat(findAppointmentList.get(0).getAppointmentCode()).isEqualTo("test1");
     }
 }
