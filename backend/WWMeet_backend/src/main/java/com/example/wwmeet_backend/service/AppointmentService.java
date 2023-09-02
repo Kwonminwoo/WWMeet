@@ -27,4 +27,10 @@ public class AppointmentService {
         }
         return findAppointmentList;
     }
+
+    public Appointment findAppointmentById(Long id){
+        Optional<Appointment> findAppointmentOptional = appointmentRepository.findById(id);
+        return findAppointmentOptional
+                .orElseThrow(() -> new NoSuchElementException());
+    }
 }
