@@ -23,9 +23,8 @@ class AppointmentRepositoryTest {
     AppointmentRepository appointmentRepository;
 
     @Test
-    void findAllAppointment(){
+    void findAppointmentByCode(){
         Appointment appointment = new Appointment(1L, "test name", "두정", "find1", 2, null, null);
-
         String findCode = "find1";
 
         Appointment savedAppointment = appointmentRepository.save(appointment);
@@ -33,5 +32,17 @@ class AppointmentRepositoryTest {
         Appointment findAppointmnet = findAppointmentOptional.orElseThrow(() -> new NoSuchElementException());
 
         Assertions.assertThat(findAppointmnet).isSameAs(savedAppointment);
+    }
+
+    @Test
+    void findAppointmentById(){
+        Long findId = 1L;
+        Appointment appointment = new Appointment(1L, "test name", "두정", "find1", 2, null, null);
+        Appointment savedAppointment = appointmentRepository.save(appointment);
+
+        Optional<Appointment> findAppointmentOptional = appointmentRepository.findById(findId);
+        Appointment findAppointment = findAppointmentOptional.orElseThrow(() -> new NoSuchElementException());
+
+        Assertions.assertThat(findAppointment).isSameAs(savedAppointment);
     }
 }
