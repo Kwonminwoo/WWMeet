@@ -37,7 +37,7 @@ class AppointmentControllerTest {
         testList.add(new Appointment(1L, "test appointment", "두정", "test1", 3, null, null));
 
         given(appointmentMapper.toFindDto(any()))
-                .willReturn(new AppointmentFindDto("test appointment", "두정", "test1", 3, null));
+                .willReturn(new AppointmentFindDto(1L, "test appointment", "두정", "test1", 3, null));
 
         given(appointmentService.findAllAppointment(anyList()))
                 .willReturn(testList);
@@ -51,5 +51,24 @@ class AppointmentControllerTest {
                 .andDo(print())
                 .andExpect(jsonPath("$..appointmentCode", "test1").exists());
 
+    }
+
+    @Test
+    void findAppointmentById() throws Exception{
+        Appointment appointment = new Appointment(1L, "test", "test", "test1", 2, null, null);
+
+        given(appointmentService.findAppointmentById(1L))
+                .willReturn(appointment);
+        given(appointmentMapper.toFindDto(any()))
+                .willReturn(new AppointmentFindDto(1L, "test", "test", "test", 2, null));
+
+        long findAppointmentId = 1L;
+        mvc.perform(
+                get("/api/appointment/" + findAppointmentId)
+
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.appointmentCode", "test1").exists())
+                .andDo(print());
     }
 }

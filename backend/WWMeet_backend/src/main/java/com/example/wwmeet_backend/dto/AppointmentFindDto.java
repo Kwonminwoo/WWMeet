@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 public class AppointmentFindDto {
+    private Long id;
     private String appointmentName;
     private String appointmentPlace;
     private String appointmentCode;
