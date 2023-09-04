@@ -12,8 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
@@ -52,4 +51,15 @@ class AppointmentServiceTest {
         Assertions.assertThat(findAppointment.getAppointmentName()).isEqualTo("test");
     }
 
+    @Test
+    void saveAppointment() throws Exception{
+        given(appointmentRepository.save(any()))
+                .willReturn(new Appointment(1L, "test", "test", "test1", 2, null, null));
+
+        AppointmentService service = new AppointmentService(appointmentRepository);
+        Appointment appointment = new Appointment(1L, "test", "test", "test1", 2, null, null);
+        Appointment savedAppointment = service.saveAppointment(appointment);
+
+        Assertions.assertThat(savedAppointment.getAppointmentName()).isEqualTo(appointment.getAppointmentName());
+    }
 }

@@ -8,6 +8,5 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel =  "spring")
 public interface AppointmentMapper {
     AppointmentFindDto toFindDto(Appointment appointment);
-    @Mapping(target = "id", ignore = true)
-    Appointment FindToUser(AppointmentFindDto appointmentFindDto);
+    Appointment FindDtoToUser(AppointmentFindDto appointmentFindDto);
 }
