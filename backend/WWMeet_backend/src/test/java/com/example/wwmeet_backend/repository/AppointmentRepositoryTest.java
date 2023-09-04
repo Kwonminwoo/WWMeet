@@ -45,4 +45,13 @@ class AppointmentRepositoryTest {
 
         Assertions.assertThat(findAppointment).isSameAs(savedAppointment);
     }
+
+    @Test
+    void saveAppointment(){
+        Appointment appointment = new Appointment(1L, "test", "test", "test1", 2, null, null);
+
+        Appointment savedAppointment = appointmentRepository.save(appointment);
+
+        Assertions.assertThat(savedAppointment.getAppointmentName()).isEqualTo(appointment.getAppointmentName());
+    }
 }

@@ -2,7 +2,7 @@ package com.example.wwmeet_backend.mapper;
 
 import com.example.wwmeet_backend.domain.Appointment;
 import com.example.wwmeet_backend.domain.Vote;
-import com.example.wwmeet_backend.dto.AppointmentFindDto;
+import com.example.wwmeet_backend.dto.AppointmentResponseDto;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-09-02T22:11:07+0900",
+    date = "2023-09-04T23:32:45+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.18 (Oracle Corporation)"
 )
 @Component
 public class AppointmentMapperImpl implements AppointmentMapper {
 
     @Override
-    public AppointmentFindDto toFindDto(Appointment appointment) {
+    public AppointmentResponseDto toResponseDto(Appointment appointment) {
         if ( appointment == null ) {
             return null;
         }
@@ -36,13 +36,13 @@ public class AppointmentMapperImpl implements AppointmentMapper {
         peopleNum = appointment.getPeopleNum();
         appointmentDate = appointment.getAppointmentDate();
 
-        AppointmentFindDto appointmentFindDto = new AppointmentFindDto( id, appointmentName, appointmentPlace, appointmentCode, peopleNum, appointmentDate );
+        AppointmentResponseDto appointmentResponseDto = new AppointmentResponseDto( id, appointmentName, appointmentPlace, appointmentCode, peopleNum, appointmentDate );
 
-        return appointmentFindDto;
+        return appointmentResponseDto;
     }
 
     @Override
-    public Appointment FindToUser(AppointmentFindDto appointmentFindDto) {
+    public Appointment ResponseDtoTo(AppointmentResponseDto appointmentFindDto) {
         if ( appointmentFindDto == null ) {
             return null;
         }
@@ -52,14 +52,15 @@ public class AppointmentMapperImpl implements AppointmentMapper {
         String appointmentCode = null;
         int peopleNum = 0;
         LocalDateTime appointmentDate = null;
+        Long id = null;
 
         appointmentName = appointmentFindDto.getAppointmentName();
         appointmentPlace = appointmentFindDto.getAppointmentPlace();
         appointmentCode = appointmentFindDto.getAppointmentCode();
         peopleNum = appointmentFindDto.getPeopleNum();
         appointmentDate = appointmentFindDto.getAppointmentDate();
+        id = appointmentFindDto.getId();
 
-        Long id = null;
         List<Vote> voteList = null;
 
         Appointment appointment = new Appointment( id, appointmentName, appointmentPlace, appointmentCode, peopleNum, appointmentDate, voteList );
