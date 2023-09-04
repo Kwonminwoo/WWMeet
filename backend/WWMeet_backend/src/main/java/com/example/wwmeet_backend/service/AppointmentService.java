@@ -33,4 +33,8 @@ public class AppointmentService {
         return findAppointmentOptional
                 .orElseThrow(() -> new NoSuchElementException());
     }
+
+    public Appointment saveAppointment(Appointment appointment){
+        return appointmentRepository.save(appointment);
+    }
 }
