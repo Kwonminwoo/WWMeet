@@ -28,7 +28,7 @@ public class Vote {
     private Participant participant;
 
     @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "possible_schedule_id")
     private PossibleSchedule possibleSchedule;
 }
