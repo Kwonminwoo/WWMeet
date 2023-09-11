@@ -1,7 +1,6 @@
 package com.example.wwmeet_backend.domain;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,24 +22,21 @@ public class Appointment {
 
     @Setter
     @Column(name = "appointment_name")
-    private String appointmentName; // 약속 이름
+    private String appointmentName;
 
     @Setter
     @Column(name = "appointment_place")
-    private String appointmentPlace; // 약속 장소
+    private String appointmentPlace;
 
     @Setter
     @Column(name = "appointment_code")
-    private String appointmentCode; // 코드 번호
+    private String identificationCode;
 
     @Setter
     @Column(name = "people_num")
-    private int peopleNum; // 약속 인원
+    private int peopleNum;
     
     @Setter
-    @Column(name = "appointment_date")
-    private LocalDateTime appointmentDate; // 약속 날짜
-
-    @OneToMany(mappedBy = "appointment")
-    private List<Vote> voteList;
+    @Column(name = "vote_deadline")
+    private LocalDateTime voteDeadline;
 }

@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
-    @Query("select a from Appointment a where a.appointmentCode = :appointmentCode")
+    @Query("select a from Appointment a where a.identificationCode = :appointmentCode")
     Optional<Appointment> findByAppointmentCode(@Param("appointmentCode") String appointmentCode);
 }
