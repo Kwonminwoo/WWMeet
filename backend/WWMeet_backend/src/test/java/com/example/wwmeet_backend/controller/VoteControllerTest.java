@@ -5,6 +5,7 @@ import com.example.wwmeet_backend.domain.Participant;
 import com.example.wwmeet_backend.domain.PossibleSchedule;
 import com.example.wwmeet_backend.domain.Vote;
 import com.example.wwmeet_backend.dto.AppointmentResponseDto;
+import com.example.wwmeet_backend.dto.VoteRequestDto;
 import com.example.wwmeet_backend.mapper.AppointmentMapper;
 import com.example.wwmeet_backend.service.AppointmentService;
 import com.example.wwmeet_backend.service.ParticipantService;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import java.util.List;
 
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -51,18 +54,19 @@ class VoteControllerTest {
         given(participantService.findParticipantById(any()))
                 .willReturn(foundParticipant);
         given(voteService.saveVoteSchedule(any()))
-                .willReturn(new Vote(1L, foundParticipant, null));
+                .willReturn(new Vote(1L, foundParticipant, new PossibleSchedule(1L, foundAppointment, LocalDateTime.now(), LocalDateTime.now())));
         given(appointmentMapper.toResponseDto(any()))
                 .willReturn(new AppointmentResponseDto(1L, "tesT", "test", "test1", 2, null));
 
         List<PossibleSchedule> possibleScheduleList = new ArrayList<>();
-        possibleScheduleList.add(new PossibleSchedule(null, foundAppointment, LocalDateTime.now(), null));
-        possibleScheduleList.add(new PossibleSchedule(null, foundAppointment, LocalDateTime.of(2023, 10, 1, 10, 30), null));
+        possibleScheduleList.add(new PossibleSchedule(null, foundAppointment, LocalDateTime.now(), LocalDateTime.now()));
+        possibleScheduleList.add(new PossibleSchedule(null, foundAppointment, LocalDateTime.of(2023, 10, 1, 10, 30), LocalDateTime.now()));
 
-        List<Vote> voteList = new ArrayList<>();
+        List<VoteRequestDto> voteList = new ArrayList<>();
         for (PossibleSchedule possible : possibleScheduleList) {
             Vote vote = voteService.saveVoteSchedule(new Vote(null, foundParticipant, possible));
-            voteList.add(vote);
+            VoteRequestDto voteRequestDto = new VoteRequestDto(vote.getId(), vote.getParticipant().getId(), vote.getPossibleSchedule().getStartTime(), vote.getPossibleSchedule().getEndTime());
+            voteList.add(voteRequestDto);
         }
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -71,6 +75,7 @@ class VoteControllerTest {
                         .content(voteListJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.participant.id", 1L).exists());
+                .andDo(print())
+                .andExpect(jsonPath("$..participantId", 1L).exists());
     }
 }
