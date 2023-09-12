@@ -4,6 +4,8 @@ import com.example.wwmeet_backend.domain.Appointment;
 import com.example.wwmeet_backend.domain.Participant;
 import com.example.wwmeet_backend.domain.PossibleSchedule;
 import com.example.wwmeet_backend.domain.Vote;
+import com.example.wwmeet_backend.dto.AppointmentResponseDto;
+import com.example.wwmeet_backend.mapper.AppointmentMapper;
 import com.example.wwmeet_backend.service.AppointmentService;
 import com.example.wwmeet_backend.service.ParticipantService;
 import com.example.wwmeet_backend.service.VoteService;
@@ -12,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -30,6 +33,8 @@ class VoteControllerTest {
 
     @MockBean
     private AppointmentService appointmentService;
+    @MockBean
+    private AppointmentMapper appointmentMapper;
 
     @MockBean
     private ParticipantService participantService;
@@ -45,8 +50,10 @@ class VoteControllerTest {
         Participant foundParticipant = new Participant(1L, foundAppointment, "testA");
         given(participantService.findParticipantById(any()))
                 .willReturn(foundParticipant);
-        given(voteService.saveVote(any()))
+        given(voteService.saveVoteSchedule(any()))
                 .willReturn(new Vote(1L, foundParticipant, null));
+        given(appointmentMapper.toResponseDto(any()))
+                .willReturn(new AppointmentResponseDto(1L, "tesT", "test", "test1", 2, null));
 
         List<PossibleSchedule> possibleScheduleList = new ArrayList<>();
         possibleScheduleList.add(new PossibleSchedule(null, foundAppointment, LocalDateTime.now(), null));
@@ -54,14 +61,15 @@ class VoteControllerTest {
 
         List<Vote> voteList = new ArrayList<>();
         for (PossibleSchedule possible : possibleScheduleList) {
-            Vote vote = voteService.saveVote(Vote(null, foundParticipant, possible));
+            Vote vote = voteService.saveVoteSchedule(new Vote(null, foundParticipant, possible));
             voteList.add(vote);
         }
 
         ObjectMapper objectMapper = new ObjectMapper();
         String voteListJson = objectMapper.writeValueAsString(voteList);
-        mvc.perform(post("api/appointment/vote")
-                        .content(voteListJson))
+        mvc.perform(post("/api/appointment/vote")
+                        .content(voteListJson)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.participant.id", 1L).exists());
     }

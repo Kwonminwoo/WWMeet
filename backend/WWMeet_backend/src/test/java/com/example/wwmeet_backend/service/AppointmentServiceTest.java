@@ -23,7 +23,7 @@ class AppointmentServiceTest {
 
     @Test
     void findAllAppointment(){
-        Appointment appointment = new Appointment(1L, "test appointment", "두정", "test1", 3, null, null);
+        Appointment appointment = new Appointment(1L, "test appointment", "두정", "test1", 3, null);
 
         given(appointmentRepository.findByAppointmentCode(anyString()))
                 .willReturn(Optional.of(appointment));
@@ -35,13 +35,13 @@ class AppointmentServiceTest {
 
         List<Appointment> findAppointmentList = service.findAllAppointment(appointmentCodeList);
         Assertions.assertThat(findAppointmentList.size()).isEqualTo(1);
-        Assertions.assertThat(findAppointmentList.get(0).getAppointmentCode()).isEqualTo("test1");
+        Assertions.assertThat(findAppointmentList.get(0).getIdentificationCode()).isEqualTo("test1");
     }
 
     @Test
     void findAppointmentById() throws Exception{
         given(appointmentRepository.findById(anyLong()))
-                .willReturn(Optional.of(new Appointment(1L, "test", "test1", "test1", 2, null, null)));
+                .willReturn(Optional.of(new Appointment(1L, "test", "test1", "test1", 2, null)));
         AppointmentService service = new AppointmentService(appointmentRepository);
         Long findId = 1L;
 
@@ -54,10 +54,10 @@ class AppointmentServiceTest {
     @Test
     void saveAppointment() throws Exception{
         given(appointmentRepository.save(any()))
-                .willReturn(new Appointment(1L, "test", "test", "test1", 2, null, null));
+                .willReturn(new Appointment(1L, "test", "test", "test1", 2, null));
 
         AppointmentService service = new AppointmentService(appointmentRepository);
-        Appointment appointment = new Appointment(1L, "test", "test", "test1", 2, null, null);
+        Appointment appointment = new Appointment(1L, "test", "test", "test1", 2, null);
         Appointment savedAppointment = service.saveAppointment(appointment);
 
         Assertions.assertThat(savedAppointment.getAppointmentName()).isEqualTo(appointment.getAppointmentName());

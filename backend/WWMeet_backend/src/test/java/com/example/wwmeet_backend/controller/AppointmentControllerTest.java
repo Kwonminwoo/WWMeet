@@ -33,7 +33,7 @@ class AppointmentControllerTest {
     @Test
     void findAppointmentAllListTest() throws Exception{
         List<Appointment> testList = new ArrayList<>();
-        testList.add(new Appointment(1L, "test appointment", "두정", "test1", 3, null, null));
+        testList.add(new Appointment(1L, "test appointment", "두정", "test1", 3, null));
 
         given(appointmentMapper.toResponseDto(any()))
                 .willReturn(new AppointmentResponseDto(1L, "test appointment", "두정", "test1", 3, null));
@@ -54,7 +54,7 @@ class AppointmentControllerTest {
 
     @Test
     void findAppointmentById() throws Exception{
-        Appointment appointment = new Appointment(1L, "test", "test", "test1", 2, null, null);
+        Appointment appointment = new Appointment(1L, "test", "test", "test1", 2, null);
 
         given(appointmentService.findAppointmentById(1L))
                 .willReturn(appointment);
@@ -73,7 +73,7 @@ class AppointmentControllerTest {
 
     @Test
     void saveAppointment() throws Exception{
-        Appointment appointment = new Appointment(1L, "test", "test", "test1", 2, null, null);
+        Appointment appointment = new Appointment(1L, "test", "test", "test1", 2, null);
         given(appointmentService.saveAppointment(appointment))
                 .willReturn(appointment);
         given(appointmentMapper.toResponseDto(any()))
