@@ -12,8 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class VoteService {
     private final VoteRepository voteRepository;
-
     public Vote saveVoteSchedule(Vote vote) {
-        return null;
+        return voteRepository.save(vote);
     }
 }

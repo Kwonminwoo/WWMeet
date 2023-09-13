@@ -7,5 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel =  "spring")
 public interface AppointmentMapper {
     AppointmentResponseDto toResponseDto(Appointment appointment);
-    Appointment ResponseDtoTo(AppointmentResponseDto appointmentFindDto);
+    Appointment responseDtoTo(AppointmentResponseDto appointmentFindDto);
 }

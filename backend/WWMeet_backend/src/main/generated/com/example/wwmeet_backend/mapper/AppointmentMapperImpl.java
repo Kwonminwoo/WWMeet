@@ -39,7 +39,7 @@ public class AppointmentMapperImpl implements AppointmentMapper {
     }
 
     @Override
-    public Appointment ResponseDtoTo(AppointmentResponseDto appointmentFindDto) {
+    public Appointment responseDtoTo(AppointmentResponseDto appointmentFindDto) {
         if ( appointmentFindDto == null ) {
             return null;
         }
