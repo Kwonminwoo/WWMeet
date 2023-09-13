@@ -1,9 +1,12 @@
 package com.example.wwmeet_backend.controller;
 
 import com.example.wwmeet_backend.domain.Appointment;
+import com.example.wwmeet_backend.dto.AppointmentRequestDto;
 import com.example.wwmeet_backend.dto.AppointmentResponseDto;
 import com.example.wwmeet_backend.mapper.AppointmentMapper;
+import com.example.wwmeet_backend.mapper.AppointmentMapperImpl;
 import com.example.wwmeet_backend.service.AppointmentService;
+import com.example.wwmeet_backend.service.VoteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,21 +24,19 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest
+@WebMvcTest(AppointmentController.class)
 class AppointmentControllerTest {
     @Autowired
     MockMvc mvc;
     @MockBean
     AppointmentService appointmentService;
     @SpyBean
-    AppointmentMapper appointmentMapper;
+    AppointmentMapperImpl appointmentMapper;
     @Test
     void findAppointmentAllListTest() throws Exception{
         List<Appointment> testList = new ArrayList<>();
         testList.add(new Appointment(1L, "test appointment", "두정", "test1", 3, null));
 
-//        given(appointmentMapper.toResponseDto(any()))
-//                .willReturn(new AppointmentResponseDto(1L, "test appointment", "두정", "test1", 3, null));
         given(appointmentService.findAllAppointment(anyList()))
                 .willReturn(testList);
 
@@ -51,11 +52,8 @@ class AppointmentControllerTest {
     @Test
     void findAppointmentById() throws Exception{
         Appointment appointment = new Appointment(1L, "test", "test", "test1", 2, null);
-
-        given(appointmentService.findAppointmentById(1L))
+        given(appointmentService.findAppointmentById(any()))
                 .willReturn(appointment);
-//        given(appointmentMapper.toResponseDto(any()))
-//                .willReturn(new AppointmentResponseDto(1L, "test", "test", "test", 2, null));
 
         long findAppointmentId = 1L;
         mvc.perform(
@@ -63,25 +61,25 @@ class AppointmentControllerTest {
 
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.appointmentCode", "test1").exists())
+                .andExpect(jsonPath("$.identificationCode", "test3").exists())
                 .andDo(print());
     }
 
     @Test
     void saveAppointment() throws Exception{
         Appointment appointment = new Appointment(1L, "test", "test", "test1", 2, null);
-        given(appointmentService.saveAppointment(appointment))
+        given(appointmentService.saveAppointment(any()))
                 .willReturn(appointment);
-//        given(appointmentMapper.toResponseDto(any()))
-//                .willReturn(new AppointmentResponseDto(1L, "test", "test", "test", 2, null));
 
         ObjectMapper mapper = new ObjectMapper();
-        String appointmentJson = mapper.writeValueAsString(appointment);
+        AppointmentRequestDto requestAppointment = new AppointmentRequestDto(null, "test", "test", "test", 2, null);
+        String appointmentJson = mapper.writeValueAsString(requestAppointment);
 
         mvc.perform(post("/api/appointment")
                         .content(appointmentJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.appointmentCode", "test1").exists());
+                .andDo(print())
+                .andExpect(jsonPath("$.identificationCode", "test1").exists());
     }
 }

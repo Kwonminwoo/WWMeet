@@ -40,13 +40,15 @@ public class VoteController {
         List<PossibleScheduleResponseDto> savedPossibleScheduleList = new ArrayList<>();
         for (PossibleScheduleRequestDto possibleScheduleRequest : voteRequest.getPossibleScheduleList()) {
             PossibleSchedule possibleSchedule = new PossibleSchedule(null, appointment, possibleScheduleRequest.getStartTime(), possibleScheduleRequest.getEndTime());
+
             savedVote = voteService.saveVoteSchedule(new Vote(null, participant, possibleSchedule));
 
             PossibleScheduleResponseDto possibleScheduleResponse = new PossibleScheduleResponseDto();
             possibleScheduleResponse.setPossibleScheduleFrom(savedVote.getPossibleSchedule());
             savedPossibleScheduleList.add(possibleScheduleResponse);
         }
+        VoteResponseDto result = new VoteResponseDto(appointment.getId(), savedVote.getParticipant().getId(), savedPossibleScheduleList);
 
-        return new VoteResponseDto(appointment.getId(), savedVote.getParticipant().getId(), savedPossibleScheduleList);
+        return result;
     }
 }
