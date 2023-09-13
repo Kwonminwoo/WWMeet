@@ -74,9 +74,9 @@ class VoteControllerTest {
 
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String voteListJson = objectMapper.writeValueAsString(voteRequestDto);
+        String voteRequestJson = objectMapper.writeValueAsString(voteRequestDto);
         mvc.perform(post("/api/appointment/vote")
-                        .content(voteListJson)
+                        .content(voteRequestJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
