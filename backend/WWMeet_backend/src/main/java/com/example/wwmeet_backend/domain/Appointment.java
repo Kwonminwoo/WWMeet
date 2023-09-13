@@ -13,7 +13,7 @@ import java.util.List;
         indexes = {
             @Index(columnList = "id"),
             @Index(columnList = "appointment_name"),
-            @Index(columnList = "appointment_code")
+            @Index(columnList = "identification_code")
         }
 )
 public class Appointment {
@@ -29,7 +29,7 @@ public class Appointment {
     private String appointmentPlace;
 
     @Setter
-    @Column(name = "appointment_code")
+    @Column(name = "identification_code")
     private String identificationCode;
 
     @Setter

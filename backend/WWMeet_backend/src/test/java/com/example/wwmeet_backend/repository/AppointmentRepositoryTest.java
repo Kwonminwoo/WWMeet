@@ -24,7 +24,7 @@ class AppointmentRepositoryTest {
 
     @Test
     void findAppointmentByCode(){
-        Appointment appointment = new Appointment(1L, "test name", "두정", "find1", 2, null, null);
+        Appointment appointment = new Appointment(1L, "test name", "두정", "find1", 2, null);
         String findCode = "find1";
 
         Appointment savedAppointment = appointmentRepository.save(appointment);
@@ -37,7 +37,7 @@ class AppointmentRepositoryTest {
     @Test
     void findAppointmentById(){
         Long findId = 1L;
-        Appointment appointment = new Appointment(1L, "test name", "두정", "find1", 2, null, null);
+        Appointment appointment = new Appointment(1L, "test name", "두정", "find1", 2, null);
         Appointment savedAppointment = appointmentRepository.save(appointment);
 
         Optional<Appointment> findAppointmentOptional = appointmentRepository.findById(findId);
@@ -48,7 +48,7 @@ class AppointmentRepositoryTest {
 
     @Test
     void saveAppointment(){
-        Appointment appointment = new Appointment(1L, "test", "test", "test1", 2, null, null);
+        Appointment appointment = new Appointment(1L, "test", "test", "test1", 2, null);
 
         Appointment savedAppointment = appointmentRepository.save(appointment);
 

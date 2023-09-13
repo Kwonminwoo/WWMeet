@@ -2,6 +2,7 @@ package com.example.wwmeet_backend.controller;
 
 
 import com.example.wwmeet_backend.domain.Appointment;
+import com.example.wwmeet_backend.dto.AppointmentRequestDto;
 import com.example.wwmeet_backend.dto.AppointmentResponseDto;
 import com.example.wwmeet_backend.mapper.AppointmentMapper;
 import com.example.wwmeet_backend.service.AppointmentService;
@@ -34,8 +35,8 @@ public class AppointmentController {
     }
 
     @PostMapping("/api/appointment")
-    public AppointmentResponseDto saveAppointment(@RequestBody Appointment appointment){
-        Appointment savedAppointment = appointmentService.saveAppointment(appointment);
+    public AppointmentResponseDto saveAppointment(@RequestBody AppointmentRequestDto appointmentDto){
+        Appointment savedAppointment = appointmentService.saveAppointment(appointmentMapper.requestDtoToEntity(appointmentDto));
         return appointmentMapper.toResponseDto(savedAppointment);
     }
 }

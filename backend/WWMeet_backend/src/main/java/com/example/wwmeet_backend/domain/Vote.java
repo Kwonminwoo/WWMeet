@@ -1,9 +1,6 @@
 package com.example.wwmeet_backend.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.servlet.http.Part;
@@ -12,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Getter
 @Table(
         indexes = {
@@ -30,7 +28,7 @@ public class Vote {
     private Participant participant;
 
     @Setter
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "possible_schedule_id")
     private PossibleSchedule possibleSchedule;
 }
