@@ -5,6 +5,7 @@ import com.example.wwmeet_backend.domain.Participant;
 import com.example.wwmeet_backend.domain.PossibleSchedule;
 import com.example.wwmeet_backend.domain.Vote;
 import com.example.wwmeet_backend.dto.AppointmentResponseDto;
+import com.example.wwmeet_backend.dto.PossibleScheduleRequestDto;
 import com.example.wwmeet_backend.dto.VoteRequestDto;
 import com.example.wwmeet_backend.mapper.AppointmentMapper;
 import com.example.wwmeet_backend.service.AppointmentService;
@@ -62,15 +63,18 @@ class VoteControllerTest {
         possibleScheduleList.add(new PossibleSchedule(null, foundAppointment, LocalDateTime.now(), LocalDateTime.now()));
         possibleScheduleList.add(new PossibleSchedule(null, foundAppointment, LocalDateTime.of(2023, 10, 1, 10, 30), LocalDateTime.now()));
 
-        List<VoteRequestDto> voteList = new ArrayList<>();
+        VoteRequestDto voteRequest = new VoteRequestDto();
+        Vote savedVote = null;
         for (PossibleSchedule possible : possibleScheduleList) {
-            Vote vote = voteService.saveVoteSchedule(new Vote(null, foundParticipant, possible));
-            VoteRequestDto voteRequestDto = new VoteRequestDto(vote.getId(), vote.getParticipant().getId(), vote.getPossibleSchedule().getStartTime(), vote.getPossibleSchedule().getEndTime());
-            voteList.add(voteRequestDto);
+            savedVote = voteService.saveVoteSchedule(new Vote(null, foundParticipant, possible));
+            voteRequest.addPossibleSchedule(savedVote.getPossibleSchedule());
         }
 
+        VoteRequestDto voteRequestDto = new VoteRequestDto(foundAppointment.getId(), savedVote.getParticipant().getId());
+
+
         ObjectMapper objectMapper = new ObjectMapper();
-        String voteListJson = objectMapper.writeValueAsString(voteList);
+        String voteListJson = objectMapper.writeValueAsString(voteRequestDto);
         mvc.perform(post("/api/appointment/vote")
                         .content(voteListJson)
                         .contentType(MediaType.APPLICATION_JSON))

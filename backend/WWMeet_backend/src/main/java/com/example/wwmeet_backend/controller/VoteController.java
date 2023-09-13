@@ -5,6 +5,8 @@ import com.example.wwmeet_backend.domain.Appointment;
 import com.example.wwmeet_backend.domain.Participant;
 import com.example.wwmeet_backend.domain.PossibleSchedule;
 import com.example.wwmeet_backend.domain.Vote;
+import com.example.wwmeet_backend.dto.PossibleScheduleRequestDto;
+import com.example.wwmeet_backend.dto.PossibleScheduleResponseDto;
 import com.example.wwmeet_backend.dto.VoteRequestDto;
 import com.example.wwmeet_backend.dto.VoteResponseDto;
 import com.example.wwmeet_backend.service.AppointmentService;
@@ -28,18 +30,23 @@ public class VoteController {
     private final ParticipantService participantService;
 
     @PostMapping("/api/appointment/vote")
-    public List<VoteResponseDto> voteAppointmentSchedule(@RequestBody List<VoteRequestDto> voteList){
-        Long appointmentId = voteList.get(0).getAppointmentId();
-        Long participantId = voteList.get(0).getParticipantId();
+    public VoteResponseDto voteAppointmentSchedule(@RequestBody VoteRequestDto voteRequest){
+        Long appointmentId = voteRequest.getAppointmentId();
+        Long participantId = voteRequest.getParticipantId();
         Appointment appointment = appointmentService.findAppointmentById(appointmentId);
         Participant participant = participantService.findParticipantById(participantId);
-        List<VoteResponseDto> voteResponseList = new ArrayList<>();
-        for (VoteRequestDto voteRequest : voteList) {
-            PossibleSchedule possibleSchedule = new PossibleSchedule(null, appointment, voteRequest.getStartTime(), voteRequest.getEndTime());
-            Vote savedVote = voteService.saveVoteSchedule(new Vote(null, participant, possibleSchedule));
-            voteResponseList.add(new VoteResponseDto(savedVote.getId(), participantId, savedVote.getPossibleSchedule().getStartTime(), savedVote.getPossibleSchedule().getEndTime()));
+
+        Vote savedVote = null;
+        List<PossibleScheduleResponseDto> savedPossibleScheduleList = new ArrayList<>();
+        for (PossibleScheduleRequestDto possibleScheduleRequest : voteRequest.getPossibleScheduleList()) {
+            PossibleSchedule possibleSchedule = new PossibleSchedule(null, appointment, possibleScheduleRequest.getStartTime(), possibleScheduleRequest.getEndTime());
+            savedVote = voteService.saveVoteSchedule(new Vote(null, participant, possibleSchedule));
+
+            PossibleScheduleResponseDto possibleScheduleResponse = new PossibleScheduleResponseDto();
+            possibleScheduleResponse.setPossibleScheduleFrom(savedVote.getPossibleSchedule());
+            savedPossibleScheduleList.add(possibleScheduleResponse);
         }
 
-        return voteResponseList;
+        return new VoteResponseDto(appointment.getId(), savedVote.getParticipant().getId(), savedPossibleScheduleList);
     }
 }
