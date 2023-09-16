@@ -2,10 +2,13 @@ package com.example.wwmeet_backend.controller;
 
 
 import com.example.wwmeet_backend.domain.Appointment;
+import com.example.wwmeet_backend.domain.Participant;
 import com.example.wwmeet_backend.dto.AppointmentRequestDto;
 import com.example.wwmeet_backend.dto.AppointmentResponseDto;
+import com.example.wwmeet_backend.dto.SaveAppointmentResponseDto;
 import com.example.wwmeet_backend.mapper.AppointmentMapper;
 import com.example.wwmeet_backend.service.AppointmentService;
+import com.example.wwmeet_backend.service.ParticipantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +20,7 @@ import java.util.List;
 public class AppointmentController {
     private final AppointmentService appointmentService;
     private final AppointmentMapper appointmentMapper;
+    private final ParticipantService participantService;
     @GetMapping("/api/appointments")
     public List<AppointmentResponseDto> findAllAppointment(@RequestParam List<String> appointmentCodeList){
         List<Appointment> findAppointmentList = appointmentService.findAllAppointment(appointmentCodeList);
@@ -24,7 +28,6 @@ public class AppointmentController {
         for (Appointment appointment : findAppointmentList) {
             findAppointmentDtoList.add(appointmentMapper.toResponseDto(appointment));
         }
-
         return findAppointmentDtoList;
     }
 
@@ -35,8 +38,10 @@ public class AppointmentController {
     }
 
     @PostMapping("/api/appointment")
-    public AppointmentResponseDto saveAppointment(@RequestBody AppointmentRequestDto appointmentDto){
+    public SaveAppointmentResponseDto saveAppointment(@RequestBody AppointmentRequestDto appointmentDto, @RequestBody String participantName){
         Appointment savedAppointment = appointmentService.saveAppointment(appointmentMapper.requestDtoToEntity(appointmentDto));
-        return appointmentMapper.toResponseDto(savedAppointment);
+        Participant participant = new Participant(null, savedAppointment, participantName);
+        Participant addedParticipant = participantService.addParticipantOfAppointment(participant);
+        return new SaveAppointmentResponseDto(appointmentMapper.toResponseDto(savedAppointment), addedParticipant.getParticipantName());
     }
 }
