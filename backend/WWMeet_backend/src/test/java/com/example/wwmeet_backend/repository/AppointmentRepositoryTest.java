@@ -28,7 +28,7 @@ class AppointmentRepositoryTest {
         String findCode = "find1";
 
         Appointment savedAppointment = appointmentRepository.save(appointment);
-        Optional<Appointment> findAppointmentOptional = appointmentRepository.findByAppointmentCode(findCode);
+        Optional<Appointment> findAppointmentOptional = appointmentRepository.findByIdentificationCode(findCode);
         Appointment findAppointmnet = findAppointmentOptional.orElseThrow(() -> new NoSuchElementException());
 
         Assertions.assertThat(findAppointmnet).isSameAs(savedAppointment);

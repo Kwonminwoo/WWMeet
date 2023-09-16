@@ -17,24 +17,26 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-@WebMvcTest(ParticipantControllerTest.class)
+@WebMvcTest(ParticipantController.class)
 class ParticipantControllerTest {
+    @Autowired
+    MockMvc mvc;
     @MockBean
     ParticipantService participantService;
     @MockBean
     AppointmentService appointmentService;
     @SpyBean
     AppointmentMapperImpl appointmentMapper;
-    @Autowired
-    MockMvc mvc;
 
     @Test
     void saveParticipantOfAppoint() throws Exception{
@@ -44,15 +46,17 @@ class ParticipantControllerTest {
                 .willReturn(appointment);
         given(participantService.addParticipantOfAppointment(any()))
                 .willReturn(participant);
+
         ObjectMapper objectMapper = new ObjectMapper();
         String participantAppointmentRequest = objectMapper.writeValueAsString(new ParticipantAndAppointmentDto("test", "testName"));
 
         mvc.perform(
-                post("api/appointment/participant")
+                post("/api/appointment/participant")
                 .content(participantAppointmentRequest)
                 .contentType(MediaType.APPLICATION_JSON)
         )
         .andExpect(status().isOk())
+        .andDo(print())
         .andExpect(jsonPath("$.participantName", "testName").exists());
     }
 }

@@ -20,7 +20,7 @@ public class AppointmentService {
     public List<Appointment> findAllAppointment(List<String> appointmentCodeList) {
         List<Appointment> findAppointmentList = new ArrayList<>();
         for (String appointmentCode : appointmentCodeList) {
-            Optional<Appointment> findAppointmnetOptional = appointmentRepository.findByAppointmentCode(appointmentCode);
+            Optional<Appointment> findAppointmnetOptional = appointmentRepository.findByIdentificationCode(appointmentCode);
             Appointment findAppointment = findAppointmnetOptional
                     .orElseThrow(() -> new NoSuchElementException());
             findAppointmentList.add(findAppointment);
@@ -31,6 +31,11 @@ public class AppointmentService {
     public Appointment findAppointmentById(Long id){
         Optional<Appointment> findAppointmentOptional = appointmentRepository.findById(id);
         return findAppointmentOptional
+                .orElseThrow(() -> new NoSuchElementException());
+    }
+
+    public Appointment findByIdentificationCode(String identificationCode){
+        return appointmentRepository.findByIdentificationCode(identificationCode)
                 .orElseThrow(() -> new NoSuchElementException());
     }
 

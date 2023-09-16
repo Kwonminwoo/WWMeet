@@ -14,7 +14,6 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AppointmentServiceTest {
@@ -25,7 +24,7 @@ class AppointmentServiceTest {
     void findAllAppointment(){
         Appointment appointment = new Appointment(1L, "test appointment", "두정", "test1", 3, null);
 
-        given(appointmentRepository.findByAppointmentCode(anyString()))
+        given(appointmentRepository.findByIdentificationCode(anyString()))
                 .willReturn(Optional.of(appointment));
 
         AppointmentService service = new AppointmentService(appointmentRepository); // 서비스 로직의 테스트가 이루어짐...
