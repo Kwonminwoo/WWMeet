@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -13,10 +16,12 @@ public class ParticipantService {
     private final ParticipantRepository participantRepository;
 
     public Participant findParticipantById(Long participantId) {
-        return null;
+        return participantRepository.findById(participantId).orElseThrow(() ->
+                new NoSuchElementException());
     }
 
-    public Participant addParticipantOfAppointment(Participant participant) {
-        return null;
+    public Participant addParticipantOfAppointment(Participant participant){
+        return participantRepository.save(participant);
     }
+
 }
