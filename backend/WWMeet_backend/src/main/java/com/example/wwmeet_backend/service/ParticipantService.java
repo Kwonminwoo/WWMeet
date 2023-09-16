@@ -15,4 +15,8 @@ public class ParticipantService {
     public Participant findParticipantById(Long participantId) {
         return null;
     }
+
+    public Participant addParticipantOfAppointment(Participant participant) {
+        return null;
+    }
 }
