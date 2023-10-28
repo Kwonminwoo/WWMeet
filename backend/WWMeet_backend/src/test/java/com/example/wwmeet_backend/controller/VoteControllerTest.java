@@ -1,20 +1,19 @@
 package com.example.wwmeet_backend.controller;
 
-import com.example.wwmeet_backend.domain.Appointment;
-import com.example.wwmeet_backend.domain.Participant;
-import com.example.wwmeet_backend.domain.PossibleSchedule;
-import com.example.wwmeet_backend.domain.Vote;
-import com.example.wwmeet_backend.dto.VoteRequestDto;
-import com.example.wwmeet_backend.mapper.AppointmentMapperImpl;
-import com.example.wwmeet_backend.service.AppointmentService;
-import com.example.wwmeet_backend.service.ParticipantService;
-import com.example.wwmeet_backend.service.VoteService;
+import com.example.wwmeet_backend.appointment.domain.Appointment;
+import com.example.wwmeet_backend.appointment.service.AppointmentService;
+import com.example.wwmeet_backend.participant.domain.Participant;
+import com.example.wwmeet_backend.participant.service.ParticipantService;
+import com.example.wwmeet_backend.possibleschedule.domain.PossibleSchedule;
+import com.example.wwmeet_backend.vote.controller.VoteController;
+import com.example.wwmeet_backend.vote.domain.Vote;
+import com.example.wwmeet_backend.vote.dto.VoteRequestDto;
+import com.example.wwmeet_backend.vote.service.VoteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -37,9 +36,6 @@ class VoteControllerTest {
 
     @MockBean
     private AppointmentService appointmentService;
-
-    @SpyBean
-    private AppointmentMapperImpl appointmentMapper;
 
     @MockBean
     private ParticipantService participantService;

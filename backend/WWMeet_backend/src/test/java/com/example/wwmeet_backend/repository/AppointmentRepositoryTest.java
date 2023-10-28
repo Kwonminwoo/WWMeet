@@ -1,6 +1,7 @@
 package com.example.wwmeet_backend.repository;
 
-import com.example.wwmeet_backend.domain.Appointment;
+import com.example.wwmeet_backend.appointment.domain.Appointment;
+import com.example.wwmeet_backend.appointment.repository.AppointmentRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
