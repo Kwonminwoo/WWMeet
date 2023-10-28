@@ -1,6 +1,7 @@
 package com.example.wwmeet_backend.repository;
 
-import com.example.wwmeet_backend.domain.Vote;
+import com.example.wwmeet_backend.vote.domain.Vote;
+import com.example.wwmeet_backend.vote.repository.VoteRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

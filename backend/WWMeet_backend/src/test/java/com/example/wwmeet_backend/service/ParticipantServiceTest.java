@@ -1,17 +1,17 @@
 package com.example.wwmeet_backend.service;
 
-import com.example.wwmeet_backend.domain.Appointment;
-import com.example.wwmeet_backend.domain.Participant;
-import com.example.wwmeet_backend.repository.ParticipantRepository;
+import com.example.wwmeet_backend.appointment.domain.Appointment;
+import com.example.wwmeet_backend.participant.domain.Participant;
+import com.example.wwmeet_backend.participant.repository.ParticipantRepository;
+import com.example.wwmeet_backend.participant.service.ParticipantService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.*;
+import static org.mockito.BDDMockito.any;
+import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 class ParticipantServiceTest {

@@ -1,20 +1,21 @@
 package com.example.wwmeet_backend.service;
 
-import com.example.wwmeet_backend.domain.Appointment;
-import com.example.wwmeet_backend.domain.Participant;
-import com.example.wwmeet_backend.domain.PossibleSchedule;
-import com.example.wwmeet_backend.domain.Vote;
-import com.example.wwmeet_backend.repository.VoteRepository;
+import com.example.wwmeet_backend.appointment.domain.Appointment;
+import com.example.wwmeet_backend.participant.domain.Participant;
+import com.example.wwmeet_backend.possibleschedule.domain.PossibleSchedule;
+import com.example.wwmeet_backend.vote.domain.Vote;
+import com.example.wwmeet_backend.vote.repository.VoteRepository;
+import com.example.wwmeet_backend.vote.service.VoteService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 
-import static org.mockito.BDDMockito.*;
+import static org.mockito.BDDMockito.any;
+import static org.mockito.BDDMockito.given;
 
 
 @ExtendWith(MockitoExtension.class)

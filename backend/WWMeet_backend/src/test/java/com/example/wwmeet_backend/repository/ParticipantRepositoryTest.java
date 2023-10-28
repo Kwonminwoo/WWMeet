@@ -1,7 +1,8 @@
 package com.example.wwmeet_backend.repository;
 
-import com.example.wwmeet_backend.domain.Appointment;
-import com.example.wwmeet_backend.domain.Participant;
+import com.example.wwmeet_backend.appointment.domain.Appointment;
+import com.example.wwmeet_backend.participant.domain.Participant;
+import com.example.wwmeet_backend.participant.repository.ParticipantRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,6 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @TestPropertySource("classpath:application-test.properties")
