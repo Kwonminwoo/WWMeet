@@ -2,44 +2,59 @@ package com.example.wwmeet_backend.appointment.service;
 
 
 import com.example.wwmeet_backend.appointment.domain.Appointment;
+import com.example.wwmeet_backend.appointment.dto.request.SaveAppointmentRequest;
+import com.example.wwmeet_backend.appointment.dto.response.FindAppointmentListResponse;
+import com.example.wwmeet_backend.appointment.dto.response.FindAppointmentResponse;
 import com.example.wwmeet_backend.appointment.repository.AppointmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class AppointmentService {
     private final AppointmentRepository appointmentRepository;
-    public List<Appointment> findAllAppointment(List<String> appointmentCodeList) {
-        List<Appointment> findAppointmentList = new ArrayList<>();
-        for (String appointmentCode : appointmentCodeList) {
-            Optional<Appointment> findAppointmnetOptional = appointmentRepository.findByIdentificationCode(appointmentCode);
-            Appointment findAppointment = findAppointmnetOptional
-                    .orElseThrow(() -> new NoSuchElementException());
-            findAppointmentList.add(findAppointment);
-        }
-        return findAppointmentList;
+
+    public Long saveAppointment(SaveAppointmentRequest saveAppointmentRequest){
+        Appointment savedAppointment = appointmentRepository.save(saveAppointmentRequest.toEntity());
+        return savedAppointment.getId();
     }
 
-    public Appointment findAppointmentById(Long id){
-        Optional<Appointment> findAppointmentOptional = appointmentRepository.findById(id);
-        return findAppointmentOptional
-                .orElseThrow(() -> new NoSuchElementException());
+    public FindAppointmentResponse findAppointmentById(Long id){
+        Optional<Appointment> foundAppointmentOptional = appointmentRepository.findById(id);
+        Appointment foundAppointment = foundAppointmentOptional.orElseThrow(() -> new NoSuchElementException());
+        return FindAppointmentResponse.builder()
+                .appointmentName(foundAppointment.getAppointmentName())
+                .appointmentPlace(foundAppointment.getAppointmentPlace())
+                .identificationCode(foundAppointment.getIdentificationCode())
+                .participantNum(foundAppointment.getParticipantNum())
+                .voteDeadline(foundAppointment.getVoteDeadline())
+                .build();
     }
 
-    public Appointment findByIdentificationCode(String identificationCode){
-        return appointmentRepository.findByIdentificationCode(identificationCode)
-                .orElseThrow(() -> new NoSuchElementException());
+    public List<FindAppointmentListResponse> findAllAppointment(List<Long> appointmentIdList) {
+        return appointmentIdList.stream()
+                .map(id -> appointmentRepository.findById(id).orElseThrow(NoSuchElementException::new))
+                .map(foundAppointment -> FindAppointmentListResponse.builder()
+                        .id(foundAppointment.getId())
+                        .appointmentName(foundAppointment.getAppointmentName())
+                        .voteDeadline(foundAppointment.getVoteDeadline())
+                        .build())
+                .collect(Collectors.toList());
     }
 
-    public Appointment saveAppointment(Appointment appointment){
-        return appointmentRepository.save(appointment);
-    }
+
+
+//    public Appointment findByIdentificationCode(String identificationCode){
+//        return appointmentRepository.findByIdentificationCode(identificationCode)
+//                .orElseThrow(() -> new NoSuchElementException());
+//    }
+
+
 }
