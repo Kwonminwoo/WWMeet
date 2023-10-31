@@ -1,42 +1,65 @@
 package com.example.wwmeet_backend.appointment.domain;
 
-import lombok.*;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Getter
-@Table(
-        indexes = {
-            @Index(columnList = "id"),
-            @Index(columnList = "appointment_name"),
-            @Index(columnList = "identification_code")
-        }
-)
 public class Appointment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter
     @Column(name = "appointment_name")
     private String appointmentName;
 
-    @Setter
     @Column(name = "appointment_place")
     private String appointmentPlace;
 
-    @Setter
     @Column(name = "identification_code")
     private String identificationCode;
 
-    @Setter
     @Column(name = "people_num")
-    private int peopleNum;
+    private int participantNum;
     
-    @Setter
     @Column(name = "vote_deadline")
     private LocalDateTime voteDeadline;
+
+    protected Appointment() {
+    }
+
+    private Appointment(Long id, String appointmentName, String appointmentPlace, String identificationCode, int participantNum, LocalDateTime voteDeadline) {
+        this.id = id;
+        this.appointmentName = appointmentName;
+        this.appointmentPlace = appointmentPlace;
+        this.identificationCode = identificationCode;
+        this.participantNum = participantNum;
+        this.voteDeadline = voteDeadline;
+    }
+
+    public static Appointment of(Long id, String appointmentName, String appointmentPlace, String identificationCode, int participantNum, LocalDateTime voteDeadline){
+        return new Appointment(id, appointmentName, appointmentPlace, identificationCode, participantNum, voteDeadline);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getAppointmentName() {
+        return appointmentName;
+    }
+
+    public String getAppointmentPlace() {
+        return appointmentPlace;
+    }
+
+    public String getIdentificationCode() {
+        return identificationCode;
+    }
+
+    public int getParticipantNum() {
+        return participantNum;
+    }
+
+    public LocalDateTime getVoteDeadline() {
+        return voteDeadline;
+    }
 }
