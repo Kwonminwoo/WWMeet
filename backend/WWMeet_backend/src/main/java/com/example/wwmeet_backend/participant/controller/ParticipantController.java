@@ -18,10 +18,10 @@ public class ParticipantController {
     private final ParticipantService participantService;
     private final AppointmentService appointmentService;
 
-    @PostMapping("/api/appointment/participant")
-    public ParticipantResponse saveParticipantOfAppointment(@RequestBody ParticipantAndAppointmentDto participantAndAppointment){
-        Appointment foundAppointment = appointmentService.findByIdentificationCode(participantAndAppointment.getAppointmentIdentificationCode());
-        Participant participant = participantService.addParticipantOfAppointment(new Participant(null, foundAppointment, participantAndAppointment.getParticipantName()));
-        return new ParticipantResponse(foundAppointment.getAppointmentName(), participant.getParticipantName());
-    }
+//    @PostMapping("/api/appointments/participant")
+//    public Long saveParticipantOfAppointment(@RequestBody ParticipantAndAppointmentDto participantAndAppointment){
+//        Appointment foundAppointment = appointmentService.findByIdentificationCode(participantAndAppointment.getAppointmentIdentificationCode());
+//        Participant participant = participantService.addParticipantOfAppointment(new Participant(null, foundAppointment, participantAndAppointment.getParticipantName()));
+////        return new ParticipantResponse(foundAppointment.getAppointmentName(), participant.getParticipantName());
+//    }
 }
