@@ -21,7 +21,7 @@ public class AppointmentController {
     @PostMapping
     public Long saveAppointment(@RequestBody SaveAppointmentRequest saveAppointmentRequest){
         Long savedAppointmentId = appointmentService.saveAppointment(saveAppointmentRequest);
-        participantService.saveParticipantOfAppointment(saveAppointmentRequest.getParticipantName(), savedAppointmentId);
+        participantService.saveParticipantWithAppointment(saveAppointmentRequest.getParticipantName(), savedAppointmentId);
 
         return savedAppointmentId;
     }

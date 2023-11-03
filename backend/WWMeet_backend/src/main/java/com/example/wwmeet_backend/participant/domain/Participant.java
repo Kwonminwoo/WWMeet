@@ -3,8 +3,7 @@ package com.example.wwmeet_backend.participant.domain;
 import com.example.wwmeet_backend.appointment.domain.Appointment;
 import lombok.*;
 
-import javax.persistence.*;
-
+import jakarta.persistence.*;
 @Entity
 @Getter
 

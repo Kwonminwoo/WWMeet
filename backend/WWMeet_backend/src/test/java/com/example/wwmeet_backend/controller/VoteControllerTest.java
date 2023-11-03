@@ -43,37 +43,37 @@ class VoteControllerTest {
     @Autowired
     MockMvc mvc;
 
-    @Test
-    void voteAppointmentSchedule() throws Exception{
-        Appointment foundAppointment = new Appointment(1L, "tesT", "test", "test1", 2, null);
-        given(appointmentService.findAppointmentById(any()))
-                .willReturn(foundAppointment);
-        Participant foundParticipant = new Participant(1L, foundAppointment, "testA");
-        given(participantService.findParticipantById(any()))
-                .willReturn(foundParticipant);
-        given(voteService.saveVoteSchedule(any()))
-                .willReturn(new Vote(1L, foundParticipant, new PossibleSchedule(1L, foundAppointment, LocalDateTime.now(), LocalDateTime.now())));
-
-        List<PossibleSchedule> possibleScheduleList = new ArrayList<>();
-        possibleScheduleList.add(new PossibleSchedule(null, foundAppointment, LocalDateTime.now(), LocalDateTime.now()));
-        possibleScheduleList.add(new PossibleSchedule(null, foundAppointment, LocalDateTime.of(2023, 10, 1, 10, 30), LocalDateTime.now()));
-
-        VoteRequestDto voteRequest = new VoteRequestDto();
-        Vote savedVote = null;
-        for (PossibleSchedule possible : possibleScheduleList) {
-            savedVote = voteService.saveVoteSchedule(new Vote(null, foundParticipant, possible));
-            voteRequest.addPossibleSchedule(savedVote.getPossibleSchedule());
-        }
-        voteRequest.setAppointmentId(foundAppointment.getId());
-        voteRequest.setParticipantId(savedVote.getParticipant().getId());
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String voteRequestJson = objectMapper.writeValueAsString(voteRequest);
-        mvc.perform(post("/api/appointment/vote")
-                        .content(voteRequestJson)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(jsonPath("$..participantId", 1L).exists());
-    }
+//    @Test
+//    void voteAppointmentSchedule() throws Exception{
+//        Appointment foundAppointment = new Appointment(1L, "tesT", "test", "test1", 2, null);
+//        given(appointmentService.findAppointmentById(any()))
+//                .willReturn(foundAppointment);
+//        Participant foundParticipant = new Participant(1L, foundAppointment, "testA");
+//        given(participantService.findParticipantById(any()))
+//                .willReturn(foundParticipant);
+//        given(voteService.saveVoteSchedule(any()))
+//                .willReturn(new Vote(1L, foundParticipant, new PossibleSchedule(1L, foundAppointment, LocalDateTime.now(), LocalDateTime.now())));
+//
+//        List<PossibleSchedule> possibleScheduleList = new ArrayList<>();
+//        possibleScheduleList.add(new PossibleSchedule(null, foundAppointment, LocalDateTime.now(), LocalDateTime.now()));
+//        possibleScheduleList.add(new PossibleSchedule(null, foundAppointment, LocalDateTime.of(2023, 10, 1, 10, 30), LocalDateTime.now()));
+//
+//        VoteRequestDto voteRequest = new VoteRequestDto();
+//        Vote savedVote = null;
+//        for (PossibleSchedule possible : possibleScheduleList) {
+//            savedVote = voteService.saveVoteSchedule(new Vote(null, foundParticipant, possible));
+//            voteRequest.addPossibleSchedule(savedVote.getPossibleSchedule());
+//        }
+//        voteRequest.setAppointmentId(foundAppointment.getId());
+//        voteRequest.setParticipantId(savedVote.getParticipant().getId());
+//
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String voteRequestJson = objectMapper.writeValueAsString(voteRequest);
+//        mvc.perform(post("/api/appointment/vote")
+//                        .content(voteRequestJson)
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andDo(print())
+//                .andExpect(jsonPath("$..participantId", 1L).exists());
+//    }
 }

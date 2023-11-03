@@ -21,7 +21,7 @@ public class ParticipantService {
                 new NoSuchElementException());
     }
 
-    public void saveParticipantOfAppointment(String participantName, Long id){
+    public void saveParticipantWithAppointment(String participantName, Long id){
         Participant participant = Participant.of(id, appointmentRepository.findById(id).orElseThrow(NoSuchElementException::new), participantName);
         participantRepository.save(participant);
     }
