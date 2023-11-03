@@ -2,7 +2,7 @@ package com.example.wwmeet_backend.possibleschedule.domain;
 
 import com.example.wwmeet_backend.appointment.domain.Appointment;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 

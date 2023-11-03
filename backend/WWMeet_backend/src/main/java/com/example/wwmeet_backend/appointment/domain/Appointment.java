@@ -1,6 +1,7 @@
 package com.example.wwmeet_backend.appointment.domain;
 
-import javax.persistence.*;
+
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity

@@ -4,8 +4,7 @@ import com.example.wwmeet_backend.participant.domain.Participant;
 import com.example.wwmeet_backend.possibleschedule.domain.PossibleSchedule;
 import lombok.*;
 
-import javax.persistence.*;
-
+import jakarta.persistence.*;
 
 @Entity
 public class Vote {
