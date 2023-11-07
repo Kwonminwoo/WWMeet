@@ -1,6 +1,7 @@
 package com.example.wwmeet_backend.vote.service;
 
 
+import com.example.wwmeet_backend.appointment.domain.Appointment;
 import com.example.wwmeet_backend.appointment.repository.AppointmentRepository;
 import com.example.wwmeet_backend.participant.domain.Participant;
 import com.example.wwmeet_backend.participant.repository.ParticipantRepository;
@@ -17,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
@@ -27,13 +30,17 @@ public class VoteService {
     private final VoteRepository voteRepository;
     private final ParticipantRepository participantRepository;
     private final PossibleScheduleRepository possibleScheduleRepository;
-    public Long saveVoteSchedule(SaveVoteRequest saveVoteRequest) {
-        Participant foundParticipant = participantRepository.findByParticipantName(saveVoteRequest.getParticipantName());
+    private final AppointmentRepository appointmentRepository;
+
+    public Long saveVoteSchedule(Long id, SaveVoteRequest saveVoteRequest) {
+        Appointment foundAppointment = appointmentRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        Participant foundParticipant = participantRepository.findByParticipantName(foundAppointment, saveVoteRequest.getParticipantName())
+                .orElseThrow(NoSuchElementException::new);
 
         List<PossibleSchedule> possibleScheduleList = new ArrayList<>();
         for (SavePossibleScheduleRequest possibleScheduleRequest : saveVoteRequest.getPossibleScheduleList()) {
             PossibleSchedule savedPossibleSchedule = possibleScheduleRepository.save(
-                    PossibleSchedule.of(null, foundParticipant.getAppointment(), possibleScheduleRequest.getStartTime(), possibleScheduleRequest.getEndTime())
+                    PossibleSchedule.of(null, foundAppointment, possibleScheduleRequest.getStartTime(), possibleScheduleRequest.getEndTime())
             );
             possibleScheduleList.add(savedPossibleSchedule);
         }
@@ -42,6 +49,6 @@ public class VoteService {
                 .map(possibleSchedule -> (Vote.of(null, foundParticipant, possibleSchedule)))
                 .forEach(voteRepository::save);
 
-        return foundParticipant.getAppointment().getId();
+        return foundAppointment.getId();
     }
 }
