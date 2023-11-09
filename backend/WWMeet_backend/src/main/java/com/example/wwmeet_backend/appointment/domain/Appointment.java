@@ -1,8 +1,11 @@
 package com.example.wwmeet_backend.appointment.domain;
 
 
+import com.example.wwmeet_backend.participant.domain.Participant;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Appointment {
@@ -23,6 +26,9 @@ public class Appointment {
     
     @Column(name = "vote_deadline")
     private LocalDateTime voteDeadline;
+
+    @OneToMany(mappedBy = "appointment")
+    private List<Participant> participantList = new ArrayList<>();
 
     protected Appointment() {
     }
@@ -62,5 +68,9 @@ public class Appointment {
 
     public LocalDateTime getVoteDeadline() {
         return voteDeadline;
+    }
+
+    public List<Participant> getParticipantList() {
+        return participantList;
     }
 }

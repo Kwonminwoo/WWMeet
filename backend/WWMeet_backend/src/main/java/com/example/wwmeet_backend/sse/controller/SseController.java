@@ -30,14 +30,14 @@ public class SseController {
         return userSseConnection.getSseEmitter();
     }
 
-    @GetMapping("/push-event")
-    public void pushEvent(@RequestParam String id, @RequestParam String name) {
-        log.info("push");
-
-        UserSseConnection connection = sseConnectionPool.getConnection(id + name);
-        Optional.ofNullable(connection)
-                .ifPresent(it -> {
-                    it.sendMessage("test message");
-                });
-    }
+//    @GetMapping("/push-event")
+//    public void pushEvent(@RequestParam String id, @RequestParam String name) {
+//        log.info("push");
+//
+//        UserSseConnection connection = sseConnectionPool.getConnection(id + name);
+//        Optional.ofNullable(connection)
+//                .ifPresent(it -> {
+//                    it.sendMessage("test message");
+//                });
+//    }
 }
