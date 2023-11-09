@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 약속 만들기
-                Intent intent = new Intent(getApplicationContext(), CreateAppointmentActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AppointmentCreateActivity.class);
                 startActivity(intent);
                 finish();
             }
