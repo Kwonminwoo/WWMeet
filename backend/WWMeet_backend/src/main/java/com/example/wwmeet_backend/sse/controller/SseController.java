@@ -21,11 +21,11 @@ public class SseController {
     private final SseConnectionPool<String, UserSseConnection> sseConnectionPool;
 
     @GetMapping("/connecct")
-    public SseEmitter connect(@RequestParam String id, @RequestParam String name) {
+    public SseEmitter connect(@RequestParam String key) {
         log.info("connect");
 
-        UserSseConnection userSseConnection = UserSseConnection.connect(id + name, sseConnectionPool);
-        sseConnectionPool.addConnection(id + name, userSseConnection);
+        UserSseConnection userSseConnection = UserSseConnection.connect(key, sseConnectionPool);
+        sseConnectionPool.addConnection(key, userSseConnection);
 
         return userSseConnection.getSseEmitter();
     }
