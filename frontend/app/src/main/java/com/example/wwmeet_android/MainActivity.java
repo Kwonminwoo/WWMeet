@@ -58,7 +58,9 @@ public class MainActivity extends AppCompatActivity {
         enterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 약속 입장 하기
+                Intent intent = new Intent(getApplicationContext(), EntranceActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 

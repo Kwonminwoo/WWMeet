@@ -15,15 +15,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
                 android:text="약속  설정"
-                android:textSize="30sp"/>
+                android:textSize="35sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="약속  이름"
+                android:text=" 약속  이름"
                 android:layout_marginRight="120dp"
-                android:textSize="17sp" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/appointment_create_name_edit"
@@ -35,8 +35,8 @@
                 android:hint="  20 학번 모임" />
 
             <TextView
-                android:text="약속  장소"
-                android:textSize="17sp"
+                android:text=" 약속  장소"
+                android:textSize="18sp"
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="120dp"
                 android:layout_gravity="center"
@@ -54,7 +54,7 @@
 
             <TextView
                 android:text="참여  인원"
-                android:textSize="17sp"
+                android:textSize="18sp"
                 android:layout_marginTop="30dp"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -105,9 +105,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:text="사용자  이름"
+                android:text=" 사용자  이름"
                 android:layout_marginRight="110dp"
-                android:textSize="17sp" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/appointment_create_user_name_edit"
