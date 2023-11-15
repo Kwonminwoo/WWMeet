@@ -22,6 +22,9 @@
             android:name=".AppointmentCreateActivity"
             android:exported="false" />
         <activity
+            android:name=".SetVoteDeadlineActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
