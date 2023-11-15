@@ -1,5 +1,6 @@
 package com.example.wwmeet_android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +34,14 @@ public class AppointmentCreateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 count--;
                 numText.setText(count+"");
+            }
+        });
+        createBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SetVoteDeadlineActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
