@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:text="초대  코드  입력"
+            android:textSize="35sp"/>
+
+        <EditText
+            android:id="@+id/entrance_name_edit"
+            android:layout_width="330dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/background_box"
+            android:hint="  이름을  입력해주세요." />
+
+        <EditText
+            android:id="@+id/entrance_code_edit"
+            android:layout_width="330dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/background_box"
+            android:hint="  코드를  입력해주세요." />
+
+        <Button
+            android:id="@+id/entrance_create_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="100dp"
+            android:text="확인" />
+
+
+    </LinearLayout>
+
+</LinearLayout>
