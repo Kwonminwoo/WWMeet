@@ -31,7 +31,7 @@
                 android:layout_height="55dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/background_box"
+                android:background="@drawable/background_box1"
                 android:hint="  20 학번 모임" />
 
             <TextView
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"/>
 
             <EditText
-                android:background="@drawable/background_box"
+                android:background="@drawable/background_box1"
                 android:id="@+id/appointment_create_place_edit"
                 android:layout_gravity="center"
                 android:hint="  두정역"
@@ -111,7 +111,7 @@
 
             <EditText
                 android:id="@+id/appointment_create_user_name_edit"
-                android:background="@drawable/background_box"
+                android:background="@drawable/background_box1"
                 android:layout_gravity="center"
                 android:hint="  김공주대"
                 android:layout_marginTop="5dp"
