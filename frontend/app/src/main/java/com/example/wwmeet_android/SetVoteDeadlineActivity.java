@@ -15,17 +15,16 @@ import java.time.LocalDateTime;
 public class SetVoteDeadlineActivity extends AppCompatActivity {
     DatePicker datePicker;
     TimePicker timePicker;
-    Button deadlineBtn;
+    Button deadlinecreateBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_vote_deadline);
         init();
-        deadlineBtn.setOnClickListener(new View.OnClickListener() {
+        deadlinecreateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 약속 만들기
-                Intent intent = new Intent(getApplicationContext(), EntranceActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AppointmentInfoBeforeActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -42,7 +41,7 @@ public class SetVoteDeadlineActivity extends AppCompatActivity {
         return limit;
     }
     private void init(){
-        deadlineBtn = findViewById(R.id.set_vote_deadline_btn);
+        deadlinecreateBtn = findViewById(R.id.set_vote_deadline_create_btn);
     }
 }
 
