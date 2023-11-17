@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         enterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), EntranceActivity.class);
+                Intent intent = new Intent(getApplicationContext(), VoteScheduleActivity.class);
                 startActivity(intent);
                 finish();
             }

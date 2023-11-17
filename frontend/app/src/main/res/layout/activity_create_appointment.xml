@@ -3,95 +3,97 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="100dp"
                 android:text="약속 만들기"
-                android:textSize="30sp"/>
+                android:textSize="30sp" />
 
             <TextView
-                android:text="약속 이름"
-                android:textSize="17sp"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="약속 이름"
+                android:textSize="17sp" />
 
             <EditText
                 android:id="@+id/create_appointment_name_edit"
-                android:layout_gravity="center"
-                android:textSize="21sp"
-                android:hint="약속A"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="약속A"
+                android:textSize="21sp" />
 
             <TextView
-                android:text="장소 이름"
-                android:textSize="17sp"
-                android:layout_marginTop="30dp"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:text="장소 이름"
+                android:textSize="17sp" />
 
             <EditText
                 android:id="@+id/create_appointment_place_edit"
-                android:layout_gravity="center"
-                android:hint="강남"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="강남" />
 
             <TextView
-                android:text="인원"
-                android:textSize="17sp"
-                android:layout_marginTop="30dp"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:text="인원"
+                android:textSize="17sp" />
 
             <EditText
                 android:id="@+id/create_num_people_edit"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:hint="4"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"/>
+                android:hint="4" />
 
 
             <DatePicker
                 android:id="@+id/create_limit_date"
-                android:layout_marginTop="30dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TimePicker
-                android:id="@+id/create_limit_time"
-                android:layout_marginTop="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp" />
+
+            <TimePicker
+                android:id="@+id/create_limit_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:timePickerMode="spinner" />
 
             <Button
                 android:id="@+id/create_create_btn"
-                android:text="완료"
-                android:layout_marginTop="60dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center|bottom"
                 android:layout_marginHorizontal="50dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_marginTop="60dp"
+                android:text="완료" />
 
 
         </LinearLayout>
 
     </ScrollView>
-
 
 
 </LinearLayout>
