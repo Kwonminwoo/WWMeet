@@ -69,10 +69,9 @@
 
             <ImageButton
                 android:id="@+id/appointment_create_minus_btn"
-                android:src="@drawable/minuslogo"
+                android:src="@drawable/downlogo"
                 android:layout_width="55dp"
                 android:layout_height="65dp"
-                android:text="-"
                 android:padding="5sp"
                 android:scaleType="centerCrop"
                 android:layout_marginLeft="110dp"/>
@@ -95,8 +94,7 @@
                     android:layout_height="65dp"
                     android:padding="5sp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/pluslogo"
-                    android:text="+" />
+                    android:src="@drawable/uplogo" />
 
             </LinearLayout>
 
