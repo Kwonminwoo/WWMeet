@@ -6,6 +6,15 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
+    <ImageView
+        android:id="@+id/main_logo_small_img"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:src="@drawable/mainlogo2" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_recyclerview"
         android:layout_width="match_parent"
@@ -16,6 +25,7 @@
         android:layout_height="0dp" />
 
     <ImageView
+        android:id="@+id/main_logo_img"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center"

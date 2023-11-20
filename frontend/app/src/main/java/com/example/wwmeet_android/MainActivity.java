@@ -8,10 +8,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.wwmeet_android.domain.Appointment;
+import com.example.wwmeet_android.dto.FindAppointmentListResponse;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,28 +22,35 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     Button enterBtn;
     Button createApmBtn;
-    List<Appointment> appointmentList = new ArrayList<>();
+    List<FindAppointmentListResponse> appointmentList = new ArrayList<>();
     SharedPreferenceUtil sharedPreferenceUtil;
+    ImageView mainLogo;
+    ImageView smallLogo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
         getAppointmentList();
+        setLogoOrList();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        AppointmentBeforeAdapter beforeAdapter = new AppointmentBeforeAdapter();
+        AppointmentListAdapter beforeAdapter = new AppointmentListAdapter();
 //        appointmentList.add(new Appointment("1234123", "hello", 2, "강남", LocalDateTime.now(), LocalDateTime.now()));
 //        beforeAdapter.setList(appointmentList); // 실제 데이터로 바꿔야 함 Todo
         recyclerView.setAdapter(beforeAdapter);
 
-        beforeAdapter.setItemClickListener(new AppointmentBeforeAdapter.OnItemClickEventListener() {
+        beforeAdapter.setItemClickListener(new AppointmentListAdapter.OnItemClickEventListener() {
             @Override
             public void onItemClick(View view, int position) {
                 // Todo 약속 확인 하기
-                
+                if(appointmentList.get(position).isFinishVote()){
+                    // 끝난 후 약속 요청
+                }else{
+                    // 끝나기 전 약속 요청
+                }
             }
         });
         createApmBtn.setOnClickListener(new View.OnClickListener() {
@@ -68,11 +76,20 @@ public class MainActivity extends AppCompatActivity {
         enterBtn = findViewById(R.id.home_enter_appoint_btn);
         createApmBtn = findViewById(R.id.home_create_appoint_btn);
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+        mainLogo = findViewById(R.id.main_logo_img);
+        smallLogo = findViewById(R.id.main_logo_small_img);
     }
 
     private void getAppointmentList(){
         Set<String> codes = sharedPreferenceUtil.getData("codes", new HashSet<>());
         // Todo DB 에서 약속 코드로 호출
 
+    }
+
+    private void setLogoOrList(){
+        if (!appointmentList.isEmpty()){
+            mainLogo.setVisibility(View.GONE);
+            smallLogo.setVisibility(View.VISIBLE);
+        }
     }
 }
