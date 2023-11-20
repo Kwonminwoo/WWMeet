@@ -25,8 +25,8 @@ public class AppointmentBeforeAdapter extends RecyclerView.Adapter<AppointmentBe
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            nameTextView = itemView.findViewById(R.id.list_item_appointment_name);
-            limitTimeTextView = itemView.findViewById(R.id.list_item_vote_limit);
+            nameTextView = itemView.findViewById(R.id.item_appointment_list_deadline_text);
+            limitTimeTextView = itemView.findViewById(R.id.item_appointment_list_progress_text);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
