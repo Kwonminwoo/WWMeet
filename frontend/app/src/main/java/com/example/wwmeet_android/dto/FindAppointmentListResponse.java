@@ -1,5 +1,6 @@
 package com.example.wwmeet_android.dto;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,8 @@ public class FindAppointmentListResponse {
     @SerializedName("vote_deadline")
     private LocalDateTime deadline;
 
+    @Expose(serialize = false, deserialize = false)
+    private boolean isFinishVote;
 
 
     public FindAppointmentListResponse(Long id, String appointmentName, LocalDateTime deadline) {
@@ -46,5 +49,13 @@ public class FindAppointmentListResponse {
 
     public void setDeadline(LocalDateTime deadline) {
         this.deadline = deadline;
+    }
+
+    public boolean isFinishVote() {
+        return isFinishVote;
+    }
+
+    public void setFinishVote(boolean finishVote) {
+        isFinishVote = finishVote;
     }
 }
