@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class EntranceActivity extends AppCompatActivity {
+public class EntranceAppointmentActivity extends AppCompatActivity {
 
     EditText nameEdit,codeEdit;
     Button createBtn;
@@ -23,7 +23,6 @@ public class EntranceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
     }
