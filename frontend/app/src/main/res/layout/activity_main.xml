@@ -19,7 +19,7 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center"
-        android:src="@drawable/mainlogo" />
+        android:src="@drawable/mainlogo1" />
 
     <Button
         android:id="@+id/home_enter_appoint_btn"

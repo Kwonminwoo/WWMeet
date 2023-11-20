@@ -2,20 +2,73 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="5dp"
-    android:layout_marginVertical="5dp"
+    android:gravity="center"
     android:orientation="vertical">
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/mainlogo2" />
 
+    <LinearLayout
+        android:layout_width="370dp"
+        android:layout_height="150dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:background= "@drawable/background_box_main"
+        android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/line2"/>
 
     <TextView
-        android:id="@+id/list_item_appointment_name"
-        android:text="약속 명: "
+        android:id="@+id/item_appointment_list_name_text"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/list_item_vote_limit"
-        android:text="남은 시간: "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="약속  이름  나오는  곳"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="25dp"/>
+
+        <ImageView
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/line2" />
+
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="115dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/item_appointment_list_progress_text"
+                android:layout_width="90dp"
+                android:layout_height="25dp"
+                android:text="진행 여부  " />
+
+            <ImageView
+                android:id="@+id/item_appointment_list_color_image"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:padding="4sp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/greencircle" />
+
+        </LinearLayout>
+
+        <TextView
+        android:id="@+id/item_appointment_list_deadline_text"
+        android:text="기한  : "
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="80dp"/>
+
+    </LinearLayout>
 
 </LinearLayout>
