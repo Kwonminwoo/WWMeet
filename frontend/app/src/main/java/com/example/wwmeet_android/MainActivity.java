@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         enterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), VoteScheduleActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AppointmentInfoAfterActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.home_recyclerview);
         enterBtn = findViewById(R.id.home_enter_appoint_btn);
         createApmBtn = findViewById(R.id.home_create_appoint_btn);
-
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
     }
 

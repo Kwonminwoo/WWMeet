@@ -31,6 +31,9 @@
             android:name=".AppointmentInfoBeforeActivity"
             android:exported="false" />
         <activity
+            android:name=".AppointmentInfoAfterActivity"
+            android:exported="false" />
+        <activity
             android:name=".VoteScheduleActivity"
             android:exported="false" />
         <activity
