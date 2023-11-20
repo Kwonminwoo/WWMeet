@@ -41,7 +41,6 @@ public class AppointmentCreateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SetVoteDeadlineActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
     }

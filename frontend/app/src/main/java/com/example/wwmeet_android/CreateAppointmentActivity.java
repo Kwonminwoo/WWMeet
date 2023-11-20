@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -51,10 +50,9 @@ public class CreateAppointmentActivity extends AppCompatActivity {
 
                 // Todo newAppointment 데이터베이스에 저장
 
-                Intent intent = new Intent(getApplicationContext(), InviteApmActivity.class);
+                Intent intent = new Intent(getApplicationContext(), InviteAppointmentActivity.class);
                 intent.putExtra("code", appointmentCode);
                 startActivity(intent);
-                finish();
             }
         });
     }

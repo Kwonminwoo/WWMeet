@@ -12,11 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOError;
 import java.util.HashSet;
 import java.util.Set;
 
-public class InviteApmActivity extends AppCompatActivity {
+public class InviteAppointmentActivity extends AppCompatActivity {
     TextView codeTextView;
     ImageView clipboardImageView;
 
@@ -42,7 +41,7 @@ public class InviteApmActivity extends AppCompatActivity {
                 ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("code", appointmentCode);
                 clipboardManager.setPrimaryClip(clip);
-                Toast.makeText(InviteApmActivity.this, "코드가 복사되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(InviteAppointmentActivity.this, "코드가 복사되었습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -52,7 +51,6 @@ public class InviteApmActivity extends AppCompatActivity {
                 Intent intentHome = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intentHome);
 
-                finish();
             }
         });
 

@@ -29,7 +29,6 @@ public class VoteScheduleActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AppointmentInfoBeforeActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
     }

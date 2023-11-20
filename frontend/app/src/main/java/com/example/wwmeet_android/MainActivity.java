@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
                 // 약속 만들기
                 Intent intent = new Intent(getApplicationContext(), AppointmentCreateActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -60,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AppointmentInfoAfterActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
 
