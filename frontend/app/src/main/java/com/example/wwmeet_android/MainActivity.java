@@ -1,18 +1,20 @@
 package com.example.wwmeet_android;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.wwmeet_android.domain.Appointment;
 import com.example.wwmeet_android.dto.FindAppointmentListResponse;
+import com.example.wwmeet_android.network.SseEventService;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -70,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        setSSE("test");
+
     }
     private void init(){
         recyclerView = findViewById(R.id.home_recyclerview);
@@ -84,6 +88,15 @@ public class MainActivity extends AppCompatActivity {
         Set<String> codes = sharedPreferenceUtil.getData("codes", new HashSet<>());
         // Todo DB 에서 약속 코드로 호출
 
+    }
+
+    private void setSSE(String key){
+        SseEventService sseEventService = new SseEventService();
+        try {
+            sseEventService.startSse(key);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setLogoOrList(){
