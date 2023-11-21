@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 public class AppointmentService {
     private final AppointmentRepository appointmentRepository;
 
+    @Transactional
     public Long saveAppointment(SaveAppointmentRequest saveAppointmentRequest){
         Appointment savedAppointment = appointmentRepository.save(saveAppointmentRequest.toEntity());
         return savedAppointment.getId();

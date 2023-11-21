@@ -21,29 +21,18 @@ public class AppointmentController {
     @PostMapping
     public Long saveAppointment(@RequestBody SaveAppointmentRequest saveAppointmentRequest){
         Long savedAppointmentId = appointmentService.saveAppointment(saveAppointmentRequest);
-        participantService.saveParticipantWithAppointment(saveAppointmentRequest.getParticipantName(), savedAppointmentId);
-
+        participantService.addParticipantByAppointmentId(saveAppointmentRequest.getParticipantName(), savedAppointmentId);
         return savedAppointmentId;
     }
 
-    @GetMapping("/api/appointments/{id}")
+    @GetMapping("/{id}")
     public FindAppointmentResponse findAppointmentById(@PathVariable(name = "id") Long id){
         return appointmentService.findAppointmentById(id);
     }
 
     @GetMapping
-    public List<FindAppointmentListResponse> findAllAppointment(@RequestBody List<Long> appointmentIdList){
+    public List<FindAppointmentListResponse> findAllAppointment(@RequestParam List<Long> appointmentIdList){
         return appointmentService.findAllAppointment(appointmentIdList);
     }
-
-//    @PostMapping("/participant")
-//    public FindAppointmentListResponse findAppointmentByCode(String identificationCode){
-////        Appointment findAppointment = appointmentService.findAppointmentById(appointmentId);
-////        return appointmentMapper.toResponseDto(findAppointment);
-//        return null;
-//    }
-
-
-
 
 }
