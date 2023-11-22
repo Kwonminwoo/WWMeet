@@ -39,6 +39,12 @@
             android:id="@+id/entrance_create_btn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:background="@drawable/button_design"
+            android:backgroundTint="@color/black"
+            android:textColor="#ffffff"
+            android:textSize="15dp"
+            android:letterSpacing="0.1"
+            android:textStyle="bold"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="100dp"
             android:text="확인" />
