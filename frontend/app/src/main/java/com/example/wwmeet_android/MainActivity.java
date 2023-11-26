@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 약속 만들기
-                Intent intent = new Intent(getApplicationContext(), AppointmentCreateActivity.class);
+                Intent intent = new Intent(getApplicationContext(), VoteScheduleActivity.class);
                 startActivity(intent);
             }
         });
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         enterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 입장하기
                 Intent intent = new Intent(getApplicationContext(), EntranceAppointmentActivity.class);
                 startActivity(intent);
             }

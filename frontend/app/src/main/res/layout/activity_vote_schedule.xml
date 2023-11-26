@@ -33,6 +33,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -57,47 +58,59 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/text_space"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="80dp"
-                    android:text="시작  시간"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="종료  시간"
-                    android:layout_marginLeft="120dp"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
+                android:layout_width="400dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/background_box1">
 
             <LinearLayout
-                android:id="@+id/Timepicker_space"
+                android:id="@+id/text_space"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/background_box1"
+                android:layout_height="150dp"
+                android:gravity="center"
                 android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="시작  시간"
+                    android:layout_marginRight="20dp"
+                    android:textSize="16sp" />
 
                 <TimePicker
                     android:id="@+id/vote_schedule_start_timepicker"
-                    android:layout_width="190dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:timePickerMode="spinner" />
 
+            </LinearLayout>
+
+                <ImageView
+                    android:layout_width="390dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/line2"/>
+
+                <LinearLayout
+                android:id="@+id/Timepicker_space"
+                android:layout_width="fill_parent"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:text="종료  시간"
+                    android:textSize="16sp" />
+
                 <TimePicker
                     android:id="@+id/vote_schedule_end_timepicker"
-                    android:layout_width="match_parent"
-                    android:layout_height="172dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:timePickerMode="spinner" />
 
+            </LinearLayout>
             </LinearLayout>
 
             <Button
