@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         enterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AppointmentInfoAfterActivity.class);
+                Intent intent = new Intent(getApplicationContext(), EntranceAppointmentActivity.class);
                 startActivity(intent);
             }
         });
