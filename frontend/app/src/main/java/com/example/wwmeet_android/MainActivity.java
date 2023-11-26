@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 입장하기
-                Intent intent = new Intent(getApplicationContext(), AppointmentInfoAfterActivity.class);
+                Intent intent = new Intent(getApplicationContext(), EntranceAppointmentActivity.class);
                 startActivity(intent);
             }
         });
