@@ -34,6 +34,7 @@ public class EntranceAppointmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entrance);
         init();
+
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,11 +54,12 @@ public class EntranceAppointmentActivity extends AppCompatActivity {
                             return;
                         }
                         Long appointmentId = response.body();
-                        Set<String> set = new HashSet<>();
                         String appointmentAndParticipant = appointmentId + " " + nameEdit.getText().toString();
-                        set.add(appointmentAndParticipant);
 
-                        sharedPreferenceUtil.putData("appointment", set);
+                        Set<String> appointmentSet = sharedPreferenceUtil.getData("appointment", new HashSet<>());
+                        Log.e("set size", appointmentSet.size() + "");
+                        appointmentSet.add(appointmentAndParticipant);
+                        sharedPreferenceUtil.putData("appointment", appointmentSet);
 
                         finish();
                     }
