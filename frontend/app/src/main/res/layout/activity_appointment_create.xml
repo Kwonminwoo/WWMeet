@@ -80,7 +80,7 @@
                 android:id="@+id/appointment_create_num_people_text"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:hint="0"
+                android:hint="1"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:textStyle="bold"

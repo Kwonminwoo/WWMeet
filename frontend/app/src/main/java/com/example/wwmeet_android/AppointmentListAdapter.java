@@ -3,6 +3,7 @@ package com.example.wwmeet_android;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +29,14 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         private TextView dateTimeTextView;
         private TextView progressTextView;
         private ImageView progressImageView;
+        private TextView appoointmentNameTextView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             dateTimeTextView = itemView.findViewById(R.id.item_appointment_list_datetime_text);
             progressTextView = itemView.findViewById(R.id.item_appointment_list_progress_text);
             progressImageView = itemView.findViewById(R.id.item_appointment_list_progress_image);
+            appoointmentNameTextView = itemView.findViewById(R.id.item_appointment_name_text);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -77,14 +81,14 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             // 투표가 끝났다면
             progressText = "투표 진행 완료";
             circleId = R.drawable.redcircle;
-            dateTimeText = "기한: " + appointment.getDeadline();
+            dateTimeText = "약속 일: " + appointment.getAppointmentDate();
         }else{
             progressText = "투표 진행 중";
             circleId = R.drawable.greencircle;
-            dateTimeText = "약속 일: " + appointment.getDeadline();
+            dateTimeText = "기한: " + appointment.getVoteDeadline();
         }
 
-
+        holder.appoointmentNameTextView.setText(appointment.getAppointmentName());
         holder.dateTimeTextView.setText(dateTimeText);
         //String formattedLimitTime = appointment.getDeadline().format(DateTimeFormatter.ofPattern("MM-dd HH:mm"));
         holder.progressTextView.setText(progressText);

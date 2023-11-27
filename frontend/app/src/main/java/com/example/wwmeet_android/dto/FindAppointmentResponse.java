@@ -1,42 +1,37 @@
 package com.example.wwmeet_android.dto;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.time.LocalDateTime;
 
 public class FindAppointmentResponse {
-    @SerializedName("appointment_name")
-    private String appointmentNAme;
+    private String appointmentName;
 
-    @SerializedName("appointment_place")
     private String appointmentPlace;
 
-    @SerializedName("identification_code")
     private String identificationCode;
 
-    @SerializedName("participant_num")
     private int participantNum;
 
-    @SerializedName("vote_deadline")
-    private LocalDateTime deadline;
+    private String voteDeadline;
 
-    public FindAppointmentResponse(String appointmentNAme, String appointmentPlace, String identificationCode, int participantNum, LocalDateTime deadline) {
-        this.appointmentNAme = appointmentNAme;
+
+    public FindAppointmentResponse(String appointmentNAme, String appointmentPlace,
+           String identificationCode, int participantNum, String voteDeadline) {
+        this.appointmentName = appointmentNAme;
         this.appointmentPlace = appointmentPlace;
         this.identificationCode = identificationCode;
         this.participantNum = participantNum;
-        this.deadline = deadline;
+        this.voteDeadline = voteDeadline;
     }
 
     public FindAppointmentResponse() {
     }
 
-    public String getAppointmentNAme() {
-        return appointmentNAme;
+    public String getAppointmentName() {
+        return appointmentName;
     }
 
-    public void setAppointmentNAme(String appointmentNAme) {
-        this.appointmentNAme = appointmentNAme;
+    public void setAppointmentName(String appointmentName) {
+        this.appointmentName = appointmentName;
     }
 
     public String getAppointmentPlace() {
@@ -63,11 +58,12 @@ public class FindAppointmentResponse {
         this.participantNum = participantNum;
     }
 
-    public LocalDateTime getDeadline() {
-        return deadline;
+    public String getDeadline() {
+        return voteDeadline;
     }
 
-    public void setDeadline(LocalDateTime deadline) {
-        this.deadline = deadline;
+    public void setDeadline(String deadline) {
+        this.voteDeadline = deadline;
     }
+
 }
