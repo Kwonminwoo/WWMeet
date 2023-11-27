@@ -74,7 +74,6 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
     @Override
     public void onBindViewHolder(@NonNull AppointmentListAdapter.ViewHolder holder, int position) {
         FindAppointmentListResponse appointment = appointmentList.get(position);
-        Log.e("deadline", appointment.getVoteDeadline() + "");
         String progressText = "";
         int circleId = 0;
         String dateTimeText = "";
@@ -86,7 +85,6 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         }else{
             progressText = "투표 진행 중";
             circleId = R.drawable.greencircle;
-            Log.e("deadline!!", appointment.getVoteDeadline() + "123");
             dateTimeText = "기한: " + appointment.getVoteDeadline();
         }
 

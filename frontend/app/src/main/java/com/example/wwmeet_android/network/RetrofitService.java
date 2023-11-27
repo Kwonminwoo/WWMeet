@@ -16,8 +16,8 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface RetrofitService {
-    @GET("/api/appointments")
-    Call<List<FindAppointmentListResponse>> findAppointmentList();
+    @GET("/api/appointments/{id}")
+    Call<FindAppointmentResponse> findAppointmentById(@Path("id") Long id);
 
     @POST("/api/appointments/participant")
     Call<Long> addParticipantByCode(@Body AddParticipantRequest addParticipantRequest);
@@ -26,7 +26,7 @@ public interface RetrofitService {
     Call<Long> voteSchedule(@Path("id") Long id, @Body VoteScheduleRequest voteScheduleRequest);
 
     @GET("/api/appointments")
-    Call<List<FindAppointmentListResponse>> findAppointment(@Query("appointmentIdList") List<Long> appointmentIdList);
+    Call<List<FindAppointmentListResponse>> findAppointmentList(@Query("appointmentIdList") List<Long> appointmentIdList);
 
     @POST("/api/appointments")
     Call<Long> saveAppointment(@Body SaveAppointmentRequest saveAppointmentRequest);

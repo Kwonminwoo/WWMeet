@@ -11,9 +11,11 @@ public class FindAppointmentResponse {
 
     private int participantNum;
 
-    private LocalDateTime voteDeadline;
+    private String voteDeadline;
 
-    public FindAppointmentResponse(String appointmentNAme, String appointmentPlace, String identificationCode, int participantNum, LocalDateTime voteDeadline) {
+
+    public FindAppointmentResponse(String appointmentNAme, String appointmentPlace,
+           String identificationCode, int participantNum, String voteDeadline) {
         this.appointmentName = appointmentNAme;
         this.appointmentPlace = appointmentPlace;
         this.identificationCode = identificationCode;
@@ -56,11 +58,12 @@ public class FindAppointmentResponse {
         this.participantNum = participantNum;
     }
 
-    public LocalDateTime getDeadline() {
+    public String getDeadline() {
         return voteDeadline;
     }
 
-    public void setDeadline(LocalDateTime deadline) {
+    public void setDeadline(String deadline) {
         this.voteDeadline = deadline;
     }
+
 }

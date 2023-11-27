@@ -13,9 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wwmeet_android.domain.Appointment;
 import com.example.wwmeet_android.dto.FindAppointmentListResponse;
-import com.example.wwmeet_android.dto.FindAppointmentResponse;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 import com.example.wwmeet_android.network.SseEventService;
@@ -26,8 +24,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import javax.security.auth.login.LoginException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
                 if(appointmentList.get(position).isFinishVote()){
                     // 끝난 후 약속 요청
                 }else{
-                    // 끝나기 전 약속 요청
+                    Intent intent = new Intent(getApplicationContext(), AppointmentInfoBeforeActivity.class);
+                    intent.putExtra("appointmentId", appointmentList.get(position).getId());
+                    startActivity(intent);
                 }
             }
         });
@@ -69,13 +67,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 약속 만들기
-                Intent intent = new Intent(getApplicationContext(), VoteScheduleActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AppointmentCreateActivity.class);
                 startActivity(intent);
             }
-        });
-
-        enterBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
         });
 
         enterBtn.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             nameList.add(name);
         }
 
-        Call<List<FindAppointmentListResponse>> findAppointmentCall = retrofitService.findAppointment(idList);
+        Call<List<FindAppointmentListResponse>> findAppointmentCall = retrofitService.findAppointmentList(idList);
         findAppointmentCall.enqueue(new Callback<List<FindAppointmentListResponse>>() {
             @Override
             public void onResponse(Call<List<FindAppointmentListResponse>> call, Response<List<FindAppointmentListResponse>> response) {
