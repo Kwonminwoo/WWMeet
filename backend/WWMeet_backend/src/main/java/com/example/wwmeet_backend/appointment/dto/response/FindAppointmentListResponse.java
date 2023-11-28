@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Getter
-@Builder
 @NoArgsConstructor
 public class FindAppointmentListResponse {
     private Long id;
@@ -18,6 +17,7 @@ public class FindAppointmentListResponse {
         this.id = id;
     }
 
+    @Builder
     public FindAppointmentListResponse(Long id, String appointmentName, LocalDateTime voteDeadline) {
         this.id = id;
         this.appointmentName = appointmentName;

@@ -4,6 +4,7 @@ package com.example.wwmeet_backend.appointment.controller;
 import com.example.wwmeet_backend.appointment.dto.request.SaveAppointmentRequest;
 import com.example.wwmeet_backend.appointment.dto.response.FindAppointmentListResponse;
 import com.example.wwmeet_backend.appointment.dto.response.FindAppointmentResponse;
+import com.example.wwmeet_backend.appointment.dto.response.FindAppointmentVoteStatus;
 import com.example.wwmeet_backend.appointment.service.AppointmentService;
 import com.example.wwmeet_backend.participant.service.ParticipantService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,13 @@ public class AppointmentController {
     @GetMapping
     public List<FindAppointmentListResponse> findAllAppointment(@RequestParam List<Long> appointmentIdList){
         return appointmentService.findAllAppointment(appointmentIdList);
+    }
+
+    @GetMapping("/{id}/{name}/vote-status")
+    public boolean getParticipantWithVoteStatus(
+        @PathVariable("id") Long appointmentId, @PathVariable("name") String participantName){
+        System.out.println(participantName);
+        return appointmentService.getParticipantVoteStatus(appointmentId, participantName);
     }
 
 }
