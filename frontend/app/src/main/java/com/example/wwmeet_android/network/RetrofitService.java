@@ -31,4 +31,7 @@ public interface RetrofitService {
     @POST("/api/appointments")
     Call<Long> saveAppointment(@Body SaveAppointmentRequest saveAppointmentRequest);
 
+    @GET("/api/appointments/{id}/{name}/vote-status")
+    Call<Boolean> getVoteStatusOfParticipant(@Path("id") Long id, @Path("name") String name);
+
 }

@@ -14,12 +14,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wwmeet_android.dto.FindAppointmentListResponse;
+import com.example.wwmeet_android.dto.FindAppointmentResponse;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 import com.example.wwmeet_android.network.SseEventService;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -57,9 +61,42 @@ public class MainActivity extends AppCompatActivity {
                 if(appointmentList.get(position).isFinishVote()){
                     // 끝난 후 약속 요청
                 }else{
-                    Intent intent = new Intent(getApplicationContext(), AppointmentInfoBeforeActivity.class);
-                    intent.putExtra("appointmentId", appointmentList.get(position).getId());
-                    startActivity(intent);
+                    Intent intent = null;
+
+                    Call<Boolean> voteStatusCall = retrofitService.getVoteStatusOfParticipant(
+                            appointmentList.get(position).getId(), appointmentList.get(position).getName());
+                    voteStatusCall.enqueue(new Callback<Boolean>() {
+                        @Override
+                        public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                            if(!response.isSuccessful()){
+                                Toast.makeText(MainActivity.this, "투표 상태 조회에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                                try {
+                                    Log.e("투표 상태 조회에 실패했습니다.", response.errorBody().string());
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                return;
+                            }
+                            Intent intent = null;
+                            if (response.body()) {
+                                intent = new Intent(getApplicationContext(), AppointmentInfoBeforeActivity.class);
+                                intent.putExtra("appointmentId", appointmentList.get(position).getId());
+                            }else{
+                                intent = new Intent(getApplicationContext(), VoteScheduleActivity.class);
+                                intent.putExtra("appointmentId", appointmentList.get(position).getId());
+                                intent.putExtra("participantName", appointmentList.get(position).getName());
+                            }
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onFailure(Call<Boolean> call, Throwable t) {
+                            Toast.makeText(MainActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                            Log.e("서버 연결에 실패했습니다.", t.getMessage());
+                        }
+                    });
+
+
                 }
             }
         });
@@ -113,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
         Log.e("set size", appointmentSet.size() + "");
         List<Long> idList = new ArrayList<>();
         List<String> nameList = new ArrayList<>();
+
         for (String appointment : appointmentSet) {
             Log.e("appointments", appointment);
             String[] idAndName = appointment.split(" ");
@@ -133,12 +171,19 @@ public class MainActivity extends AppCompatActivity {
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
+                    return;
                 }
                 List<FindAppointmentListResponse> responseList = response.body();
                 if (responseList != null) {
+                    for (int i = 0;i < responseList.size(); i++) {
+                        FindAppointmentListResponse appointmentResponse = responseList.get(i);
+                        appointmentResponse.setName(nameList.get(i));
+                        checkVoteStatus(appointmentResponse);
+                    }
                     appointmentList = responseList;
+                    setAppointmentList();
                 }
-                setAppointmentList();
+
             }
 
             @Override
@@ -148,6 +193,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void checkVoteStatus(FindAppointmentListResponse appointmentResponse){
+        String voteStatus = sharedPreferenceUtil.getData(String.valueOf(appointmentResponse.getId()), "not voted");
+        if(voteStatus.equals("voted")){
+            appointmentResponse.setFinishVote(true);
+        }else{
+            appointmentResponse.setFinishVote(false);
+        }
     }
 
     private void setSSE(String key){
