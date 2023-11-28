@@ -1,31 +1,31 @@
 package com.example.wwmeet_android.dto;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class SaveAppointmentRequest {
-    @SerializedName("appointment_name")
+public class SaveAppointmentRequest implements Serializable {
     private String appointmentName;
 
-    @SerializedName("appointment_place")
     private String appointmentPlace;
 
-    @SerializedName("participant_num")
     private int participantNum;
 
-    @SerializedName("participant_name")
     private String participantName;
 
-    @SerializedName("vote_deadline")
-    private LocalDateTime deadline;
+    private String voteDeadline;
 
-    public SaveAppointmentRequest(String appointmentName, String appointmentPlace, int participantNum, String participantName, LocalDateTime deadline) {
+    public SaveAppointmentRequest(String appointmentName, String appointmentPlace, int participantNum, String participantName) {
         this.appointmentName = appointmentName;
         this.appointmentPlace = appointmentPlace;
         this.participantNum = participantNum;
         this.participantName = participantName;
-        this.deadline = deadline;
     }
 
     public SaveAppointmentRequest() {
@@ -63,11 +63,12 @@ public class SaveAppointmentRequest {
         this.participantName = participantName;
     }
 
-    public LocalDateTime getDeadline() {
-        return deadline;
+    public String getVoteDeadline() {
+        return voteDeadline;
     }
 
-    public void setDeadline(LocalDateTime deadline) {
-        this.deadline = deadline;
+    public void setVoteDeadline(String voteDeadline) {
+        this.voteDeadline = voteDeadline;
     }
+
 }
