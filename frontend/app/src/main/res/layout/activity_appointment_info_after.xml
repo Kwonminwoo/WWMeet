@@ -15,11 +15,13 @@
         android:orientation="vertical">
 
         <TextView
+            android:text="20 학번 졸업모임"
             android:id="@+id/appointment_info_after_name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="약속 이름 보이는 곳"
             android:layout_marginTop="50dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:textSize="35sp" />
 
         <LinearLayout
@@ -49,9 +51,15 @@
                     android:src="@drawable/place" />
 
                 <TextView
+                    android:text="두정역"
                     android:id="@+id/appointment_info_after_place_text"
                     android:layout_width="255dp"
                     android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="25dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_gravity="center" />
 
             </LinearLayout>
@@ -75,10 +83,37 @@
                     android:src="@drawable/number" />
 
                 <TextView
+                    android:id="@+id/appointment_info_before_participation_text1"
+                    android:layout_width="25dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="25dp"
+                    android:textSize="25dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="총"/>
+
+                <TextView
+                    android:text="3"
                     android:id="@+id/appointment_info_after_participation_num_text"
-                    android:layout_width="140dp"
+                    android:layout_width="20dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="2dp"
                     android:layout_height="50dp"
+                    android:textSize="30dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/appointment_info_before_participation_text2"
+                    android:layout_width="25dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:textSize="25dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="명"/>
 
                 <ImageButton
                     android:id="@+id/appointment_info_after_num_arrow"
@@ -128,9 +163,15 @@
                     android:src="@drawable/clock" />
 
                 <TextView
+                    android:text="2023-12-05 \n18:00:00 ~ 21:00:00"
                     android:id="@+id/appointment_info_after_vote_result_text1"
                     android:layout_width="290dp"
                     android:layout_height="70dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="25dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_gravity="center" />
 
             </LinearLayout>
@@ -170,9 +211,15 @@
                     android:src="@drawable/clock" />
 
                 <TextView
+                    android:text="2023-12-06 \n19:00:00 ~ 22:00:00"
                     android:id="@+id/appointment_info_after_vote_result_text2"
                     android:layout_width="290dp"
                     android:layout_height="70dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="25dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_gravity="center" />
 
             </LinearLayout>
@@ -212,10 +259,16 @@
                     android:src="@drawable/clock" />
 
                 <TextView
+                    android:text="2023-12-05 \n21:00:00 ~ 22:00:00"
                     android:id="@+id/appointment_info_after_vote_result_text3"
                     android:layout_width="290dp"
                     android:layout_height="70dp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
