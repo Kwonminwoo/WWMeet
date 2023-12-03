@@ -16,9 +16,9 @@ import java.time.LocalDateTime;
 public class SavePossibleScheduleRequest {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime startTime;
+    private LocalDateTime startDateTime;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime endTime;
+    private LocalDateTime endDateTime;
 }
