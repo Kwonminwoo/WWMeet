@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.*;
 public class VoteController {
     private final VoteService voteService;
 
-    @PostMapping("/appointment/{id}/vote")
+    @PostMapping("/appointments/{id}/vote")
     public Long voteAppointmentSchedule(@PathVariable Long id, @RequestBody SaveVoteRequest saveVoteRequest) {
+        System.out.println(saveVoteRequest.getPossibleScheduleList().get(0).getStartDateTime());
         return voteService.saveVoteSchedule(id, saveVoteRequest);
     }
 }

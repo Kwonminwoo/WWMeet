@@ -6,15 +6,13 @@ import java.util.List;
 
 public class VoteScheduleRequest {
 
-    @SerializedName("participant_name")
     private String participantName;
 
-    @SerializedName("possible_schedule")
-    private List<PossibleScheduleRequest> possibleScheduleRequestList;
+    private List<PossibleScheduleRequest> possibleScheduleList;
 
-    public VoteScheduleRequest(String participantName, List<PossibleScheduleRequest> possibleScheduleRequestList) {
+    public VoteScheduleRequest(String participantName, List<PossibleScheduleRequest> possibleScheduleList) {
         this.participantName = participantName;
-        this.possibleScheduleRequestList = possibleScheduleRequestList;
+        this.possibleScheduleList = possibleScheduleList;
     }
 
     public VoteScheduleRequest() {
@@ -28,11 +26,11 @@ public class VoteScheduleRequest {
         this.participantName = participantName;
     }
 
-    public List<PossibleScheduleRequest> getPossibleScheduleRequestList() {
-        return possibleScheduleRequestList;
+    public List<PossibleScheduleRequest> getPossibleScheduleList() {
+        return possibleScheduleList;
     }
 
-    public void setPossibleScheduleRequestList(List<PossibleScheduleRequest> possibleScheduleRequestList) {
-        this.possibleScheduleRequestList = possibleScheduleRequestList;
+    public void setPossibleScheduleRequestList(List<PossibleScheduleRequest> possibleScheduleList) {
+        this.possibleScheduleList = possibleScheduleList;
     }
 }

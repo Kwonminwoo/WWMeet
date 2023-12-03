@@ -41,4 +41,9 @@ public class SharedPreferenceUtil {
         editor.putStringSet(key, data);
         editor.commit();
     }
+
+    public void clearData(){
+        editor.clear();
+        editor.commit();
+    }
 }

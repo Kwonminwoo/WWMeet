@@ -44,7 +44,7 @@ public class VoteService {
         List<PossibleSchedule> possibleScheduleList = new ArrayList<>();
         for (SavePossibleScheduleRequest possibleScheduleRequest : saveVoteRequest.getPossibleScheduleList()) {
             PossibleSchedule savedPossibleSchedule = possibleScheduleRepository.save(
-                    PossibleSchedule.of(null, foundAppointment, possibleScheduleRequest.getStartTime(), possibleScheduleRequest.getEndTime())
+                    PossibleSchedule.of(null, foundAppointment, possibleScheduleRequest.getStartDateTime(), possibleScheduleRequest.getEndDateTime())
             );
             possibleScheduleList.add(savedPossibleSchedule);
         }
@@ -53,7 +53,7 @@ public class VoteService {
                 .map(possibleSchedule -> (Vote.of(null, foundParticipant, possibleSchedule)))
                 .forEach(voteRepository::save);
 
-        checkVoteCompleteAndSendMessage(foundAppointment);
+//        checkVoteCompleteAndSendMessage(foundAppointment);
 
         return foundAppointment.getId();
     }
