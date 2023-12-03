@@ -40,7 +40,6 @@ public class AppointmentService {
     }
 
     public List<FindAppointmentListResponse> findAllAppointment(List<Long> appointmentIdList) {
-        System.out.println(appointmentIdList.get(0));
         return appointmentIdList.stream()
                 .map(id -> appointmentRepository.findById(id).orElseThrow(NoSuchElementException::new))
                 .map(foundAppointment -> FindAppointmentListResponse.builder()
