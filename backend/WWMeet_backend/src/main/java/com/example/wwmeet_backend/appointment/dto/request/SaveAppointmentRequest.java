@@ -28,6 +28,7 @@ public class SaveAppointmentRequest {
 
     private String createIdentificationCode(){
         UUID identificationCodeUUID = UUID.randomUUID();
-        return identificationCodeUUID.toString();
+        String identificationCode = identificationCodeUUID.toString().substring(0, 15);
+        return identificationCode;
     }
 }

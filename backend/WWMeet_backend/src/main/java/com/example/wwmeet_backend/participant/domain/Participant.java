@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @Getter
 
 public class Participant {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Setter
@@ -20,14 +20,13 @@ public class Participant {
     protected Participant() {
     }
 
-    private Participant (Long id, Appointment appointment, String participantName){
-        this.id = id;
+    private Participant (Appointment appointment, String participantName){
         this.appointment = appointment;
         this.participantName = participantName;
     }
 
-    public static Participant of(Long id, Appointment appointment, String participantName) {
-        return new Participant(id, appointment, participantName);
+    public static Participant of(Appointment appointment, String participantName) {
+        return new Participant(appointment, participantName);
     }
 
 }
