@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 public class PossibleSchedule {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
