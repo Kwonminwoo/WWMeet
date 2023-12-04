@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @Getter
 
 public class Participant {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Setter
