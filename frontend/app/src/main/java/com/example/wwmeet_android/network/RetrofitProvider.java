@@ -10,15 +10,17 @@ public class RetrofitProvider {
     private Gson gson;
     private RetrofitService retrofitService;
 
-    private final String BASE_URL = "http//localhost:8080";
+    private final String BASE_URL = "http://10.0.2.2:8080";
     public RetrofitProvider() {
-        gson = new GsonBuilder().setLenient().create();
+        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         retrofitService = retrofit.create(RetrofitService.class);
     }
+
 
     public RetrofitService getService(){
         return retrofitService;

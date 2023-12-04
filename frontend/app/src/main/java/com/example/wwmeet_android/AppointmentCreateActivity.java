@@ -10,13 +10,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wwmeet_android.dto.SaveAppointmentRequest;
+
 public class AppointmentCreateActivity extends AppCompatActivity {
 
     EditText nameEdit,usernameEdit,placeEdit;
     Button createBtn;
     ImageButton addBtn, minusBtn;
     TextView numText;
-    int count = 0;
+    int count = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +34,9 @@ public class AppointmentCreateActivity extends AppCompatActivity {
         minusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count--;
+                if(count > 1){
+                    count--;
+                }
                 numText.setText(count+"");
             }
         });
@@ -40,6 +44,9 @@ public class AppointmentCreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SetVoteDeadlineActivity.class);
+                SaveAppointmentRequest saveAppointmentRequest = new SaveAppointmentRequest(
+                        nameEdit.getText().toString(), placeEdit.getText().toString(), count, usernameEdit.getText().toString());
+                intent.putExtra("appointment", saveAppointmentRequest);
                 startActivity(intent);
             }
         });
@@ -52,7 +59,7 @@ public class AppointmentCreateActivity extends AppCompatActivity {
         addBtn = findViewById(R.id.appointment_create_add_btn);
         minusBtn = findViewById(R.id.appointment_create_minus_btn);
         numText = findViewById(R.id.appointment_create_num_people_text);
-        numText.setText(count+"");
+        numText.setText(String.valueOf(count));
     }
 }
 

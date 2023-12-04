@@ -36,7 +36,7 @@
             android:hint="  코드를  입력해주세요." />
 
         <Button
-            android:id="@+id/entrance_create_btn"
+            android:id="@+id/entrance_confirm_btn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/button_design"
