@@ -145,7 +145,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/delete_btn"/>
+                    android:src="@drawable/delete"/>
 
             </LinearLayout>
 
@@ -180,7 +180,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/delete_btn"/>
+                    android:src="@drawable/delete"/>
 
             </LinearLayout>
 

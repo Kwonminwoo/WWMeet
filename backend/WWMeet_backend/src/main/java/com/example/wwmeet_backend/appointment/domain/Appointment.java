@@ -33,7 +33,8 @@ public class Appointment {
     protected Appointment() {
     }
 
-    private Appointment(Long id, String appointmentName, String appointmentPlace, String identificationCode, int participantNum, LocalDateTime voteDeadline) {
+    private Appointment(Long id, String appointmentName, String appointmentPlace,
+        String identificationCode, int participantNum, LocalDateTime voteDeadline) {
         this.id = id;
         this.appointmentName = appointmentName;
         this.appointmentPlace = appointmentPlace;
@@ -42,7 +43,8 @@ public class Appointment {
         this.voteDeadline = voteDeadline;
     }
 
-    public static Appointment of(Long id, String appointmentName, String appointmentPlace, String identificationCode, int participantNum, LocalDateTime voteDeadline){
+    public static Appointment of(Long id, String appointmentName, String appointmentPlace,
+        String identificationCode, int participantNum, LocalDateTime voteDeadline){
         return new Appointment(id, appointmentName, appointmentPlace, identificationCode, participantNum, voteDeadline);
     }
 

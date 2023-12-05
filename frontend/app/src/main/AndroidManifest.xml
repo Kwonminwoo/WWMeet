@@ -20,22 +20,22 @@
             android:name=".CreateAppointmentActivity"
             android:exported="false" />
         <activity
-            android:name=".AppointmentCreateActivity"
+            android:name=".appointment.create.AppointmentCreateActivity"
             android:exported="false" />
         <activity
-            android:name=".SetVoteDeadlineActivity"
+            android:name=".appointment.create.SetVoteDeadlineActivity"
             android:exported="false" />
         <activity
-            android:name=".EntranceAppointmentActivity"
+            android:name=".appointment.entrance.EntranceAppointmentActivity"
             android:exported="false" />
         <activity
-            android:name=".AppointmentInfoBeforeActivity"
+            android:name=".appointment.info.AppointmentInfoBeforeActivity"
             android:exported="false" />
         <activity
-            android:name=".AppointmentInfoAfterActivity"
+            android:name=".appointment.info.AppointmentInfoAfterActivity"
             android:exported="false" />
         <activity
-            android:name=".VoteScheduleActivity"
+            android:name=".appointment.vote.VoteScheduleActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

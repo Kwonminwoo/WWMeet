@@ -46,7 +46,7 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center"
-        android:layout_weight="5"
+        android:layout_weight="8"
         android:src="@drawable/mainlogo1" />
 
     <View
@@ -82,7 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="약속  만들기"
-        android:layout_weight="0.5"
+        android:layout_weight="0.1"
         android:layout_marginBottom="20dp"/>
 
 </LinearLayout>

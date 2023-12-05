@@ -54,11 +54,6 @@ public class AppointmentService {
                 .collect(Collectors.toList());
     }
 
-//    public Appointment findByIdentificationCode(String identificationCode){
-//        return appointmentRepository.findByIdentificationCode(identificationCode)
-//                .orElseThrow(() -> new NoSuchElementException());
-//    }
-
     public boolean getParticipantVoteStatus(Long appointmentId, String participantName){
         Appointment appointment = appointmentRepository.findById(appointmentId).orElseThrow(NoSuchElementException::new);
         List<Participant> participantList = appointment.getParticipantList();
@@ -72,5 +67,10 @@ public class AppointmentService {
             }
         }
         return false;
+    }
+
+    public Long findAppointmentByCode(String code) {
+        Appointment appointment = appointmentRepository.findByIdentificationCode(code).orElseThrow(RuntimeException::new);
+        return appointment.getId();
     }
 }

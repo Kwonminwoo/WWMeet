@@ -20,12 +20,12 @@ public class ParticipantService {
 
     public Long addParticipantByIdentificationCode(AddParticipantRequest addParticipantRequest) {
         Appointment foundAppointment = appointmentRepository.findByIdentificationCode(addParticipantRequest.getIdentificationCode()).orElseThrow(NoSuchElementException::new);
-        participantRepository.save(Participant.of(null, foundAppointment, addParticipantRequest.getParticipantName()));
+        participantRepository.save(Participant.of(foundAppointment, addParticipantRequest.getParticipantName()));
         return foundAppointment.getId();
     }
 
     public void addParticipantByAppointmentId(String participantName, Long id){
-        Participant participant = Participant.of(id, appointmentRepository.findById(id).orElseThrow(NoSuchElementException::new), participantName);
+        Participant participant = Participant.of(appointmentRepository.findById(id).orElseThrow(NoSuchElementException::new), participantName);
         participantRepository.save(participant);
     }
 

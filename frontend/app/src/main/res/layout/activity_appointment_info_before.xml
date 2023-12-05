@@ -42,10 +42,9 @@
                 android:layout_width="225dp"
                 android:layout_height="45dp"
                 android:layout_marginTop="2dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="15dp"
                 android:textSize="25dp"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 android:layout_gravity="center" />
 
         </LinearLayout>
@@ -76,7 +75,6 @@
                 android:layout_marginLeft="25dp"
                 android:textSize="25dp"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 android:text="총"/>
 
             <TextView
@@ -88,7 +86,6 @@
                 android:layout_gravity="center"
                 android:textSize="30dp"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 android:text=""/>
 
             <TextView
@@ -98,7 +95,6 @@
                 android:layout_gravity="center"
                 android:textSize="25dp"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 android:text="명"/>
 
             <ImageButton
@@ -137,9 +133,8 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="15dp"
-                android:textSize="27dp"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textSize="27dp" />
 
 
         </LinearLayout>
@@ -154,12 +149,11 @@
             <TextView
                 android:id="@+id/appointment_info_before_invite_link_text"
                 android:layout_width="290dp"
-                android:layout_height="55dp"
+                android:layout_height="45dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="50dp"
                 android:textSize="27dp"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 android:background="@drawable/background_box2" />
 
             <ImageButton
