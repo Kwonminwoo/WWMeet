@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wwmeet_android.appointment.create.AppointmentCreateActivity;
 import com.example.wwmeet_android.appointment.entrance.EntranceAppointmentActivity;
+import com.example.wwmeet_android.appointment.info.AppointmentInfoAfterActivity;
 import com.example.wwmeet_android.appointment.info.AppointmentInfoBeforeActivity;
 import com.example.wwmeet_android.appointment.info.AppointmentListAdapter;
 import com.example.wwmeet_android.appointment.vote.VoteScheduleActivity;
@@ -58,11 +59,11 @@ public class MainActivity extends AppCompatActivity {
         listAdapter.setItemClickListener(new AppointmentListAdapter.OnItemClickEventListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if(appointmentList.get(position).isFinishVote()){
+                if(appointmentList.get(position).isVoteFinish()){
                     // 끝난 후 약속 요청
-//                    Intent intent = new Intent(getApplicationContext(), AppointmentInfoAfterActivity.class);
-//
-//                    startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(), AppointmentInfoAfterActivity.class);
+
+                    startActivity(intent);
                 }else{
                     Call<Boolean> voteStatusCall = retrofitService.getVoteStatusOfParticipant(
                             appointmentList.get(position).getId(), appointmentList.get(position).getName());
@@ -167,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
                     for (int i = 0;i < responseList.size(); i++) {
                         FindAppointmentListResponse appointmentResponse = responseList.get(i);
                         appointmentResponse.setName(myAppointmentList.get(i).getName());
-                        checkVoteStatus(appointmentResponse);
                     }
                     appointmentList = responseList;
                     setAppointmentList();
@@ -182,9 +182,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void checkVoteStatus(FindAppointmentListResponse appointmentResponse){
     }
 
     private void setSSE(String key){

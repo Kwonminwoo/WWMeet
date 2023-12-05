@@ -73,7 +73,7 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
         String progressText = "";
         int circleId = 0;
         String dateTimeText = "";
-        if(appointment.isFinishVote()){
+        if(appointment.isVoteFinish()){
             // 투표가 끝났다면
             progressText = "투표 진행 완료";
             circleId = R.drawable.redcircle;

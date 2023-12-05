@@ -12,16 +12,18 @@ public class FindAppointmentListResponse {
     private Long id;
     private String appointmentName;
     private LocalDateTime voteDeadline;
+    private boolean voteFinish;
 
     public FindAppointmentListResponse(Long id) {
         this.id = id;
     }
 
     @Builder
-    public FindAppointmentListResponse(Long id, String appointmentName, LocalDateTime voteDeadline) {
+    public FindAppointmentListResponse(Long id, String appointmentName, LocalDateTime voteDeadline,
+        boolean voteFinish) {
         this.id = id;
         this.appointmentName = appointmentName;
         this.voteDeadline = voteDeadline;
+        this.voteFinish = voteFinish;
     }
-
 }

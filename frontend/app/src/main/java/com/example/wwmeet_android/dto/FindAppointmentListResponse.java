@@ -8,16 +8,13 @@ public class FindAppointmentListResponse {
     private Long id;
     private String appointmentName;
     private String voteDeadline;
-
-    @Expose(serialize = false, deserialize = false)
-    private boolean isFinishVote;
+    private boolean voteFinish;
 
     @Expose(serialize = false, deserialize = false)
     private String participantName;
 
     @Expose(serialize = false, deserialize = false)
     private LocalDateTime appointmentDate;
-
 
     public FindAppointmentListResponse(Long id, String appointmentName, String voteDeadline) {
         this.id = id;
@@ -52,14 +49,6 @@ public class FindAppointmentListResponse {
         this.voteDeadline = voteDeadline;
     }
 
-    public boolean isFinishVote() {
-        return isFinishVote;
-    }
-
-    public void setFinishVote(boolean finishVote) {
-        isFinishVote = finishVote;
-    }
-
     public void setName(String name){
         this.participantName = name;
     }
@@ -74,5 +63,13 @@ public class FindAppointmentListResponse {
 
     public void setAppointmentDate(LocalDateTime appointmentDate){
         this.appointmentDate = appointmentDate;
+    }
+
+    public boolean isVoteFinish() {
+        return voteFinish;
+    }
+
+    public void setVoteFinish(boolean voteFinish) {
+        this.voteFinish = voteFinish;
     }
 }
