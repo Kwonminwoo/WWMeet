@@ -43,4 +43,9 @@ public class AppointmentController {
         return appointmentService.getParticipantVoteStatus(appointmentId, participantName);
     }
 
+    @GetMapping("/code")
+    public Long findAppointmentByCode(@RequestParam String code){
+        return appointmentService.findAppointmentByCode(code);
+    }
+
 }

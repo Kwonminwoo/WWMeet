@@ -68,4 +68,9 @@ public class AppointmentService {
         }
         return false;
     }
+
+    public Long findAppointmentByCode(String code) {
+        Appointment appointment = appointmentRepository.findByIdentificationCode(code).orElseThrow(RuntimeException::new);
+        return appointment.getId();
+    }
 }
