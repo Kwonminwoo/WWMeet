@@ -1,4 +1,4 @@
-package com.example.wwmeet_android;
+package com.example.wwmeet_android.appointment.create;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,12 +6,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.app.DatePickerDialog;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wwmeet_android.R;
+import com.example.wwmeet_android.appointment.info.AppointmentInfoBeforeActivity;
 import com.example.wwmeet_android.dto.SaveAppointmentRequest;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
@@ -30,7 +31,6 @@ public class SetVoteDeadlineActivity extends AppCompatActivity {
     TimePicker timePicker;
     Button confirmBtn;
     private RetrofitService retrofitService;
-    private SharedPreferenceUtil sharedPreferenceUtil;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +56,6 @@ public class SetVoteDeadlineActivity extends AppCompatActivity {
                                 throw new RuntimeException(e);
                             }
                         }
-                        String appointmentAndParticipant = response.body() + " " + appointment.getParticipantName();
-                        Set<String> appointmentSet = sharedPreferenceUtil.getData("appointment", new HashSet<>());
-                        appointmentSet.add(appointmentAndParticipant);
 
                         Intent intent = new Intent(getApplicationContext(), AppointmentInfoBeforeActivity.class);
                         intent.putExtra("appointmentId", response.body());
@@ -92,7 +89,6 @@ public class SetVoteDeadlineActivity extends AppCompatActivity {
 
         RetrofitProvider retrofitProvider = new RetrofitProvider();
         retrofitService = retrofitProvider.getService();
-        sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
     }
 }
 

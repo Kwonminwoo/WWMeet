@@ -1,4 +1,4 @@
-package com.example.wwmeet_android;
+package com.example.wwmeet_android.appointment.info;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wwmeet_android.MainActivity;
+import com.example.wwmeet_android.R;
 import com.example.wwmeet_android.dto.FindAppointmentResponse;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;

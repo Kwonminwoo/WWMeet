@@ -13,20 +13,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wwmeet_android.appointment.create.AppointmentCreateActivity;
+import com.example.wwmeet_android.appointment.entrance.EntranceAppointmentActivity;
 import com.example.wwmeet_android.appointment.info.AppointmentInfoAfterActivity;
+import com.example.wwmeet_android.appointment.info.AppointmentInfoBeforeActivity;
+import com.example.wwmeet_android.appointment.info.AppointmentListAdapter;
+import com.example.wwmeet_android.appointment.vote.VoteScheduleActivity;
 import com.example.wwmeet_android.domain.MyAppointment;
 import com.example.wwmeet_android.dto.FindAppointmentListResponse;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 import com.example.wwmeet_android.network.SseEventService;
-import com.example.wwmeet_android.util.SharedPreferenceUtil;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,10 +41,9 @@ public class MainActivity extends AppCompatActivity {
     Button createApmBtn;
     List<FindAppointmentListResponse> appointmentList = new ArrayList<>();
     private RetrofitService retrofitService;
-    SharedPreferenceUtil sharedPreferenceUtil;
     ImageView mainLogo;
     ImageView smallLogo;
-    com.example.wwmeet_android.AppointmentListAdapter listAdapter = new com.example.wwmeet_android.AppointmentListAdapter();
+    AppointmentListAdapter listAdapter = new AppointmentListAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        listAdapter.setItemClickListener(new com.example.wwmeet_android.AppointmentListAdapter.OnItemClickEventListener() {
+        listAdapter.setItemClickListener(new AppointmentListAdapter.OnItemClickEventListener() {
             @Override
             public void onItemClick(View view, int position) {
                 appointmentList.get(position).setFinishVote(true); // fake
@@ -81,10 +82,10 @@ public class MainActivity extends AppCompatActivity {
                             }
                             Intent intent = null;
                             if (response.body()) {
-                                intent = new Intent(getApplicationContext(), com.example.wwmeet_android.AppointmentInfoBeforeActivity.class);
+                                intent = new Intent(getApplicationContext(), AppointmentInfoBeforeActivity.class);
                                 intent.putExtra("appointmentId", appointmentList.get(position).getId());
                             }else{
-                                intent = new Intent(getApplicationContext(), com.example.wwmeet_android.VoteScheduleActivity.class);
+                                intent = new Intent(getApplicationContext(), VoteScheduleActivity.class);
                                 intent.putExtra("appointmentId", appointmentList.get(position).getId());
                                 intent.putExtra("participantName", appointmentList.get(position).getName());
                             }
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 약속 만들기
-                Intent intent = new Intent(getApplicationContext(), com.example.wwmeet_android.AppointmentCreateActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AppointmentCreateActivity.class);
                 startActivity(intent);
             }
         });
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 입장하기
-                Intent intent = new Intent(getApplicationContext(), com.example.wwmeet_android.EntranceAppointmentActivity.class);
+                Intent intent = new Intent(getApplicationContext(), EntranceAppointmentActivity.class);
                 startActivity(intent);
             }
         });
@@ -137,14 +138,11 @@ public class MainActivity extends AppCompatActivity {
         appointmentListBox = findViewById(R.id.main_apm_list_box);
         enterBtn = findViewById(R.id.home_enter_appoint_btn);
         createApmBtn = findViewById(R.id.home_create_appoint_btn);
-        sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
         mainLogo = findViewById(R.id.main_logo_img);
         smallLogo = findViewById(R.id.main_logo_small_img);
 
         RetrofitProvider retrofitProvider = new RetrofitProvider();
         retrofitService = retrofitProvider.getService();
-
-        sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
     }
 
     private void getAppointmentList(){
@@ -190,12 +188,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkVoteStatus(FindAppointmentListResponse appointmentResponse){
-        String voteStatus = sharedPreferenceUtil.getData(String.valueOf(appointmentResponse.getId()), "not voted");
-        if(voteStatus.equals("voted")){
-            appointmentResponse.setFinishVote(true);
-        }else{
-            appointmentResponse.setFinishVote(false);
-        }
     }
 
     private void setSSE(String key){

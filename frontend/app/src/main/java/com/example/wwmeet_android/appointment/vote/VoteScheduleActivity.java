@@ -1,4 +1,4 @@
-package com.example.wwmeet_android;
+package com.example.wwmeet_android.appointment.vote;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wwmeet_android.R;
+import com.example.wwmeet_android.appointment.info.AppointmentInfoBeforeActivity;
 import com.example.wwmeet_android.dto.PossibleScheduleRequest;
 import com.example.wwmeet_android.dto.VoteScheduleRequest;
 import com.example.wwmeet_android.network.RetrofitProvider;
@@ -39,7 +41,6 @@ public class VoteScheduleActivity extends AppCompatActivity {
     private LinearLayout mainBox;
 
     private RetrofitService retrofitService;
-    private SharedPreferenceUtil sharedPreferenceUtil;
 
     private LinearLayout dateTimeBox;
     private LinearLayout dateTimeBox2;
@@ -158,7 +159,6 @@ public class VoteScheduleActivity extends AppCompatActivity {
         RetrofitProvider retrofitProvider = new RetrofitProvider();
         retrofitService = retrofitProvider.getService();
 
-        sharedPreferenceUtil = new SharedPreferenceUtil(this);
     }
 
     private void setNowDate(){
@@ -230,7 +230,6 @@ public class VoteScheduleActivity extends AppCompatActivity {
     }
 
     private void setVoteStatus(){
-        sharedPreferenceUtil.putData(String.valueOf(nowAppointmentId), "voted");
     }
 }
 

@@ -1,6 +1,5 @@
-package com.example.wwmeet_android;
+package com.example.wwmeet_android.appointment.entrance;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wwmeet_android.R;
 import com.example.wwmeet_android.dto.AddParticipantRequest;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
@@ -27,7 +27,6 @@ public class EntranceAppointmentActivity extends AppCompatActivity {
     EditText nameEdit,codeEdit;
     Button confirmBtn;
     private RetrofitService retrofitService;
-    private SharedPreferenceUtil sharedPreferenceUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +53,6 @@ public class EntranceAppointmentActivity extends AppCompatActivity {
                             return;
                         }
                         Long appointmentId = response.body();
-                        String appointmentAndParticipant = appointmentId + " " + nameEdit.getText().toString();
-
-                        Set<String> appointmentSet = sharedPreferenceUtil.getData("appointment", new HashSet<>());
-                        Log.e("set size", appointmentSet.size() + "");
-                        appointmentSet.add(appointmentAndParticipant);
-                        sharedPreferenceUtil.putData("appointment", appointmentSet);
 
                         finish();
                     }
@@ -79,7 +72,6 @@ public class EntranceAppointmentActivity extends AppCompatActivity {
         codeEdit = findViewById(R.id.entrance_code_edit);
         confirmBtn = findViewById(R.id.entrance_confirm_btn);
 
-        sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
         RetrofitProvider retrofitProvider = new RetrofitProvider();
         retrofitService = retrofitProvider.getService();
     }
