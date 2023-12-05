@@ -85,7 +85,7 @@ public class AppointmentService {
         return appointment.getId();
     }
 
-    private boolean checkVoteState(Appointment appointment){
+    public boolean checkVoteState(Appointment appointment){
         List<Participant> participantList = appointment.getParticipantList();
         if(participantList.size() != appointment.getParticipantNum()){
             return false;
