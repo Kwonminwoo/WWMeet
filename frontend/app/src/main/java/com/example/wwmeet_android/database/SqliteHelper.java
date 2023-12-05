@@ -1,4 +1,4 @@
-package com.example.wwmeet_android;
+package com.example.wwmeet_android.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -29,7 +29,6 @@ public class SqliteHelper extends SQLiteOpenHelper {
                 "name text)";
 
         sqLiteDatabase.execSQL(initSql);
-
     }
 
     @Override
@@ -39,29 +38,4 @@ public class SqliteHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void saveMyAppointment(MyAppointment myAppointment){
-        SQLiteDatabase writableDatabase = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put("appointmentId", myAppointment.getAppointmentId());
-        cv.put("name", myAppointment.getName());
-        Log.e(myAppointment.getName(), myAppointment.getAppointmentId() + "");
-
-        writableDatabase.insert(TABLE_NAME, null, cv);
-    }
-
-    public List<MyAppointment> findAllMyAppointment(){
-        List<MyAppointment> resultList = new ArrayList<>();
-        SQLiteDatabase readableDatabase = this.getReadableDatabase();
-        Cursor cursor = readableDatabase.query(TABLE_NAME, null, null, null, null, null, null);
-
-        while (cursor.moveToNext()){
-            MyAppointment myAppointment = new MyAppointment(cursor.getLong(1),  cursor.getString(2));
-            resultList.add(myAppointment);
-        }
-        return resultList;
-    }
-
-    public void clearAllData(){
-        this.getWritableDatabase().execSQL("delete from " + TABLE_NAME);
-    }
 }

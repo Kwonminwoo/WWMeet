@@ -11,16 +11,16 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wwmeet_android.util.LocalDatabaseUtil;
 import com.example.wwmeet_android.R;
 import com.example.wwmeet_android.appointment.info.AppointmentInfoBeforeActivity;
+import com.example.wwmeet_android.domain.MyAppointment;
 import com.example.wwmeet_android.dto.SaveAppointmentRequest;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,9 +56,15 @@ public class SetVoteDeadlineActivity extends AppCompatActivity {
                                 throw new RuntimeException(e);
                             }
                         }
+                        Long appointmentId = response.body();
+
+                        // local db에 저장
+                        MyAppointment myAppointment = new MyAppointment(appointmentId, appointment.getParticipantName());
+                        LocalDatabaseUtil database = new LocalDatabaseUtil(getApplicationContext());
+                        database.saveMyAppointment(myAppointment);
 
                         Intent intent = new Intent(getApplicationContext(), AppointmentInfoBeforeActivity.class);
-                        intent.putExtra("appointmentId", response.body());
+                        intent.putExtra("appointmentId", appointmentId);
                         startActivity(intent);
                         finish();
                     }

@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wwmeet_android.appointment.create.AppointmentCreateActivity;
 import com.example.wwmeet_android.appointment.entrance.EntranceAppointmentActivity;
-import com.example.wwmeet_android.appointment.info.AppointmentInfoAfterActivity;
 import com.example.wwmeet_android.appointment.info.AppointmentInfoBeforeActivity;
 import com.example.wwmeet_android.appointment.info.AppointmentListAdapter;
 import com.example.wwmeet_android.appointment.vote.VoteScheduleActivity;
@@ -24,6 +23,7 @@ import com.example.wwmeet_android.dto.FindAppointmentListResponse;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 import com.example.wwmeet_android.network.SseEventService;
+import com.example.wwmeet_android.util.LocalDatabaseUtil;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -54,18 +54,16 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        // 리스트 클릭하면 -> 투표 했는지 체크 후 정보 화면으로 넘어가야 함
         listAdapter.setItemClickListener(new AppointmentListAdapter.OnItemClickEventListener() {
             @Override
             public void onItemClick(View view, int position) {
-                appointmentList.get(position).setFinishVote(true); // fake
                 if(appointmentList.get(position).isFinishVote()){
                     // 끝난 후 약속 요청
-                    Intent intent = new Intent(getApplicationContext(), AppointmentInfoAfterActivity.class);
-
-                    startActivity(intent);
+//                    Intent intent = new Intent(getApplicationContext(), AppointmentInfoAfterActivity.class);
+//
+//                    startActivity(intent);
                 }else{
-                    Intent intent = null;
-
                     Call<Boolean> voteStatusCall = retrofitService.getVoteStatusOfParticipant(
                             appointmentList.get(position).getId(), appointmentList.get(position).getName());
                     voteStatusCall.enqueue(new Callback<Boolean>() {
@@ -128,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("resume", "resume");
         appointmentList.clear();
         getAppointmentList();
     }
@@ -146,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getAppointmentList(){
-        SqliteHelper database = new SqliteHelper(getApplicationContext(), "appointmentDB", null, 1);
+        LocalDatabaseUtil database = new LocalDatabaseUtil(getApplicationContext());
 
         List<MyAppointment> myAppointmentList = database.findAllMyAppointment();
 
