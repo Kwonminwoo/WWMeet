@@ -39,7 +39,7 @@ public class VoteService {
     private final AppointmentRepository appointmentRepository;
     private final SseConnectionPool<String, UserSseConnection> sseConnectionPool;
     private final AppointmentService appointmentService;
-    private final AppointmentDateRepository appointmentDateRepository;
+    private final AppointmentDateService appointmentDateService;
 
     public Long saveVoteSchedule(Long id, SaveVoteRequest saveVoteRequest) {
         Appointment foundAppointment = appointmentRepository.findById(id).orElseThrow(NoSuchElementException::new);
@@ -56,11 +56,17 @@ public class VoteService {
 
         possibleScheduleList.stream()
                 .map(possibleSchedule -> (Vote.of(null, foundParticipant, possibleSchedule)))
-                .forEach(voteRepository::save);
+                .forEach(voteRepository::saveAndFlush);
 
-
+        checkVoteFinishAndSetAppointmentDate(foundAppointment);
 
         return foundAppointment.getId();
+    }
+
+    public void checkVoteFinishAndSetAppointmentDate(Appointment appointment){
+        if(appointmentService.checkVoteState(appointment)){
+            appointmentDateService.setAppointmentDate(appointment);
+        }
     }
 
     public void checkVoteCompleteAndSendMessage(Appointment appointment){
@@ -82,10 +88,4 @@ public class VoteService {
         }
     }
 
-    public void checkVoteFinishAndSetAppointmentDate(Appointment appointment){
-        if(appointmentService.checkVoteState(appointment)){
-            // 완료
-
-        }
-    }
 }
