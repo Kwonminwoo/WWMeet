@@ -1,9 +1,12 @@
 package com.example.wwmeet_android.appointment.vote;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
@@ -14,6 +17,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.wwmeet_android.R;
 import com.example.wwmeet_android.appointment.info.AppointmentInfoBeforeActivity;
@@ -24,6 +28,7 @@ import com.example.wwmeet_android.network.RetrofitService;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,36 +44,28 @@ public class VoteScheduleActivity extends AppCompatActivity {
     Button voteBtn;
     ImageButton scheduleAddBtn;
     private LinearLayout mainBox;
-
     private RetrofitService retrofitService;
-
-    private LinearLayout dateTimeBox;
-    private LinearLayout dateTimeBox2;
-    private TextView dateTimeText;
-    private TextView dateTimeText2;
-    private int dateTimeId = 1;
-    private ImageView deleteBtn;
-    private ImageView deleteBtn2;
-
     private List<PossibleScheduleRequest> voteDateTimeList = new ArrayList<>();
-
-    private List<Integer> boxIdList = new ArrayList<>();
-    private List<Integer> dateTimeIdList = new ArrayList<>();
-
     private long nowAppointmentId;
+
+    private List<TextView> dateTimeTextList = new ArrayList<>();
+    private TextView nowDateTimeTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote_schedule);
         init();
+        setNewDateBox();
         setNowDate();
+
         voteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVoteList();
-                setVoteStatus();
-                voteScheduleTime();
+                if(checkTimeRange()){
+                    setVoteList();
+                    voteScheduleTime();
+                }
             }
         });
 
@@ -83,7 +80,9 @@ public class VoteScheduleActivity extends AppCompatActivity {
         scheduleAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addDateTime();
+                if(checkTimeRange()){
+                    addDateTime();
+                }
             }
         });
 
@@ -103,12 +102,20 @@ public class VoteScheduleActivity extends AppCompatActivity {
 
 
     }
+    private boolean checkTimeRange(){
+        LocalTime startTime = LocalTime.of(startTimePicker.getHour(), 0, 0);
+        LocalTime endTime = LocalTime.of(endTimePicker.getHour(), 0, 0);
+        if(endTime.isAfter(startTime)){
+            return true;
+        }
+        Toast.makeText(VoteScheduleActivity.this, "종료 시간과 시작 시간은 최소 1시간 이상 차이나야 합니다.", Toast.LENGTH_SHORT).show();
+        return false;
+    }
     private LocalDateTime voteScheduleTime(){
         Intent intent = getIntent();
         long appointmentId = intent.getLongExtra("appointmentId", 0);
         nowAppointmentId = appointmentId;
         String participantName = intent.getStringExtra("participantName");
-        Log.e("participant", participantName);
 
         VoteScheduleRequest voteScheduleRequest = new VoteScheduleRequest(participantName, voteDateTimeList);
 
@@ -147,89 +154,135 @@ public class VoteScheduleActivity extends AppCompatActivity {
         datePicker = findViewById(R.id.vote_schedule_datePicker);
         startTimePicker = findViewById(R.id.vote_schedule_start_timepicker);
         endTimePicker = findViewById(R.id.vote_schedule_end_timepicker);
-        dateTimeText = findViewById(R.id.vote_schedule_dateTime);
-        dateTimeBox = findViewById(R.id.vote_schedule_dateTime_box);
-        deleteBtn = findViewById(R.id.vote_schedule_delete_btn);
         mainBox = findViewById(R.id.vote_schedule_main_box);
-
-        dateTimeBox2 = findViewById(R.id.vote_schedule_dateTime_box2);
-        dateTimeText2 = findViewById(R.id.vote_schedule_dateTime2);
-        deleteBtn2 = findViewById(R.id.vote_schedule_delete_btn2);
 
         RetrofitProvider retrofitProvider = new RetrofitProvider();
         retrofitService = retrofitProvider.getService();
-
     }
 
     private void setNowDate(){
-        String nowDate = datePicker.getYear() + " - " + (datePicker.getMonth() + 1) + " - " + datePicker.getDayOfMonth();
-        String nowStartTime = startTimePicker.getHour() + " : " + startTimePicker.getMinute();
-        String nowEndTime = endTimePicker.getHour() + " : " + endTimePicker.getMinute();
-        if (dateTimeId == 1) {
-            dateText.setText(nowDate);
-            dateTimeText.setText(nowDate + "  /  " + nowStartTime + "  ~  " + nowEndTime);
+        String nowDate = "";
+        if(datePicker.getDayOfMonth() < 10){
+            nowDate = datePicker.getYear() + "년 " + (datePicker.getMonth() + 1) + "월 0" + datePicker.getDayOfMonth() + "일";
+            if(datePicker.getMonth() + 1 < 10){
+                nowDate = datePicker.getYear() + "년 0" + (datePicker.getMonth() + 1) + "월 0" + datePicker.getDayOfMonth() + "일";
+            }else{
+                nowDate = datePicker.getYear() + "년 " + (datePicker.getMonth() + 1) + "월 0" + datePicker.getDayOfMonth() + "일";
+            }
         }else{
-            dateTimeText2.setText(nowDate + "  /  " + nowStartTime + "  ~  " + nowEndTime);
+            nowDate = datePicker.getYear() + "년 " + (datePicker.getMonth() + 1) + "월 " + datePicker.getDayOfMonth() + "일";
+            if(datePicker.getMonth() + 1 < 10){
+                nowDate = datePicker.getYear() + "년 0" + (datePicker.getMonth() + 1) + "월 " + datePicker.getDayOfMonth() + "일";
+            }else{
+                nowDate = datePicker.getYear() + "년 " + (datePicker.getMonth() + 1) + "월 " + datePicker.getDayOfMonth() + "일";
+            }
         }
+
+        dateText.setText(nowDate);
+
+        String nowStartTime = startTimePicker.getHour() + "시";
+        if(startTimePicker.getHour() < 10){
+            nowStartTime = "0" + startTimePicker.getHour() + "시";
+        }else{
+            nowStartTime = startTimePicker.getHour() + "시";
+        }
+
+        String nowEndTime = endTimePicker.getHour() + "시";
+        if (endTimePicker.getHour() < 10) {
+            nowEndTime = "0" + endTimePicker.getHour() + "시";
+        }else{
+            nowEndTime = endTimePicker.getHour() + "시";
+        }
+        nowDateTimeTextView.setText(nowDate + "   " + nowStartTime + "  ~  " + nowEndTime);
     }
 
     private void addDateTime(){
-        dateTimeId++;
-        dateTimeBox2.setVisibility(View.VISIBLE);
+        setNewDateBox();
         setNowDate();
-        setVoteList();
+    }
 
-//        LinearLayout box = new LinearLayout(this);
-//        box.setOrientation(LinearLayout.HORIZONTAL);
-//        box.setBackground(ContextCompat.getDrawable(this, R.drawable.background_box2));
-//        int boxId = View.generateViewId();
-//        boxIdList.add(boxId);
-//        box.setId(boxId);
-//
-//        TextView dateTime = new TextView(this);
-//        dateTime.setId(R.id.vote_schedule_dateTime + dateTimeId);
-//        int dateTimeId = View.generateViewId();
-//        dateTime.setId(dateTimeId);
-//
-//        box.addView(dateTime);
-//
-//        View view = new View(this);
-//        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
-//        params.weight = 1;
-//        params.width = 0;
-//        params.height = 0;
-//
-//        box.addView(view);
-//
-//        ImageView imageView = new ImageView(this);
-//        imageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.delete_btn));
-//        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-//        ViewGroup.LayoutParams imageParams = (ViewGroup.LayoutParams) imageView.getLayoutParams();
-//        imageParams.width = 25;
-//        imageParams.height = 25;
-//
-//        box.addView(imageView);
-//
-//
-//
-//        mainBox.addView(box);
+    private void setNewDateBox(){
+        LinearLayout box = new LinearLayout(this);
+
+        box.setOrientation(LinearLayout.HORIZONTAL);
+        box.setBackground(ContextCompat.getDrawable(this, R.drawable.background_box1));
+        LinearLayout.LayoutParams boxParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        boxParams.leftMargin = 13;
+        boxParams.rightMargin = 13;
+        boxParams.topMargin = 13;
+        boxParams.bottomMargin = 13;
+        box.setLayoutParams(boxParams);
+
+        int boxId = View.generateViewId();
+        box.setId(boxId);
+
+        // 시간 담을 textView
+        TextView dateTime = new TextView(this);
+        nowDateTimeTextView = dateTime;
+
+        int dateTimeId = View.generateViewId();
+        dateTime.setId(dateTimeId);
+        dateTime.setTextColor(Color.BLACK);
+        dateTime.setTextSize(17);
+        LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        textParams.leftMargin = 200;
+        dateTime.setLayoutParams(textParams);
+
+        box.addView(dateTime);
+        dateTimeTextList.add(dateTime);
+
+        // view
+        View view = new View(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, 0, 1);
+        view.setLayoutParams(params);
+
+
+        box.addView(view);
+
+        // 삭제 버튼
+        ImageView imageView = new ImageView(this);
+
+        imageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.delete));
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(55, 55);
+        imageView.setLayoutParams(imageParams);
+
+        int deleteBtnId = View.generateViewId();
+        imageView.setId(deleteBtnId);
+
+        box.addView(imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                box.setVisibility(View.GONE);
+                dateTimeTextList.remove(dateTime);
+            }
+        });
+
+        mainBox.addView(box);
     }
 
     private void setVoteList(){
-        int year = datePicker.getYear();
-        int month = datePicker.getMonth();
-        int day = datePicker.getDayOfMonth();
-        int startHour = startTimePicker.getHour();
-        int startMinute = startTimePicker.getMinute();
-        int endHour = endTimePicker.getHour();
-        int endMinute = endTimePicker.getMinute();
+//        int year = datePicker.getYear();
+//        int month = datePicker.getMonth();
+//        int day = datePicker.getDayOfMonth();
+//        int startHour = startTimePicker.getHour();
+//        int endHour = endTimePicker.getHour();
 
+        for (TextView textView : dateTimeTextList) {
+            String dateTimeText = textView.getText().toString();
 
-        voteDateTimeList.add(new PossibleScheduleRequest(LocalDateTime.of(year, month + 1, day, startHour, startMinute).toString()
-                , LocalDateTime.of(year, month + 1, day, endHour, endMinute).toString()));
-    }
+            String yearString = dateTimeText.substring(0, 4);
+            String monthString = dateTimeText.substring(6, 8);
+            String dayString = dateTimeText.substring(10, 12);
+            String startHourString = dateTimeText.substring(16, 18);
+            String endHourString = dateTimeText.substring(24, 26);
 
-    private void setVoteStatus(){
+            String startDateTime = yearString + "-" + monthString + "-" + dayString + "T" + startHourString + ":00";
+            String endDateTime = yearString + "-" + monthString + "-" + dayString + "T" + endHourString + ":00";
+
+            voteDateTimeList.add(new PossibleScheduleRequest(startDateTime, endDateTime));
+        }
     }
 }
 
