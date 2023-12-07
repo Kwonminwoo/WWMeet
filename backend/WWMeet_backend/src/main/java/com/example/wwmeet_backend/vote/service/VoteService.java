@@ -3,6 +3,9 @@ package com.example.wwmeet_backend.vote.service;
 
 import com.example.wwmeet_backend.appointment.domain.Appointment;
 import com.example.wwmeet_backend.appointment.repository.AppointmentRepository;
+import com.example.wwmeet_backend.appointment.service.AppointmentService;
+import com.example.wwmeet_backend.appointmentDate.repository.AppointmentDateRepository;
+import com.example.wwmeet_backend.appointmentDate.service.AppointmentDateService;
 import com.example.wwmeet_backend.participant.domain.Participant;
 import com.example.wwmeet_backend.participant.repository.ParticipantRepository;
 import com.example.wwmeet_backend.possibleschedule.domain.PossibleSchedule;
@@ -35,6 +38,8 @@ public class VoteService {
     private final PossibleScheduleRepository possibleScheduleRepository;
     private final AppointmentRepository appointmentRepository;
     private final SseConnectionPool<String, UserSseConnection> sseConnectionPool;
+    private final AppointmentService appointmentService;
+    private final AppointmentDateService appointmentDateService;
 
     public Long saveVoteSchedule(Long id, SaveVoteRequest saveVoteRequest) {
         Appointment foundAppointment = appointmentRepository.findById(id).orElseThrow(NoSuchElementException::new);
@@ -51,11 +56,17 @@ public class VoteService {
 
         possibleScheduleList.stream()
                 .map(possibleSchedule -> (Vote.of(null, foundParticipant, possibleSchedule)))
-                .forEach(voteRepository::save);
+                .forEach(voteRepository::saveAndFlush);
 
-//        checkVoteCompleteAndSendMessage(foundAppointment);
+        checkVoteFinishAndSetAppointmentDate(foundAppointment);
 
         return foundAppointment.getId();
+    }
+
+    public void checkVoteFinishAndSetAppointmentDate(Appointment appointment){
+        if(appointmentService.checkVoteState(appointment)){
+            appointmentDateService.setAppointmentDate(appointment);
+        }
     }
 
     public void checkVoteCompleteAndSendMessage(Appointment appointment){
@@ -76,4 +87,5 @@ public class VoteService {
             connection.sendMessage("complete");
         }
     }
+
 }

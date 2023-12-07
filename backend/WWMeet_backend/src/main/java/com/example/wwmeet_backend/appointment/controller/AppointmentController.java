@@ -2,6 +2,7 @@ package com.example.wwmeet_backend.appointment.controller;
 
 
 import com.example.wwmeet_backend.appointment.dto.request.SaveAppointmentRequest;
+import com.example.wwmeet_backend.appointment.dto.response.AppointmentScheduleResponse;
 import com.example.wwmeet_backend.appointment.dto.response.FindAppointmentListResponse;
 import com.example.wwmeet_backend.appointment.dto.response.FindAppointmentResponse;
 import com.example.wwmeet_backend.appointment.dto.response.FindAppointmentVoteStatus;
@@ -46,6 +47,11 @@ public class AppointmentController {
     @GetMapping("/code")
     public Long findAppointmentByCode(@RequestParam String code){
         return appointmentService.findAppointmentByCode(code);
+    }
+
+    @GetMapping("/{id}/date")
+    public AppointmentScheduleResponse getAppointmentDate(@PathVariable("id") Long id){
+        return appointmentService.getAppointmentDate(id);
     }
 
 }

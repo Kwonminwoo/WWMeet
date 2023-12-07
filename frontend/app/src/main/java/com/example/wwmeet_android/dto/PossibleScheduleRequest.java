@@ -1,7 +1,6 @@
 package com.example.wwmeet_android.dto;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.time.LocalDateTime;
 
 public class PossibleScheduleRequest {
