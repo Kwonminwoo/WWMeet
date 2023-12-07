@@ -20,7 +20,9 @@ import com.example.wwmeet_android.appointment.info.AppointmentInfoBeforeActivity
 import com.example.wwmeet_android.appointment.info.AppointmentListAdapter;
 import com.example.wwmeet_android.appointment.vote.VoteScheduleActivity;
 import com.example.wwmeet_android.domain.MyAppointment;
+import com.example.wwmeet_android.dto.AppointmentScheduleResponse;
 import com.example.wwmeet_android.dto.FindAppointmentListResponse;
+import com.example.wwmeet_android.dto.ScheduleResponse;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 import com.example.wwmeet_android.network.SseEventService;
@@ -60,11 +62,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 if(appointmentList.get(position).isVoteFinish()){
-                    // 끝난 후 약속 요청
+                    // 전체 투표 끝난 후
                     Intent intent = new Intent(getApplicationContext(), AppointmentInfoAfterActivity.class);
-
+                    intent.putExtra("appointmentId", appointmentList.get(position).getId());
                     startActivity(intent);
                 }else{
+                    // 전체 투표 끝나기 전
                     Call<Boolean> voteStatusCall = retrofitService.getVoteStatusOfParticipant(
                             appointmentList.get(position).getId(), appointmentList.get(position).getName());
                     voteStatusCall.enqueue(new Callback<Boolean>() {
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                                 return;
                             }
                             Intent intent = null;
+                            // 내가 투표를 했는지 / 안했는지
                             if (response.body()) {
                                 intent = new Intent(getApplicationContext(), AppointmentInfoBeforeActivity.class);
                                 intent.putExtra("appointmentId", appointmentList.get(position).getId());
@@ -119,9 +123,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        setSSE("test");
-
     }
 
     @Override
@@ -207,4 +208,5 @@ public class MainActivity extends AppCompatActivity {
 
         setLogoOrList();
     }
+
 }

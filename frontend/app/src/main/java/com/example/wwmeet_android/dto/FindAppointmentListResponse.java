@@ -9,12 +9,11 @@ public class FindAppointmentListResponse {
     private String appointmentName;
     private String voteDeadline;
     private boolean voteFinish;
+    private String appointmentDate;
 
     @Expose(serialize = false, deserialize = false)
     private String participantName;
 
-    @Expose(serialize = false, deserialize = false)
-    private LocalDateTime appointmentDate;
 
     public FindAppointmentListResponse(Long id, String appointmentName, String voteDeadline) {
         this.id = id;
@@ -57,11 +56,11 @@ public class FindAppointmentListResponse {
         return participantName;
     }
 
-    public LocalDateTime getAppointmentDate(){
+    public String getAppointmentDate(){
         return appointmentDate;
     }
 
-    public void setAppointmentDate(LocalDateTime appointmentDate){
+    public void setAppointmentDate(String appointmentDate){
         this.appointmentDate = appointmentDate;
     }
 

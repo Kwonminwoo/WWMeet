@@ -1,6 +1,7 @@
 package com.example.wwmeet_android.network;
 
 import com.example.wwmeet_android.dto.AddParticipantRequest;
+import com.example.wwmeet_android.dto.AppointmentScheduleResponse;
 import com.example.wwmeet_android.dto.FindAppointmentListResponse;
 import com.example.wwmeet_android.dto.FindAppointmentResponse;
 import com.example.wwmeet_android.dto.SaveAppointmentRequest;
@@ -36,5 +37,8 @@ public interface RetrofitService {
 
     @GET("/api/appointments/code")
     Call<Long> findAppointmentByCode(@Query("code") String code);
+
+    @GET("/api/appointments/{id}/date")
+    Call<AppointmentScheduleResponse> getAppointmentSchedule(@Path("id") Long id);
 
 }
