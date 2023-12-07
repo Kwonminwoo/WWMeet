@@ -3,15 +3,18 @@ package com.example.wwmeet_backend.appointment.service;
 
 import com.example.wwmeet_backend.appointment.domain.Appointment;
 import com.example.wwmeet_backend.appointment.dto.request.SaveAppointmentRequest;
+import com.example.wwmeet_backend.appointment.dto.response.AppointmentScheduleResponse;
+import com.example.wwmeet_backend.appointment.dto.response.DateRangeResponse;
 import com.example.wwmeet_backend.appointment.dto.response.FindAppointmentListResponse;
 import com.example.wwmeet_backend.appointment.dto.response.FindAppointmentResponse;
 import com.example.wwmeet_backend.appointment.repository.AppointmentRepository;
+import com.example.wwmeet_backend.appointmentDate.domain.AppointmentDate;
+import com.example.wwmeet_backend.appointmentDate.repository.AppointmentDateRepository;
 import com.example.wwmeet_backend.participant.domain.Participant;
 import com.example.wwmeet_backend.participant.repository.ParticipantRepository;
 import com.example.wwmeet_backend.vote.domain.Vote;
 import com.example.wwmeet_backend.vote.repository.VoteRepository;
 import java.util.ArrayList;
-import javax.swing.plaf.basic.BasicComboPopup;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +22,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class AppointmentService {
     private final AppointmentRepository appointmentRepository;
+    private final AppointmentDateRepository appointmentDateRepository;
     private final ParticipantRepository participantRepository;
     private final VoteRepository voteRepository;
     @Transactional
@@ -54,11 +57,20 @@ public class AppointmentService {
 
         List<FindAppointmentListResponse> responseList = new ArrayList<>();
         for(Appointment foundAppointment : foundAppointmentList){
+            boolean voteState = checkVoteState(foundAppointment);
+            String appointmentDate = null;
+            if(voteState){
+                List<AppointmentDate> foundAppointmentDate = appointmentDateRepository.findByAppointmentId(
+                    foundAppointment.getId());
+                AppointmentDate firstDate = foundAppointmentDate.get(0);
+                appointmentDate = firstDate.getStartDate() + " ~ " + firstDate.getEndDate().toLocalTime();
+            }
             responseList.add(FindAppointmentListResponse.builder()
                 .id(foundAppointment.getId())
                 .appointmentName(foundAppointment.getAppointmentName())
                 .voteDeadline(foundAppointment.getVoteDeadline())
                 .voteFinish(checkVoteState(foundAppointment))
+                .appointmentDate(appointmentDate)
                 .build());
         }
 
@@ -96,5 +108,31 @@ public class AppointmentService {
             }
         }
         return true;
+    }
+
+    public AppointmentScheduleResponse getAppointmentDate(Long id){
+        List<AppointmentDate> appointmentDateList = appointmentDateRepository.findByAppointmentId(id);
+
+        List<DateRangeResponse> dateRangeResponseList = appointmentDateList.stream()
+            .map(date -> {
+                return new DateRangeResponse(date.getStartDate(), date.getEndDate().toLocalTime());
+            })
+            .toList();
+
+        AppointmentScheduleResponse appointmentScheduleResponse = new AppointmentScheduleResponse();
+        appointmentScheduleResponse.setFirstSchedule(dateRangeResponseList.get(0));
+
+        if(dateRangeResponseList.size() == 1){
+            appointmentScheduleResponse.setSecondSchedule(null);
+            appointmentScheduleResponse.setThirdSchedule(null);
+        }else if(dateRangeResponseList.size() == 2){
+            appointmentScheduleResponse.setSecondSchedule(dateRangeResponseList.get(1));
+            appointmentScheduleResponse.setThirdSchedule(null);
+        }else{
+            appointmentScheduleResponse.setSecondSchedule(dateRangeResponseList.get(1));
+            appointmentScheduleResponse.setThirdSchedule(dateRangeResponseList.get(2));
+        }
+
+        return appointmentScheduleResponse;
     }
 }

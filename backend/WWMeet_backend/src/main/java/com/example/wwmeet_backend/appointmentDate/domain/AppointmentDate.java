@@ -5,16 +5,24 @@ import com.example.wwmeet_backend.appointment.domain.Appointment;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import lombok.Builder;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class AppointmentDate {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private LocalDateTime startDate;
+
     private LocalDateTime endDate;
+
     @ManyToOne
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;
+
+    protected AppointmentDate() {
+    }
 
     @Builder
     private AppointmentDate(LocalDateTime startDate, LocalDateTime endDate,
