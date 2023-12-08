@@ -16,6 +16,7 @@ import com.example.wwmeet_backend.vote.domain.Vote;
 import com.example.wwmeet_backend.vote.repository.VoteRepository;
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,7 +64,8 @@ public class AppointmentService {
                 List<AppointmentDate> foundAppointmentDate = appointmentDateRepository.findByAppointmentId(
                     foundAppointment.getId());
                 AppointmentDate firstDate = foundAppointmentDate.get(0);
-                appointmentDate = firstDate.getStartDate() + " ~ " + firstDate.getEndDate().toLocalTime();
+                String startDate = firstDate.getStartDate().toString();
+                appointmentDate = startDate.substring(0, startDate.length() - 3) + "시 ~ " + firstDate.getEndDate().toLocalTime();
             }
             responseList.add(FindAppointmentListResponse.builder()
                 .id(foundAppointment.getId())

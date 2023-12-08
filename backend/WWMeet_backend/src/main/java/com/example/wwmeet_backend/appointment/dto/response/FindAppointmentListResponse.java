@@ -16,10 +16,6 @@ public class FindAppointmentListResponse {
     private boolean voteFinish;
     private String appointmentDate;
 
-    public FindAppointmentListResponse(Long id) {
-        this.id = id;
-    }
-
     @Builder
     public FindAppointmentListResponse(Long id, String appointmentName, LocalDateTime voteDeadline,
         boolean voteFinish, String appointmentDate) {
