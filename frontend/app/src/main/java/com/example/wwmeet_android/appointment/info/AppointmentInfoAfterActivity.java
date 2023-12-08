@@ -122,13 +122,13 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
                 String rank3;
                 if(secondSchedule != null){
                     rank2 = secondSchedule.getStartDateTime() + " ~ " + secondSchedule.getEndTime();
-                    vote_result_Text2.setText(rank2);
+                    vote_result_Text2.setText(rank2.replace("T", "\n"));
                 }
-                if(secondSchedule != null){
+                if(thirdSchedule != null){
                     rank3 = thirdSchedule.getStartDateTime() + " ~ " + thirdSchedule.getEndTime();
-                    vote_result_Text3.setText(rank3);
+                    vote_result_Text3.setText(rank3.replace("T", "\n"));
                 }
-                vote_result_Text1.setText(rank1);
+                vote_result_Text1.setText(rank1.replace("T", "\n"));
             }
 
             @Override
