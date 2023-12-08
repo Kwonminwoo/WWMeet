@@ -1,5 +1,7 @@
 package com.example.wwmeet_android.appointment.info;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +47,16 @@ public class AppointmentInfoBeforeActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        copyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(AppointmentInfoBeforeActivity.this, "초대 코드가 복사 되었습니다.", Toast.LENGTH_SHORT).show();
+                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                ClipData code = ClipData.newPlainText("code", inviteText.getText().toString());
+                clipboardManager.setPrimaryClip(code);
             }
         });
     }
