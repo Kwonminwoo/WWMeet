@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +28,8 @@ public class AppointmentInfoBeforeActivity extends AppCompatActivity {
 
     TextView nameText, placeText, numText, deadlineText, inviteText;
     Button createBtn;
-    ImageButton copyBtn, numBtn;
+    ImageButton copyBtn;
+    ImageView numBtn;
 
     private RetrofitService retrofitService;
     @Override
@@ -91,7 +93,14 @@ public class AppointmentInfoBeforeActivity extends AppCompatActivity {
         placeText.setText(appointmentData.getAppointmentPlace());
         numText.setText(String.valueOf(appointmentData.getParticipantNum()));
         nameText.setText(appointmentData.getAppointmentName());
-        deadlineText.setText(appointmentData.getDeadline());
+        String[] dateAndTime = appointmentData.getDeadline().split("T");
+        String[] date = dateAndTime[0].split("-");
+        String[] time = dateAndTime[1].split(":");
+
+        String dateTime = date[0] + "년 " + date[1] + "월 " + date[2] + "일\n"
+                + time[0] + "시 " + time[1] + "분";
+
+        deadlineText.setText(dateTime);
         inviteText.setText(appointmentData.getIdentificationCode());
     }
 }

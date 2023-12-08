@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
     TextView nameText, placeText, numText;
     TextView vote_result_Text1, vote_result_Text2, vote_result_Text3;
     Button createBtn, foodBtn;
-    ImageButton arrowBtn;
+    ImageView arrowBtn;
 
     private RetrofitService retrofitService;
 
@@ -117,18 +118,21 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
                 ScheduleResponse secondSchedule = appointmentSchedule.getSecondSchedule();
                 ScheduleResponse thirdSchedule = appointmentSchedule.getThirdSchedule();
 
-                String rank1 = firstSchedule.getStartDateTime() + " ~ " + firstSchedule.getEndTime();
+                String rank1 = setStartDateTimeStringFormat(firstSchedule.getStartDateTime())
+                        + " ~ " + setEndDateTimeStringFormat(firstSchedule.getEndTime());
                 String rank2;
                 String rank3;
                 if(secondSchedule != null){
-                    rank2 = secondSchedule.getStartDateTime() + " ~ " + secondSchedule.getEndTime();
-                    vote_result_Text2.setText(rank2.replace("T", "\n"));
+                    rank2 = setStartDateTimeStringFormat(secondSchedule.getStartDateTime())
+                            + " ~ " + setEndDateTimeStringFormat(secondSchedule.getEndTime());
+                    vote_result_Text2.setText(rank2);
                 }
                 if(thirdSchedule != null){
-                    rank3 = thirdSchedule.getStartDateTime() + " ~ " + thirdSchedule.getEndTime();
-                    vote_result_Text3.setText(rank3.replace("T", "\n"));
+                    rank3 = setStartDateTimeStringFormat(thirdSchedule.getStartDateTime())
+                            + " ~ " + setEndDateTimeStringFormat(thirdSchedule.getEndTime());
+                    vote_result_Text3.setText(rank3);
                 }
-                vote_result_Text1.setText(rank1.replace("T", "\n"));
+                vote_result_Text1.setText(rank1);
             }
 
             @Override
@@ -137,5 +141,16 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
                 Log.e("서버 연결 실패", t.getMessage());
             }
         });
+    }
+    private String setStartDateTimeStringFormat(String dateTime){
+        String[] startDateTime = dateTime.split("T");
+        String[] date = startDateTime[0].split("-");
+        String[] time = startDateTime[1].split(":");
+        return date[0] + "년 " + date[1] + "월 " + date[2] + "일\n" + time[0] + "시";
+    }
+
+    private String setEndDateTimeStringFormat(String time){
+        String[] splitTime = time.split(":");
+        return splitTime[0] + "시";
     }
 }

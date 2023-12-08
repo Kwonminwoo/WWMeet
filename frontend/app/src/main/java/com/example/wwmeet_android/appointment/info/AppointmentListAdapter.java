@@ -77,11 +77,25 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             // 투표가 끝났다면
             progressText = "투표 진행 완료";
             circleId = R.drawable.redcircle;
-            dateTimeText = "약속 일: " + appointment.getAppointmentDate();
+            String[] dateAndTime = appointment.getAppointmentDate().split("T");
+            String[] dateList = dateAndTime[0].split("-");
+            String date = dateList[0] + "년 " + dateList[1] + "월 " + dateList[2] + "일";
+            String[] timeList = dateAndTime[1].split(":");
+            String time = timeList[0] + "시 ";
+            System.out.println(timeList[0]);
+
+            dateTimeText = "약속 일: " + date + " " + time;
         }else{
             progressText = "투표 진행 중";
             circleId = R.drawable.greencircle;
-            dateTimeText = "기한: " + appointment.getVoteDeadline();
+
+            String[] dateAndTime = appointment.getVoteDeadline().split("T");
+            String[] dateList = dateAndTime[0].split("-");
+            String date = dateList[0] + "년 " + dateList[1] + "월 " + dateList[2] + "일";
+            String[] timeList = dateAndTime[1].split(":");
+            String time = timeList[0] + "시 " + timeList[1] + "분";
+
+            dateTimeText = "기한: " + date + " " + time;
         }
 
         holder.appoointmentNameTextView.setText(appointment.getAppointmentName());
