@@ -53,7 +53,7 @@ public class AppointmentInfoBeforeActivity extends AppCompatActivity {
         copyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AppointmentInfoBeforeActivity.this, "코드가 복사되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AppointmentInfoBeforeActivity.this, "초대 코드가 복사 되었습니다.", Toast.LENGTH_SHORT).show();
                 ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 ClipData code = ClipData.newPlainText("code", inviteText.getText().toString());
                 clipboardManager.setPrimaryClip(code);
