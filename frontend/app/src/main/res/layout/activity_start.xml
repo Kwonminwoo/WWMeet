@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:src="@drawable/mainlogo1"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:text="약속 일정을 편하게"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:fontFamily="@font/start_app_name_font"
+        android:textSize="25sp"/>
+
+
+    <TextView
+        android:text="When Where Meet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/start_app_name_font"
+        android:layout_marginBottom="10dp"
+        android:textStyle="bold"/>
+
+</LinearLayout>
