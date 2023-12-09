@@ -17,7 +17,7 @@
         android:layout_weight="1"/>
 
     <TextView
-        android:text="약속 일정을 편하게"
+        android:text="약속을 조정을 편하게"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
