@@ -7,20 +7,27 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wwmeet_android.MainActivity;
 import com.example.wwmeet_android.R;
+import com.example.wwmeet_android.domain.Participant;
 import com.example.wwmeet_android.dto.AppointmentScheduleResponse;
 import com.example.wwmeet_android.dto.FindAppointmentResponse;
+import com.example.wwmeet_android.dto.FindParticipantResponse;
 import com.example.wwmeet_android.dto.ScheduleResponse;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +41,12 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
     ImageView arrowBtn;
 
     private RetrofitService retrofitService;
+    private boolean participantBtn = false;
+    private LinearLayout participantBox;
+    private RecyclerView participantRecyclerView;
+
+    private List<Participant> participantList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +56,27 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
         init();
         setAppointmentData();
         setAppointmentSchedule();
+        setParticipantData();
+
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        arrowBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(AppointmentInfoAfterActivity.this, participantBtn + "", Toast.LENGTH_SHORT).show();
+                if(participantBtn){
+                    participantBox.setVisibility(View.GONE);
+                    participantBtn = false;
+                    return;
+                }
+                participantBox.setVisibility(View.VISIBLE);
+                participantBtn = true;
             }
         });
     }
@@ -61,6 +90,8 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
         vote_result_Text3 = findViewById(R.id.appointment_info_after_vote_result_text3);
         createBtn = findViewById(R.id.appointment_info_after_create_btn);
         foodBtn = findViewById(R.id.appointment_info_after_food_btn);
+        participantBox = findViewById(R.id.appointment_info_after_participant_box);
+        participantRecyclerView = findViewById(R.id.appointment_info_after_participant_list);
 
         RetrofitProvider retrofitProvider = new RetrofitProvider();
         retrofitService = retrofitProvider.getService();
@@ -152,5 +183,52 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
     private String setEndDateTimeStringFormat(String time){
         String[] splitTime = time.split(":");
         return splitTime[0] + "시";
+    }
+
+    private void setParticipantData(){
+        long appointmentId = getIntent().getLongExtra("appointmentId", 0L);
+        Call<List<FindParticipantResponse>> findAllParticipantCall =
+                retrofitService.getAllParticipantOfAppointment(appointmentId);
+        findAllParticipantCall.enqueue(new Callback<List<FindParticipantResponse>>() {
+            @Override
+            public void onResponse(Call<List<FindParticipantResponse>> call, Response<List<FindParticipantResponse>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(AppointmentInfoAfterActivity.this, "참가자 조회에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                    try {
+                        Log.e("참가자 조회 실패", response.errorBody().string());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    return;
+                }
+                for (FindParticipantResponse participantResponse : response.body()) {
+                    Participant participant = new Participant(participantResponse.getParticipantName(), participantResponse.getVoteState());
+                    participantList.add(participant);
+                }
+                setParticipantRecyclerView();
+            }
+
+            @Override
+            public void onFailure(Call<List<FindParticipantResponse>> call, Throwable t) {
+                Toast.makeText(AppointmentInfoAfterActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                Log.e("서버 연결 실패", t.getMessage());
+            }
+        });
+    }
+
+    private void setParticipantRecyclerView(){
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        participantRecyclerView.setLayoutManager(linearLayoutManager);
+
+        ParticipantListAdapter participantListAdapter = new ParticipantListAdapter();
+        participantListAdapter.setList(participantList);
+
+        participantRecyclerView.setAdapter(participantListAdapter);
     }
 }

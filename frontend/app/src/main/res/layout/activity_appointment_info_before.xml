@@ -97,18 +97,38 @@
                 android:textColor="@color/black"
                 android:text="명"/>
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
             <ImageView
                 android:id="@+id/appointment_info_before_num_arrow"
-                android:layout_width="35dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="5dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
                 android:padding="5sp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/arrow" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/appointment_info_before_participant_box"
+            android:background="@drawable/background_box2"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/appointment_info_before_participant_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/vote_deadline_space"
             android:layout_width="330dp"
