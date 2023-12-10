@@ -217,12 +217,6 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
     }
 
     private void setParticipantRecyclerView(){
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         participantRecyclerView.setLayoutManager(linearLayoutManager);
 
