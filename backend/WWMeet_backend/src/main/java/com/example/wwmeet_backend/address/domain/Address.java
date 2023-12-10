@@ -31,10 +31,10 @@ public class Address {
     private double longitude;
 
     @Builder
-    private Address(String address, double latitude, double longitude) {
+    public Address(Participant participant, String address, double latitude, double longitude) {
+        this.participant = participant;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
     }
-
 }
