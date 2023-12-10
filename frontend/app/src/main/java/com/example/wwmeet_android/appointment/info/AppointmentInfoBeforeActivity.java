@@ -38,7 +38,7 @@ public class AppointmentInfoBeforeActivity extends AppCompatActivity {
 
     TextView nameText, placeText, numText, deadlineText, inviteText;
     Button createBtn;
-    ImageButton copyBtn;
+    ImageButton copyBtn, middleLocationBtn;
     ImageView numBtn;
 
     private RetrofitService retrofitService;
@@ -101,7 +101,7 @@ public class AppointmentInfoBeforeActivity extends AppCompatActivity {
         createBtn = findViewById(R.id.appointment_info_before_create_btn);
         participantBox = findViewById(R.id.appointment_info_before_participant_box);
         participantRecyclerView = findViewById(R.id.appointment_info_before_participant_list);
-
+        middleLocationBtn = findViewById(R.id.appointment_info_before_middle_location_btn);
         RetrofitProvider retrofitProvider = new RetrofitProvider();
         retrofitService = retrofitProvider.getService();
     }
