@@ -2,6 +2,7 @@ package com.example.wwmeet_android.network;
 
 import com.example.wwmeet_android.dto.AddParticipantRequest;
 import com.example.wwmeet_android.dto.AppointmentScheduleResponse;
+import com.example.wwmeet_android.dto.FindAllAddressResponse;
 import com.example.wwmeet_android.dto.FindAppointmentListResponse;
 import com.example.wwmeet_android.dto.FindAppointmentResponse;
 import com.example.wwmeet_android.dto.FindParticipantResponse;
@@ -49,4 +50,6 @@ public interface RetrofitService {
     @POST("/api/address")
     Call<Void> saveAddress(@Body SaveAddressRequest saveAddressRequest);
 
+    @GET("/api/address/{appointment_id}")
+    Call<FindAllAddressResponse> findAllAddress (@Path("appointment_id") Long appointmentId);
 }
