@@ -47,11 +47,12 @@
                 android:text="종료  시간  선택"
                 android:textSize="19sp" />
 
-            <TimePicker
-                android:id="@+id/set_vote_deadline_timepicker"
-                android:layout_width="match_parent"
-                android:layout_height="172dp"
-                android:timePickerMode="spinner" />
+            <FrameLayout
+                android:id="@+id/vote_deadline_time_picker_box"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
             <Button
                 android:id="@+id/set_vote_deadline_create_btn"
