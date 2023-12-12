@@ -39,6 +39,7 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
     TextView vote_result_Text1, vote_result_Text2, vote_result_Text3;
     Button createBtn, foodBtn;
     ImageView arrowBtn;
+    ImageButton middleLocationBtn;
 
     private RetrofitService retrofitService;
     private boolean participantBtn = false;
@@ -62,6 +63,14 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        middleLocationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PlaceResultActivity.class);
                 startActivity(intent);
             }
         });
@@ -92,6 +101,7 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
         foodBtn = findViewById(R.id.appointment_info_after_food_btn);
         participantBox = findViewById(R.id.appointment_info_after_participant_box);
         participantRecyclerView = findViewById(R.id.appointment_info_after_participant_list);
+        middleLocationBtn = findViewById(R.id.appointment_info_after_middle_location_btn);
 
         RetrofitProvider retrofitProvider = new RetrofitProvider();
         retrofitService = retrofitProvider.getService();
