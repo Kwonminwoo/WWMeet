@@ -5,10 +5,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,8 +40,6 @@ import retrofit2.Response;
 
 public class VoteScheduleActivity extends AppCompatActivity {
     DatePicker datePicker;
-    TimePicker startTimePicker;
-    TimePicker endTimePicker;
     TextView dateText;
     Button voteBtn;
     ImageButton scheduleAddBtn;
@@ -47,17 +47,113 @@ public class VoteScheduleActivity extends AppCompatActivity {
     private RetrofitService retrofitService;
     private List<PossibleScheduleRequest> voteDateTimeList = new ArrayList<>();
     private long nowAppointmentId;
-
     private List<TextView> dateTimeTextList = new ArrayList<>();
     private TextView nowDateTimeTextView;
-
+    private FrameLayout startTimePickerBox;
+    private FrameLayout endTimePickerBox;
+    private TextView startTimeText, endTimeText;
+    private ImageView startTimePlusBtn, startTimeMinusBtn, endTimePlusBtn, endTimeMinusBtn;
+    private int startTime = 1;
+    private int endTime = 1;
+    private TextView startTimeAfternoonBtn, startTimeMorningBtn, endTimeAfternoonBtn, endTimeMorningBtn;
+    boolean isStartAfternoon = true, isEndAfternoon = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote_schedule);
+        startTimePickerBox = findViewById(R.id.vote_schedule_start_time);
+        endTimePickerBox = findViewById(R.id.vote_schedule_end_time);
+
+        LayoutInflater startTimeLayoutInflater = getLayoutInflater();
+        startTimeLayoutInflater.inflate(R.layout.custom_time_picker, startTimePickerBox, true);
+
+        LayoutInflater endTimeLayoutInflater = getLayoutInflater();
+        endTimeLayoutInflater.inflate(R.layout.custom_time_picker, endTimePickerBox, true);
+
         init();
         setNewDateBox();
         setNowDate();
+
+        startTimePlusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(startTime == 12){
+                    startTime = 0;
+                }
+                startTimeText.setText(String.valueOf(++startTime));
+                setNowDate();
+            }
+        });
+
+        startTimeMinusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(startTime == 1){
+                    return;
+                }
+                startTimeText.setText(String.valueOf(--startTime));
+                setNowDate();
+            }
+        });
+
+        endTimePlusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(endTime == 12){
+                    endTime = 0;
+                }
+                endTimeText.setText(String.valueOf(++endTime));
+                setNowDate();
+            }
+        });
+
+        endTimeMinusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(endTime == 1){
+                    return;
+                }
+                endTimeText.setText(String.valueOf(--endTime));
+                setNowDate();
+            }
+        });
+
+        startTimeAfternoonBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startTimeMorningBtn.setTextColor(Color.GRAY);
+                startTimeAfternoonBtn.setTextColor(Color.BLACK);
+                isStartAfternoon = true;
+            }
+        });
+
+        startTimeMorningBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startTimeMorningBtn.setTextColor(Color.BLACK);
+                startTimeAfternoonBtn.setTextColor(Color.GRAY);
+                isStartAfternoon = false;
+            }
+        });
+
+        endTimeAfternoonBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                endTimeMorningBtn.setTextColor(Color.GRAY);
+                endTimeAfternoonBtn.setTextColor(Color.BLACK);
+                isEndAfternoon = true;
+            }
+        });
+
+        endTimeMorningBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                endTimeMorningBtn.setTextColor(Color.BLACK);
+                endTimeAfternoonBtn.setTextColor(Color.GRAY);
+                isEndAfternoon = false;
+            }
+        });
+
 
         voteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +168,6 @@ public class VoteScheduleActivity extends AppCompatActivity {
         datePicker.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
             @Override
             public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
-                // 날짜 선택 마다 바뀜
                 setNowDate();
             }
         });
@@ -86,26 +181,11 @@ public class VoteScheduleActivity extends AppCompatActivity {
             }
         });
 
-        startTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-                setNowDate();
-            }
-        });
-
-        endTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-                setNowDate();
-            }
-        });
-
-
     }
     private boolean checkTimeRange(){
-        LocalTime startTime = LocalTime.of(startTimePicker.getHour(), 0, 0);
-        LocalTime endTime = LocalTime.of(endTimePicker.getHour(), 0, 0);
-        if(endTime.isAfter(startTime)){
+        LocalTime nowStartTime = LocalTime.of(startTime, 0, 0);
+        LocalTime nowEndTime = LocalTime.of(endTime, 0, 0);
+        if(nowEndTime.isAfter(nowStartTime)){
             return true;
         }
         Toast.makeText(VoteScheduleActivity.this, "종료 시간과 시작 시간은 최소 1시간 이상 차이나야 합니다.", Toast.LENGTH_SHORT).show();
@@ -152,9 +232,19 @@ public class VoteScheduleActivity extends AppCompatActivity {
         dateText = findViewById(R.id.vote_schedule_date_text);
         scheduleAddBtn = findViewById(R.id.vote_schedule_add_btn);
         datePicker = findViewById(R.id.vote_schedule_datePicker);
-        startTimePicker = findViewById(R.id.vote_schedule_start_timepicker);
-        endTimePicker = findViewById(R.id.vote_schedule_end_timepicker);
         mainBox = findViewById(R.id.vote_schedule_main_box);
+
+        startTimeText = startTimePickerBox.findViewById(R.id.time_picker_time);
+        endTimeText = endTimePickerBox.findViewById(R.id.time_picker_time);
+        startTimePlusBtn = startTimePickerBox.findViewById(R.id.time_picker_plus);
+        startTimeMinusBtn = startTimePickerBox.findViewById(R.id.time_picker_minus);
+        endTimePlusBtn = endTimePickerBox.findViewById(R.id.time_picker_plus);
+        endTimeMinusBtn = endTimePickerBox.findViewById(R.id.time_picker_minus);
+        startTimeAfternoonBtn = startTimePickerBox.findViewById(R.id.time_picker_afternoon);
+        startTimeMorningBtn = startTimePickerBox.findViewById(R.id.time_picker_morning);
+
+        endTimeAfternoonBtn = endTimePickerBox.findViewById(R.id.time_picker_afternoon);
+        endTimeMorningBtn = endTimePickerBox.findViewById(R.id.time_picker_morning);
 
         RetrofitProvider retrofitProvider = new RetrofitProvider();
         retrofitService = retrofitProvider.getService();
@@ -180,19 +270,36 @@ public class VoteScheduleActivity extends AppCompatActivity {
 
         dateText.setText(nowDate);
 
-        String nowStartTime = startTimePicker.getHour() + "시";
-        if(startTimePicker.getHour() < 10){
-            nowStartTime = "0" + startTimePicker.getHour() + "시";
-        }else{
-            nowStartTime = startTimePicker.getHour() + "시";
+        int start = 0;
+        if(isStartAfternoon){
+            start += startTime + 12;
+            if(start == 24){
+                start = 0;
+            }
         }
 
-        String nowEndTime = endTimePicker.getHour() + "시";
-        if (endTimePicker.getHour() < 10) {
-            nowEndTime = "0" + endTimePicker.getHour() + "시";
+        String nowStartTime = "";
+        if(start < 10){
+            nowStartTime = "0" + start + "시";
         }else{
-            nowEndTime = endTimePicker.getHour() + "시";
+            nowStartTime = start + "시";
         }
+
+        int end = 0;
+        if(isEndAfternoon){
+            end += endTime + 12;
+            if(end == 24){
+                end = 0;
+            }
+        }
+
+        String nowEndTime = "";
+        if (end < 10) {
+            nowEndTime = "0" + end + "시";
+        }else{
+            nowEndTime = end + "시";
+        }
+
         nowDateTimeTextView.setText(nowDate + "   " + nowStartTime + "  ~  " + nowEndTime);
     }
 
@@ -263,12 +370,6 @@ public class VoteScheduleActivity extends AppCompatActivity {
     }
 
     private void setVoteList(){
-//        int year = datePicker.getYear();
-//        int month = datePicker.getMonth();
-//        int day = datePicker.getDayOfMonth();
-//        int startHour = startTimePicker.getHour();
-//        int endHour = endTimePicker.getHour();
-
         for (TextView textView : dateTimeTextList) {
             String dateTimeText = textView.getText().toString();
 
@@ -284,5 +385,6 @@ public class VoteScheduleActivity extends AppCompatActivity {
             voteDateTimeList.add(new PossibleScheduleRequest(startDateTime, endDateTime));
         }
     }
+
 }
 

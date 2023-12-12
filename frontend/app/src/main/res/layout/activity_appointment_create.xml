@@ -30,9 +30,10 @@
             android:layout_width="310dp"
             android:layout_height="55dp"
             android:layout_gravity="center"
+            android:paddingLeft="15dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/background_box1"
-            android:hint="  20 학번 모임" />
+            android:hint="20 학번 모임" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -49,8 +50,9 @@
             android:layout_height="55dp"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
+            android:paddingLeft="15dp"
             android:background="@drawable/background_box1"
-            android:hint="  두정역" />
+            android:hint="두정역" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -113,8 +115,9 @@
             android:layout_height="55dp"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
+            android:paddingLeft="15dp"
             android:background="@drawable/background_box1"
-            android:hint="  김공주대" />
+            android:hint="김공주대" />
 
         <Button
             android:id="@+id/appointment_create_btn"
