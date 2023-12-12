@@ -136,7 +136,6 @@
 
         <LinearLayout
             android:visibility="gone"
-            android:background="@drawable/background_box2"
             android:id="@+id/appointment_info_after_participant_box"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="10dp"

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity"
     android:background="#ffffff"
     android:weightSum="10"
@@ -10,25 +11,24 @@
 
     <ImageView
         android:id="@+id/main_logo_small_img"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
+        android:scaleType="fitXY"
         android:layout_marginTop="10dp"
         android:visibility="gone"
-        android:layout_weight="0.5"
         android:src="@drawable/mainlogo2" />
 
     <LinearLayout
         android:id="@+id/main_apm_list_box"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="8">
+        android:layout_height="0dp"
+        android:layout_weight="7.5">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/home_recyclerview"
@@ -36,37 +36,36 @@
                 android:layout_height="match_parent" />
 
         </ScrollView>
-
-
     </LinearLayout>
 
 
     <ImageView
         android:id="@+id/main_logo_img"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="350dp"
+        android:layout_height="0dp"
         android:layout_gravity="center"
-        android:layout_weight="8"
+        android:scaleType="fitXY"
+        android:layout_marginTop="30dp"
+        android:layout_weight="7.5"
         android:src="@drawable/mainlogo1" />
 
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="0.5"/>
 
     <Button
         android:id="@+id/home_enter_appoint_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
         android:background="@drawable/button_design"
         android:backgroundTint="@color/black"
-        android:letterSpacing="0.1"
+        android:letterSpacing="0.5"
         android:text="입장하기"
         android:textColor="#ffffff"
-        android:textSize="15dp"
-        android:layout_weight="0.5"
+        android:textSize="15sp"
+        android:layout_weight="1"
         android:textStyle="bold" />
 
     <Button
@@ -75,14 +74,14 @@
         android:textColor="#ffffff"
         android:backgroundTint="#000000"
         android:letterSpacing="0.1"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:textStyle="bold"
         android:layout_marginTop="10dp"
         android:layout_marginHorizontal="20dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="0dp"
         android:text="약속  만들기"
-        android:layout_weight="0.1"
-        android:layout_marginBottom="20dp"/>
+        android:layout_weight="1"
+        android:layout_marginBottom="10dp"/>
 
 </LinearLayout>

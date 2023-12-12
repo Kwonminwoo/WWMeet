@@ -1,6 +1,7 @@
 package com.example.wwmeet_android.appointment.info;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,8 @@ public class ParticipantListAdapter extends RecyclerView.Adapter<ParticipantList
     public void setList(List<Participant> list, int participantNum) {
         participantList = list;
         this.participantNum = participantNum;
-        for (int i = 0; i < (participantNum - participantList.size());i++) {
+        int listSize = participantList.size();
+        for (int i = 0; i < (participantNum - listSize);i++) {
             participantList.add(new Participant("입장 전", false));
         }
     }
