@@ -9,5 +9,5 @@ import retrofit2.http.Query;
 
 public interface KakaoService {
     @GET("/v2/local/search/keyword")
-    Call<KakoSearchResponse> searchRestaurant(@Header("Authorization") String authorization, @Query("query") String query);
+    Call<KakoSearchResponse> searchRestaurant(@Header("Authorization") String authorization, @Query("query") String query, @Query("size") int size, @Query("page") int page);
 }

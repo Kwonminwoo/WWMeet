@@ -52,7 +52,47 @@ public class SearchRestaurantResponse {
         return placeUrl;
     }
 
-    public void setPlaceUrl(String placeUrl) {
-        this.placeUrl = placeUrl;
+    public String getPlaceName() {
+        return placeName;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public String getAddressName() {
+        return addressName;
+    }
+
+    public String getRoadAddressName() {
+        return roadAddressName;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getCategoryGroupCode() {
+        return categoryGroupCode;
+    }
+
+    public String getCategoryGroupName() {
+        return categoryGroupName;
+    }
+
+    public String getX() {
+        return x;
+    }
+
+    public String getY() {
+        return y;
     }
 }

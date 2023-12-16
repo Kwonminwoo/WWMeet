@@ -36,7 +36,8 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/skeleton_restaurant"
         android:layout_weight="9"
         android:layout_width="match_parent"
         android:layout_height="0dp">
@@ -46,14 +47,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/food_recyclerview"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent">
+
+                <include layout="@layout/skeleton_item_restaurant_list"/>
+                <include layout="@layout/skeleton_item_restaurant_list"/>
+                <include layout="@layout/skeleton_item_restaurant_list"/>
+                <include layout="@layout/skeleton_item_restaurant_list"/>
+                <include layout="@layout/skeleton_item_restaurant_list"/>
+
+            </LinearLayout>
 
         </ScrollView>
 
-    </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
+    <LinearLayout
+        android:id="@+id/restart_search_list"
+        android:visibility="gone"
+        android:layout_weight="9"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/food_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
 
 </LinearLayout>

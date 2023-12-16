@@ -52,4 +52,7 @@ public interface RetrofitService {
 
     @GET("/api/address/{appointment_id}")
     Call<FindAllAddressResponse> findAllAddress (@Path("appointment_id") Long appointmentId);
+
+    @GET("/api/restaurants/images")
+    Call<List<String>> getRestaurantImageList(@Query("urlList") List<String> urlList);
 }

@@ -15,6 +15,9 @@ public class Restaurant {
         this.phone = phone;
     }
 
+    public Restaurant() {
+    }
+
     public String getRestaurantName() {
         return restaurantName;
     }
