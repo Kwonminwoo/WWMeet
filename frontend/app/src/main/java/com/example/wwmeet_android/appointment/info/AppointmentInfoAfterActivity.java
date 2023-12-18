@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wwmeet_android.MainActivity;
 import com.example.wwmeet_android.R;
+import com.example.wwmeet_android.appointment.info.restaurant.AIFoodActivity;
 import com.example.wwmeet_android.domain.Participant;
 import com.example.wwmeet_android.dto.AppointmentScheduleResponse;
 import com.example.wwmeet_android.dto.FindAppointmentResponse;
@@ -86,6 +87,14 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
                 }
                 participantBox.setVisibility(View.VISIBLE);
                 participantBtn = true;
+            }
+        });
+
+        foodBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AIFoodActivity.class);
+                startActivity(intent);
             }
         });
     }
