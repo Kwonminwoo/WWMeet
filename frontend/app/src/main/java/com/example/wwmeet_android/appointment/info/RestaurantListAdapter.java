@@ -1,6 +1,9 @@
 package com.example.wwmeet_android.appointment.info;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,9 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RestaurantListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private final int VIEW_TYPE_ITEM = 0;
-    private final int VIEW_TYPE_LOADING = 1;
-
     private List<Restaurant> restaurantList = new ArrayList<>();
     private Context context;
 
@@ -41,15 +42,6 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    public class LoadingViewHolder extends RecyclerView.ViewHolder {
-        private ProgressBar progressBar;
-
-        public LoadingViewHolder(@NonNull View itemView) {
-            super(itemView);
-            progressBar = itemView.findViewById(R.id.item_progressbar);
-        }
-    }
-
     public void addRestaurant(Restaurant restaurant){
         restaurantList.add(restaurant);
     }
@@ -62,39 +54,33 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        if(viewType == VIEW_TYPE_ITEM){
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_restaurant_list, parent, false);
-            return new ItemViewHolder(view);
-        }else{
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_progressbar, parent, false);
-            return new LoadingViewHolder(view);
-        }
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_restaurant_list, parent, false);
+        return new ItemViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof ItemViewHolder){
-            Restaurant restaurant = restaurantList.get(position);
-            ((ItemViewHolder) holder).restaurantNameText.setText(restaurant.getRestaurantName());
-            ((ItemViewHolder) holder).menuText.setText(restaurant.getMenu());
-            ((ItemViewHolder) holder).addressText.setText(restaurant.getAddress());
-            Glide.with(context)
-                    .load(restaurant.getImageUrl())
-                    .into(((ItemViewHolder) holder).imageView);
-            return;
-        } else if (holder instanceof LoadingViewHolder) {
-            Log.e("e", "loading");
-        }
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return restaurantList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+        int index = position;
+        Restaurant restaurant = restaurantList.get(position);
+        ((ItemViewHolder) holder).restaurantNameText.setText(restaurant.getRestaurantName());
+        ((ItemViewHolder) holder).restaurantNameText.setTextColor(Color.BLUE);
+        ((ItemViewHolder) holder).restaurantNameText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(restaurantList.get(index).getUrl()));
+                context.startActivity(webIntent);
+            }
+        });
+        ((ItemViewHolder) holder).menuText.setText(restaurant.getMenu());
+        ((ItemViewHolder) holder).addressText.setText(restaurant.getAddress());
+        Glide.with(context)
+                .load(restaurant.getImageUrl())
+                .into(((ItemViewHolder) holder).imageView);
+        return;
     }
 
     @Override
     public int getItemCount() {
         return restaurantList.size();
     }
-
 }

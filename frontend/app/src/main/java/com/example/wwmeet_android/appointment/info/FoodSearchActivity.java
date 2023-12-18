@@ -55,29 +55,12 @@ public class FoodSearchActivity extends AppCompatActivity {
     private ShimmerFrameLayout skeletonFrame;
     private LinearLayout restaurantListBox;
     private Thread apiThread;
-
-    private boolean isLoading = false;
     private int page = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_search);
         init();
-        
-        foodRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if(!isLoading){
-                    if (!foodRecyclerView.canScrollVertically(1)) {
-                        Toast.makeText(FoodSearchActivity.this, "last", Toast.LENGTH_SHORT).show();
-                        isLoading = true;
-                        loadMoreData();
-                    }
-                }
-            }
-        });
 
         getRestaurantsData();
     }
@@ -128,8 +111,10 @@ public class FoodSearchActivity extends AppCompatActivity {
                         restaurant.setPhone(searchRestaurant.getPhone());
                         String[] categoryArray = searchRestaurant.getCategoryName().split(" > ");
                         restaurant.setMenu(categoryArray[categoryArray.length - 1]);
+                        String httpsUrl = searchRestaurant.getPlaceUrl().replace("http", "https");
+                        restaurant.setUrl(httpsUrl);
 
-                        restaurantUrlList.add(searchRestaurant.getPlaceUrl().replace("http", "https"));
+                        restaurantUrlList.add(httpsUrl);
 
                         resultList.add(restaurant);
                     }
@@ -152,7 +137,6 @@ public class FoodSearchActivity extends AppCompatActivity {
     }
 
     private void getCrawlingRestaurantImage(List<String> urlList) {
-        Log.e("t", "image");
 
         Call<List<String>> getImageUrlListCall = retrofitService.getRestaurantImageList(urlList);
         getImageUrlListCall.enqueue(new Callback<List<String>>() {
@@ -176,8 +160,7 @@ public class FoodSearchActivity extends AppCompatActivity {
 
                 setRestaurantList();
                 showList();
-                restaurantListAdapter.notifyDataSetChanged();
-                isLoading = false;
+                loadMoreData();
             }
 
             @Override
@@ -192,6 +175,7 @@ public class FoodSearchActivity extends AppCompatActivity {
         for (Restaurant restaurant : restaurantListFromServer) {
             restaurantListAdapter.addRestaurant(restaurant);
         }
+        restaurantListAdapter.notifyDataSetChanged();
     }
 
     private void showList(){
@@ -200,23 +184,12 @@ public class FoodSearchActivity extends AppCompatActivity {
     }
 
     private void loadMoreData(){
-        restaurantListAdapter.addRestaurant(null);
-        restaurantListFromServer.add(null);
-
-        restaurantListAdapter.notifyDataSetChanged();
-
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                restaurantListAdapter.notifyItemInserted(restaurantList.size() - 1);
-                int scrollPosition = restaurantListFromServer.size();
-
-                restaurantListFromServer.remove(scrollPosition - 1);
-//                restaurantListAdapter.removeRestaurant(scrollPosition - 1);
-
                 getRestaurantsData();
             }
-        }, 2000);
+        }, 2500);
     }
 }

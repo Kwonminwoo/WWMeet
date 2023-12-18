@@ -3,6 +3,7 @@ package com.example.wwmeet_backend.restaurant;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -27,10 +28,18 @@ public class RestaurantCrawlingService {
         for (String url : urlList) {
             log.error(url);
             chromeDriver.get(url);
-            chromeDriver.manage().timeouts().implicitlyWait(Duration.ofMillis(2000));
+            chromeDriver.manage().timeouts().implicitlyWait(Duration.ofMillis(3000));
 
-            WebElement div = chromeDriver.findElement(By.className("bg_present"));
+            WebElement div = null;
+            try{
+                div = chromeDriver.findElement(By.className("bg_present"));
+            }catch (Exception e){
+                imageUrlList.add("");
+                continue;
+            }
+
             String[] imageUrlArray = div.getAttribute("style").split("\"");
+            log.error(imageUrlArray[1]);
             imageUrlList.add("https:" + imageUrlArray[1]);
         }
 

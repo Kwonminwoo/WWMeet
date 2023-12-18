@@ -1,11 +1,14 @@
 package com.example.wwmeet_android.domain;
 
+import com.google.gson.annotations.Expose;
+
 public class Restaurant {
     private String restaurantName;
     private String menu;
     private String imageUrl;
     private String address;
     private String phone;
+    private String url;
 
     public Restaurant(String restaurantName, String menu, String imageUrl, String address, String phone) {
         this.restaurantName = restaurantName;
@@ -56,5 +59,13 @@ public class Restaurant {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
