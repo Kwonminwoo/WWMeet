@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context=".appointment.info.FoodSearchActivity">
+    tools:context=".appointment.info.restaurant.FoodSearchActivity">
 
     <LinearLayout
         android:orientation="horizontal"

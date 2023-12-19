@@ -18,9 +18,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".appointment.info.FoodSearchActivity"
-            android:exported="false" >
-        </activity>
+            android:name=".appointment.info.restaurant.AIFoodResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".appointment.info.restaurant.AIFoodActivity"
+            android:exported="false" />
+        <activity
+            android:name=".appointment.info.restaurant.FoodSearchActivity"
+            android:exported="false" />
         <activity
             android:name=".BeforeSplashActivity"
             android:exported="true"

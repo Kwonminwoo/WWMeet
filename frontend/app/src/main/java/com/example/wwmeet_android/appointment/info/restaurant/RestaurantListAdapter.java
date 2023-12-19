@@ -1,4 +1,4 @@
-package com.example.wwmeet_android.appointment.info;
+package com.example.wwmeet_android.appointment.info.restaurant;
 
 import android.content.Context;
 import android.content.Intent;
