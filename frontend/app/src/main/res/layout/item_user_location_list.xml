@@ -15,15 +15,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="이름   :"
+            android:text="이름"
+            android:layout_marginRight="10dp"
             android:textSize="18sp"/>
+
+
+        <TextView
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text=" - "
+            android:layout_marginRight="10dp"
+            android:textSize="25sp"/>
 
         <TextView
             android:id="@+id/user_location_item_location"
+            android:singleLine="true"
+            android:maxWidth="220dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textColor="@color/black"
+            android:ellipsize="end"
             android:text="  위치"
             android:textSize="18sp"/>
 

@@ -55,4 +55,8 @@ public class UserLocationListAdapter extends RecyclerView.Adapter<UserLocationLi
         return UserLocationList.size();
     }
 
+    public void setList(List<UserLocation> list){
+        this.UserLocationList = list;
+    }
+
 }

@@ -51,8 +51,8 @@ public class AddressService {
             Address address = addressRepository.findByParticipantId(participant.getId())
                 .orElseThrow(RuntimeException::new);
 
-            response.add(new FindAllAddressResponse(address.getAddress(), address.getLatitude(),
-                address.getLongitude()));
+            response.add(new FindAllAddressResponse(participant.getParticipantName(), address.getAddress()
+                , address.getLatitude(), address.getLongitude()));
         }
         
         return response;

@@ -6,6 +6,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class FindAllAddressResponse {
+    private String participantName;
     private String address;
     private double latitude;
     private double longitude;

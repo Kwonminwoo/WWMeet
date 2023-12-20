@@ -40,6 +40,9 @@
             android:name=".appointment.create.LocationSettingActivity"
             android:exported="false"/>
         <activity
+            android:name=".appointment.info.PlaceResultActivity"
+            android:exported="false" />
+        <activity
             android:name=".StartActivity"
             android:exported="false" />
         <activity
