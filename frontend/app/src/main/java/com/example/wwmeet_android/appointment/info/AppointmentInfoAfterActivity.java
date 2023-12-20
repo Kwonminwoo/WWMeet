@@ -19,6 +19,7 @@ import com.example.wwmeet_android.MainActivity;
 import com.example.wwmeet_android.R;
 import com.example.wwmeet_android.domain.Participant;
 import com.example.wwmeet_android.dto.AppointmentScheduleResponse;
+import com.example.wwmeet_android.dto.FindAllAddressResponse;
 import com.example.wwmeet_android.dto.FindAppointmentResponse;
 import com.example.wwmeet_android.dto.FindParticipantResponse;
 import com.example.wwmeet_android.dto.ScheduleResponse;
@@ -34,20 +35,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AppointmentInfoAfterActivity extends AppCompatActivity {
-
     TextView nameText, placeText, numText;
     TextView vote_result_Text1, vote_result_Text2, vote_result_Text3;
     Button createBtn, foodBtn;
     ImageView arrowBtn;
     ImageButton middleLocationBtn;
-
     private RetrofitService retrofitService;
     private boolean participantBtn = false;
     private LinearLayout participantBox;
     private RecyclerView participantRecyclerView;
-
     private List<Participant> participantList = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +68,7 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), PlaceResultActivity.class);
+                intent.putExtra("appointmentId", getIntent().getLongExtra("appointmentId", -1L));
                 startActivity(intent);
             }
         });
@@ -235,4 +233,5 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
 
         participantRecyclerView.setAdapter(participantListAdapter);
     }
+
 }

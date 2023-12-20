@@ -1,15 +1,26 @@
 package com.example.wwmeet_android.dto;
 
 public class FindAllAddressResponse {
+    private String participantName;
     private String address;
     private double latitude;
     private double longitude;
 
-    public FindAllAddressResponse(String address, double latitude, double longitude) {
+    public FindAllAddressResponse(String participantName, String address, double latitude, double longitude) {
+        this.participantName = participantName;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+    public String getParticipantName() {
+        return participantName;
+    }
+
+    public void setParticipantName(String participantName) {
+        this.participantName = participantName;
+    }
+
     public String getAddress() {
         return address;
     }

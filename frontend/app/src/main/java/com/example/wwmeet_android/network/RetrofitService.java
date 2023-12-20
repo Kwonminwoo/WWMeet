@@ -51,7 +51,7 @@ public interface RetrofitService {
     Call<Void> saveAddress(@Body SaveAddressRequest saveAddressRequest);
 
     @GET("/api/address/{appointment_id}")
-    Call<FindAllAddressResponse> findAllAddress (@Path("appointment_id") Long appointmentId);
+    Call<List<FindAllAddressResponse>> findAllAddress (@Path("appointment_id") Long appointmentId);
 
     @GET("/api/restaurants/images")
     Call<List<String>> getRestaurantImageList(@Query("urlList") List<String> urlList);

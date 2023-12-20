@@ -2,6 +2,7 @@ package com.example.wwmeet_android.appointment.vote;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,12 +19,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.wwmeet_android.R;
 import com.example.wwmeet_android.appointment.info.AppointmentInfoBeforeActivity;
+import com.example.wwmeet_android.dto.AddressRequest;
 import com.example.wwmeet_android.dto.PossibleScheduleRequest;
+import com.example.wwmeet_android.dto.SaveAddressRequest;
 import com.example.wwmeet_android.dto.VoteScheduleRequest;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
@@ -156,10 +160,12 @@ public class VoteScheduleActivity extends AppCompatActivity {
 
 
         voteBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
             @Override
             public void onClick(View v) {
                 if(checkTimeRange()){
                     setVoteList();
+                    saveAddress();
                     voteScheduleTime();
                 }
             }
@@ -191,7 +197,7 @@ public class VoteScheduleActivity extends AppCompatActivity {
         Toast.makeText(VoteScheduleActivity.this, "종료 시간과 시작 시간은 최소 1시간 이상 차이나야 합니다.", Toast.LENGTH_SHORT).show();
         return false;
     }
-    private LocalDateTime voteScheduleTime(){
+    private void voteScheduleTime(){
         Intent intent = getIntent();
         long appointmentId = intent.getLongExtra("appointmentId", 0);
         nowAppointmentId = appointmentId;
@@ -224,7 +230,36 @@ public class VoteScheduleActivity extends AppCompatActivity {
                 Log.e("서버 연결에 실패했습니다.", t.getMessage());
             }
         });
-        return null;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+    private void saveAddress() {
+        Intent intent = getIntent();
+        AddressRequest address = intent.getSerializableExtra("address", AddressRequest.class);
+        long appointmentId = intent.getLongExtra("appointmentId", -1);
+        String participantName = intent.getStringExtra("participantName");
+        Call<Void> saveAddressCall = retrofitService.saveAddress(new SaveAddressRequest(appointmentId,
+                participantName, address.getAddressName(), address.getLatitude(), address.getLongitude()));
+        saveAddressCall.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(VoteScheduleActivity.this, "주소 저장에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                    try {
+                        Log.e("주소 저장 실패", response.errorBody().string());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(VoteScheduleActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                Log.e("서버 연결 실패", t.getMessage());
+            }
+        });
+
     }
 
     private void init(){
