@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wwmeet_android.appointment.create.AppointmentCreateActivity;
+import com.example.wwmeet_android.appointment.create.LocationSettingActivity;
 import com.example.wwmeet_android.appointment.entrance.EntranceAppointmentActivity;
 import com.example.wwmeet_android.appointment.info.AppointmentInfoAfterActivity;
 import com.example.wwmeet_android.appointment.info.AppointmentInfoBeforeActivity;
 import com.example.wwmeet_android.appointment.info.AppointmentListAdapter;
+import com.example.wwmeet_android.appointment.info.restaurant.AIFoodActivity;
 import com.example.wwmeet_android.appointment.vote.VoteScheduleActivity;
 import com.example.wwmeet_android.domain.MyAppointment;
 import com.example.wwmeet_android.dto.AppointmentScheduleResponse;
@@ -119,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 입장하기
-                Intent intent = new Intent(getApplicationContext(), EntranceAppointmentActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AIFoodActivity.class);
                 startActivity(intent);
             }
         });

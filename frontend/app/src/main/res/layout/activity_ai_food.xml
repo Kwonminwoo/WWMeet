@@ -33,21 +33,23 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/black"/>
+
         <ScrollView
-            android:scrollbars="none"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:scrollbars="none">
+
             <EditText
                 android:id="@+id/ai_food_feel_edit"
-                android:layout_marginTop="15dp"
-                android:hint="일찍 일어나서 피곤해 집에 가고 싶어"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:background="@android:color/transparent"
-                android:textSize="25sp"/>
+                android:hint="일찍 일어나서 피곤해"
+                android:textSize="23sp" />
         </ScrollView>
 
     </LinearLayout>
@@ -84,25 +86,17 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="10dp"
+
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/ai_food_option_all"
                 android:text="전체"
                 android:textSize="20sp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="70dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="60dp"/>
-
-            <Button
-                android:id="@+id/ai_food_option_another"
-                android:text="그 외"
-                android:textSize="20sp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="180dp"
                 android:layout_height="60dp"/>
 
         </LinearLayout>
