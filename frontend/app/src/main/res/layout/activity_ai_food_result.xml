@@ -16,6 +16,7 @@
         android:layout_marginHorizontal="15dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+
         android:orientation="vertical"
         android:background="@drawable/background_box3">
 
@@ -27,6 +28,17 @@
             android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:id="@+id/ai_food_result_emotion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="감정 출력"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <View
             android:background="@color/black"
@@ -41,12 +53,14 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/ai_food_result_emotion_image"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginRight="50dp"
                 android:src="@drawable/number"/>
 
             <TextView
+                android:id="@+id/ai_food_result_probability"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="89%"
@@ -66,17 +80,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="당신을 위한 한마디: "
+            android:text="당신을 위한 한마디:"
             android:textAlignment="center"
             android:textSize="18sp"/>
 
         <TextView
+            android:id="@+id/ai_food_result_emotion_sentence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            android:hint="힘내영"/>
+            android:textSize="18sp" />
 
 
     </LinearLayout>
@@ -101,6 +115,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <TextView
+            android:id="@+id/ai_food_result_food_type"
+            android:textSize="20sp"
+            android:text="음식 종류 선택 출력"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <View
             android:background="@color/black"
             android:layout_width="match_parent"
@@ -114,12 +138,14 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/ai_food_result_food_type_image"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginRight="50dp"
-                android:src="@drawable/number"/>
+                android:src="@drawable/number" />
 
             <TextView
+                android:id="@+id/ai_food_result_type_food"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="카레"
@@ -163,12 +189,14 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/ai_food_result_emotion_food_image"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginRight="50dp"
                 android:src="@drawable/number"/>
 
             <TextView
+                android:id="@+id/ai_food_result_emotion_food"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="초콜릿"

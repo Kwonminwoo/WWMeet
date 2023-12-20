@@ -13,7 +13,7 @@ public class AIRetrofitProvider {
     private final String BASE_URL = "http://10.0.2.2:5000";
 
     public AIRetrofitProvider() {
-        gson = new GsonBuilder().create();
+        gson = new GsonBuilder().setLenient().create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
