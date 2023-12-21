@@ -19,39 +19,18 @@
             android:text="위치  설정"
             android:textSize="35sp" />
 
-        <LinearLayout
-            android:id="@+id/place_search_space"
-            android:layout_width="330dp"
+        <TextView
+            android:id="@+id/location_address_name"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/background_box2"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/location_setting_search_edit"
-                android:background="@null"
-                android:layout_width="225dp"
-                android:layout_height="45dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="2dp"
-                android:hint="장소  검색"
-                android:textSize="22dp" />
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-            <ImageView
-                android:id="@+id/location_setting_search_btn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_margin="15dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/search" />
-        </LinearLayout>
+            android:layout_weight="0.8"
+            android:text="주소가 표시됩니다."
+            android:gravity="center"
+            android:layout_marginHorizontal="30dp"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:background="@drawable/background_box1"/>
 
         <com.naver.maps.map.MapView
             android:id="@+id/location_setting_map_view"
@@ -64,18 +43,6 @@
             android:layout_marginBottom="20dp"
             android:scaleType="centerCrop" />
 
-        <TextView
-            android:id="@+id/location_address_name"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.7"
-            android:text="주소가 표시됩니다."
-            android:gravity="center"
-            android:layout_marginHorizontal="30dp"
-            android:textSize="13sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:background="@drawable/background_box1"/>
 
         <Button
             android:id="@+id/location_setting_create_btn"

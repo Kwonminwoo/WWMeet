@@ -24,6 +24,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.GET;
 
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+
+
 public class AIFoodActivity extends AppCompatActivity {
     private Button allBtn, koreanBtn,
             chineseBtn, westernBtn, japaneseBtn;
@@ -44,35 +51,45 @@ public class AIFoodActivity extends AppCompatActivity {
         allBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetButtonColors();
                 foodtype = "전체";
+                allBtn.setBackgroundColor(Color.GRAY);
             }
         });
 
         koreanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetButtonColors();
                 foodtype = "한식";
+                koreanBtn.setBackgroundColor(Color.GRAY);
             }
         });
 
         chineseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetButtonColors();
                 foodtype = "중식";
+                chineseBtn.setBackgroundColor(Color.GRAY);
             }
         });
 
         westernBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetButtonColors();
                 foodtype = "양식";
+                westernBtn.setBackgroundColor(Color.GRAY);
             }
         });
 
         japaneseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetButtonColors();
                 foodtype = "일식";
+                japaneseBtn.setBackgroundColor(Color.GRAY);
             }
         });
 
@@ -84,6 +101,13 @@ public class AIFoodActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void resetButtonColors() {
+        allBtn.setBackgroundColor(Color.TRANSPARENT);
+        koreanBtn.setBackgroundColor(Color.TRANSPARENT);
+        chineseBtn.setBackgroundColor(Color.TRANSPARENT);
+        westernBtn.setBackgroundColor(Color.TRANSPARENT);
+        japaneseBtn.setBackgroundColor(Color.TRANSPARENT);
     }
 
     private void init(){

@@ -51,8 +51,10 @@
                 android:id="@+id/vote_deadline_time_picker_box"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"/>
 
             <Button
                 android:id="@+id/set_vote_deadline_create_btn"
