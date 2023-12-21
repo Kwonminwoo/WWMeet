@@ -37,7 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textColor="@color/black"
-            android:ellipsize="end"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="1"
             android:text="  위치"
             android:textSize="18sp"/>
 

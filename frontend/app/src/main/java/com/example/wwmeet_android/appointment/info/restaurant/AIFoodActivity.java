@@ -124,17 +124,18 @@ public class AIFoodActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<FindAnalysisResponse> call, Response<FindAnalysisResponse> response) {
                 if (!response.isSuccessful()) {
-                    try {
-                        Log.e("감정 분석 실패", response.errorBody().string());
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+//                    try {
+                        Log.e("감정 분석 실패", response.message());
+//                    } catch (IOException ex) {
+//                        throw new RuntimeException(ex);
+//                    }
                     return;
                 }
 
                 FindAnalysisResponse analysisResponse = response.body();
                 if (analysisResponse != null) {
                     Intent intent = new Intent(getApplicationContext(), AIFoodResultActivity.class);
+                    intent.putExtra("appointmentId", getIntent().getLongExtra("appointmentId", -1));
                     intent.putExtra("ai data", analysisResponse.getData());
                     intent.putExtra("ai data1", analysisResponse.getData1());
                     startActivity(intent);
