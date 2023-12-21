@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.wwmeet_android.MainActivity;
 import com.example.wwmeet_android.R;
 
 import java.util.HashMap;
@@ -17,8 +18,8 @@ import java.util.Map;
 
 public class AIFoodResultActivity extends AppCompatActivity {
     private Button findRestaurantBtn;
-    private TextView percentText, emotionText, emotionSentence, foodTypeText, foodTypeRecommendText, emotionFoodRecommendText;
-    private ImageView emotionImg, foodTypeRecommendImg, emotionFoodRecommendImg;
+    private TextView percentText, emotionText, emotionText1, emotionSentence, foodTypeText, foodTypeRecommendText, emotionFoodRecommendText;
+    private ImageView emotionImg, foodTypeRecommendImg, emotionFoodRecommendImg, searchbtn1, searchbtn2;
     private static final Map<String, String> emotionImageMap = new HashMap<>();
 
     static {
@@ -91,11 +92,28 @@ public class AIFoodResultActivity extends AppCompatActivity {
         findRestaurantBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), FoodSearchActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        searchbtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(), FoodSearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        searchbtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(), FoodSearchActivity.class);
                 startActivity(intent);
             }
         });
     }
+
 
     private void init(){
         emotionText = findViewById(R.id.ai_food_result_emotion);
@@ -105,9 +123,12 @@ public class AIFoodResultActivity extends AppCompatActivity {
         emotionSentence = findViewById(R.id.ai_food_result_emotion_sentence);
 
         foodTypeText = findViewById(R.id.ai_food_result_food_type);
+        searchbtn1 = findViewById(R.id.ai_food_result_search1);
         foodTypeRecommendImg = findViewById(R.id.ai_food_result_food_type_image);
         foodTypeRecommendText = findViewById(R.id.ai_food_result_type_food);
 
+        emotionText1 = findViewById(R.id.ai_food_result_emotion1);
+        searchbtn2 = findViewById(R.id.ai_food_result_search2);
         emotionFoodRecommendImg = findViewById(R.id.ai_food_result_emotion_food_image);
         emotionFoodRecommendText = findViewById(R.id.ai_food_result_emotion_food);
     }
@@ -116,14 +137,20 @@ public class AIFoodResultActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String aiData = intent.getStringExtra("ai data");
         String aiData1 = intent.getStringExtra("ai data1");
+
         String[] dataArray = aiData.split(" ");
 
+        double value = Double.parseDouble(dataArray[1]);
+        String formattedValue = String.format("%.1f", value);
+
         emotionText.setText(dataArray[0]);
-        percentText.setText(dataArray[1]);
+        percentText.setText(formattedValue);
         emotionSentence.setText(aiData1);
 
         foodTypeText.setText(dataArray[4]);
         foodTypeRecommendText.setText(dataArray[2]);
+
+        emotionText1.setText(dataArray[0]);
         emotionFoodRecommendText.setText(dataArray[3]);
 
 

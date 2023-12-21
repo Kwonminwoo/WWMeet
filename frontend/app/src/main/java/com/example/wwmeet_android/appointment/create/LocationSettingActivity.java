@@ -79,8 +79,8 @@ public class LocationSettingActivity extends AppCompatActivity implements OnMapR
 
     }
     private void init(){
-        placeEdit = findViewById(R.id.location_setting_search_edit);
-        searchBtn = findViewById(R.id.location_setting_search_btn);
+        //placeEdit = findViewById(R.id.location_setting_search_edit);
+        //searchBtn = findViewById(R.id.location_setting_search_btn);
         mapFrame = findViewById(R.id.location_setting_map_view);
         createBtn = findViewById(R.id.location_setting_create_btn);
         addressNameText = findViewById(R.id.location_address_name);

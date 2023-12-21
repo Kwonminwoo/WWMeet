@@ -11,8 +11,8 @@ public class AIRetrofitProvider {
     private RetrofitAIService retrofitAIService;
 
     private final String BASE_URL = "http://10.2.3.128:8081";
-
 //    private final String BASE_URL = "http://10.2.19.84:8081";
+
 
     public AIRetrofitProvider() {
         gson = new GsonBuilder().setLenient().create();
