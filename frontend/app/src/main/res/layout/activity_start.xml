@@ -6,24 +6,16 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:src="@drawable/mainlogo1"/>
+        android:layout_height="350dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/mainlogo1" />
 
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-
-    <TextView
-        android:text="약속을 조정을 편하게"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:layout_gravity="center"
-        android:fontFamily="@font/start_app_name_font"
-        android:textSize="25sp"/>
 
 
     <TextView
@@ -32,9 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="30sp"
-        android:textColor="@color/black"
+        android:textColor="@color/gray"
         android:fontFamily="@font/start_app_name_font"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="90dp"
         android:textStyle="bold"/>
 
 </LinearLayout>
