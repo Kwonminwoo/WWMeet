@@ -53,7 +53,7 @@
                     android:id="@+id/vote_schedule_add_btn"
                     android:layout_width="35dp"
                     android:layout_height="45dp"
-                    android:layout_marginLeft="80dp"
+                    android:layout_marginLeft="70dp"
                     android:padding="4sp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/plus" />
@@ -81,14 +81,14 @@
 
                     <FrameLayout
                         android:id="@+id/vote_schedule_start_time"
-                        android:layout_width="wrap_content"
+                        android:layout_width="210dp"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -102,7 +102,7 @@
 
                     <FrameLayout
                         android:id="@+id/vote_schedule_end_time"
-                        android:layout_width="wrap_content"
+                        android:layout_width="210dp"
                         android:layout_height="wrap_content"/>
 
                 </LinearLayout>

@@ -51,8 +51,8 @@ public class AIFoodActivity extends AppCompatActivity {
         allBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetButtonColors();
                 foodtype = "전체";
+
                 allBtn.setBackgroundColor(Color.GRAY);
             }
         });
@@ -60,7 +60,6 @@ public class AIFoodActivity extends AppCompatActivity {
         koreanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetButtonColors();
                 foodtype = "한식";
                 koreanBtn.setBackgroundColor(Color.GRAY);
             }
@@ -69,7 +68,7 @@ public class AIFoodActivity extends AppCompatActivity {
         chineseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetButtonColors();
+
                 foodtype = "중식";
                 chineseBtn.setBackgroundColor(Color.GRAY);
             }
@@ -78,7 +77,7 @@ public class AIFoodActivity extends AppCompatActivity {
         westernBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetButtonColors();
+
                 foodtype = "양식";
                 westernBtn.setBackgroundColor(Color.GRAY);
             }
@@ -87,7 +86,7 @@ public class AIFoodActivity extends AppCompatActivity {
         japaneseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetButtonColors();
+
                 foodtype = "일식";
                 japaneseBtn.setBackgroundColor(Color.GRAY);
             }
@@ -102,13 +101,7 @@ public class AIFoodActivity extends AppCompatActivity {
         });
 
     }
-    private void resetButtonColors() {
-        allBtn.setBackgroundColor(Color.TRANSPARENT);
-        koreanBtn.setBackgroundColor(Color.TRANSPARENT);
-        chineseBtn.setBackgroundColor(Color.TRANSPARENT);
-        westernBtn.setBackgroundColor(Color.TRANSPARENT);
-        japaneseBtn.setBackgroundColor(Color.TRANSPARENT);
-    }
+
 
     private void init(){
         allBtn = findViewById(R.id.ai_food_option_all);

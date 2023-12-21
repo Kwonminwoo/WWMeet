@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 입장하기
-                Intent intent = new Intent(getApplicationContext(), AIFoodActivity.class);
+                Intent intent = new Intent(getApplicationContext(), VoteScheduleActivity.class);
                 startActivity(intent);
             }
         });
