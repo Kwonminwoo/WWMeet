@@ -28,6 +28,7 @@ public class UserLocationListAdapter extends RecyclerView.Adapter<UserLocationLi
             super(itemView);
             UserLocationName = itemView.findViewById(R.id.user_location_item_name);
             UserLocationAddress = itemView.findViewById(R.id.user_location_item_location);
+            UserLocationAddress.setSelected(true);
         }
     }
 

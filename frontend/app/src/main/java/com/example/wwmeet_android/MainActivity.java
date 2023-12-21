@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                                 intent = new Intent(getApplicationContext(), AppointmentInfoBeforeActivity.class);
                                 intent.putExtra("appointmentId", appointmentList.get(position).getId());
                             }else{
-                                intent = new Intent(getApplicationContext(), VoteScheduleActivity.class);
+                                intent = new Intent(getApplicationContext(), LocationSettingActivity.class);
                                 intent.putExtra("appointmentId", appointmentList.get(position).getId());
                                 intent.putExtra("participantName", appointmentList.get(position).getName());
                             }
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 입장하기
-                Intent intent = new Intent(getApplicationContext(), AIFoodActivity.class);
+                Intent intent = new Intent(getApplicationContext(), EntranceAppointmentActivity.class);
                 startActivity(intent);
             }
         });

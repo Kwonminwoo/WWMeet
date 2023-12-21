@@ -77,8 +77,6 @@ public class LocationSettingActivity extends AppCompatActivity implements OnMapR
         mapFrame.getMapAsync(this);
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
 
-
-
     }
     private void init(){
         //placeEdit = findViewById(R.id.location_setting_search_edit);
@@ -131,7 +129,7 @@ public class LocationSettingActivity extends AppCompatActivity implements OnMapR
             String[] addressArray = fromLocation.get(0).getAddressLine(0).split(" ");
             String specificAddressName = "";
             for (int i = 1;i < addressArray.length;i++) {
-                specificAddressName += addressArray[i];
+                specificAddressName += addressArray[i] + " ";
             }
             addressNameText.setText(specificAddressName);
             addressName = specificAddressName;
