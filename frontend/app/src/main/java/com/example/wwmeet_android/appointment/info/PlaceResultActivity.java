@@ -101,7 +101,6 @@ public class PlaceResultActivity extends AppCompatActivity implements OnMapReady
     }
 
     private void findAllAddress(){
-        Toast.makeText(this, "토스", Toast.LENGTH_SHORT).show();
         Intent intent = getIntent();
         long appointmentId = intent.getLongExtra("appointmentId", -1);
         Call<List<FindAllAddressResponse>> findAddressCall = retrofitService.findAllAddress(appointmentId);
@@ -122,7 +121,6 @@ public class PlaceResultActivity extends AppCompatActivity implements OnMapReady
                     userLocationList.add(new UserLocation(findAddress.getParticipantName(),
                             findAddress.getAddress(), findAddress.getLatitude(), findAddress.getLongitude()));
                 }
-
                 setParticipantList();
                 setMarker();
             }

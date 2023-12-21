@@ -3,24 +3,40 @@ package com.example.wwmeet_android.appointment.info.restaurant;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.wwmeet_android.MainActivity;
 import com.example.wwmeet_android.R;
+import com.example.wwmeet_android.dto.FindAllAddressResponse;
+import com.example.wwmeet_android.network.RetrofitProvider;
+import com.example.wwmeet_android.network.RetrofitService;
+import com.naver.maps.geometry.LatLng;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AIFoodResultActivity extends AppCompatActivity {
     private Button findRestaurantBtn;
+    private RetrofitService retrofitService;
     private TextView percentText, emotionText, emotionText1, emotionSentence, foodTypeText, foodTypeRecommendText, emotionFoodRecommendText;
     private ImageView emotionImg, foodTypeRecommendImg, emotionFoodRecommendImg, searchbtn1, searchbtn2;
     private static final Map<String, String> emotionImageMap = new HashMap<>();
+    private String addressName;
 
     static {
         emotionImageMap.put("행복", "https://w7.pngwing.com/pngs/871/712/png-transparent-emoji-love-happy-icon.png");
@@ -101,6 +117,8 @@ public class AIFoodResultActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplication(), FoodSearchActivity.class);
+                intent.putExtra("appointmentId", getIntent().getLongExtra("appointmentId", -1));
+                intent.putExtra("food", foodTypeRecommendText.getText().toString());
                 startActivity(intent);
             }
         });
@@ -109,6 +127,8 @@ public class AIFoodResultActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplication(), FoodSearchActivity.class);
+                intent.putExtra("appointmentId", getIntent().getLongExtra("appointmentId", -1));
+                intent.putExtra("food", emotionFoodRecommendText.getText().toString());
                 startActivity(intent);
             }
         });
@@ -131,6 +151,9 @@ public class AIFoodResultActivity extends AppCompatActivity {
         searchbtn2 = findViewById(R.id.ai_food_result_search2);
         emotionFoodRecommendImg = findViewById(R.id.ai_food_result_emotion_food_image);
         emotionFoodRecommendText = findViewById(R.id.ai_food_result_emotion_food);
+
+        RetrofitProvider retrofitProvider = new RetrofitProvider();
+        retrofitService = retrofitProvider.getService();
     }
 
     private void setData(){

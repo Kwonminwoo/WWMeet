@@ -142,6 +142,7 @@ public class AIFoodActivity extends AppCompatActivity {
                 FindAnalysisResponse analysisResponse = response.body();
                 if (analysisResponse != null) {
                     Intent intent = new Intent(getApplicationContext(), AIFoodResultActivity.class);
+                    intent.putExtra("appointmentId", getIntent().getLongExtra("appointmentId", -1));
                     intent.putExtra("ai data", analysisResponse.getData());
                     intent.putExtra("ai data1", analysisResponse.getData1());
                     startActivity(intent);

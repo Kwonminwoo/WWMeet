@@ -92,6 +92,7 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AIFoodActivity.class);
+                intent.putExtra("appointmentId", getIntent().getLongExtra("appointmentId", -1));
                 startActivity(intent);
             }
         });
