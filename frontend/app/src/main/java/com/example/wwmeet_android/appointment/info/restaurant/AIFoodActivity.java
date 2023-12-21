@@ -107,11 +107,11 @@ public class AIFoodActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<FindAnalysisResponse> call, Response<FindAnalysisResponse> response) {
                 if (!response.isSuccessful()) {
-                    try {
-                        Log.e("감정 분석 실패", response.errorBody().string());
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+//                    try {
+                        Log.e("감정 분석 실패", response.message());
+//                    } catch (IOException ex) {
+//                        throw new RuntimeException(ex);
+//                    }
                     return;
                 }
 
