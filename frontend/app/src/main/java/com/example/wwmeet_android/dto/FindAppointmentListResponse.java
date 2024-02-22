@@ -1,27 +1,24 @@
 package com.example.wwmeet_android.dto;
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.time.LocalDateTime;
 
 public class FindAppointmentListResponse {
-    @SerializedName("id")
     private Long id;
-    @SerializedName("appointment_name")
     private String appointmentName;
-
-    @SerializedName("vote_deadline")
-    private LocalDateTime deadline;
+    private String voteDeadline;
+    private boolean voteFinish;
+    private String appointmentDate;
 
     @Expose(serialize = false, deserialize = false)
-    private boolean isFinishVote;
+    private String participantName;
 
 
-    public FindAppointmentListResponse(Long id, String appointmentName, LocalDateTime deadline) {
+    public FindAppointmentListResponse(Long id, String appointmentName, String voteDeadline) {
         this.id = id;
         this.appointmentName = appointmentName;
-        this.deadline = deadline;
+        this.voteDeadline = voteDeadline;
     }
 
     public FindAppointmentListResponse() {
@@ -43,19 +40,35 @@ public class FindAppointmentListResponse {
         this.appointmentName = appointmentName;
     }
 
-    public LocalDateTime getDeadline() {
-        return deadline;
+    public String getVoteDeadline() {
+        return voteDeadline;
     }
 
-    public void setDeadline(LocalDateTime deadline) {
-        this.deadline = deadline;
+    public void setVoteDeadline(String voteDeadline) {
+        this.voteDeadline = voteDeadline;
     }
 
-    public boolean isFinishVote() {
-        return isFinishVote;
+    public void setName(String name){
+        this.participantName = name;
     }
 
-    public void setFinishVote(boolean finishVote) {
-        isFinishVote = finishVote;
+    public String getName(){
+        return participantName;
+    }
+
+    public String getAppointmentDate(){
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(String appointmentDate){
+        this.appointmentDate = appointmentDate;
+    }
+
+    public boolean isVoteFinish() {
+        return voteFinish;
+    }
+
+    public void setVoteFinish(boolean voteFinish) {
+        this.voteFinish = voteFinish;
     }
 }

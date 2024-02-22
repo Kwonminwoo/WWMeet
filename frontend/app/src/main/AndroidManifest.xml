@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,40 +15,60 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WWMeet_android"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".InviteAppointmentActivity"
+            android:name=".appointment.info.restaurant.AIFoodResultActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateAppointmentActivity"
+            android:name=".appointment.info.restaurant.AIFoodActivity"
             android:exported="false" />
         <activity
-            android:name=".AppointmentCreateActivity"
+            android:name=".appointment.info.restaurant.FoodSearchActivity"
             android:exported="false" />
         <activity
-            android:name=".SetVoteDeadlineActivity"
-            android:exported="false" />
-        <activity
-            android:name=".EntranceAppointmentActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AppointmentInfoBeforeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AppointmentInfoAfterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".VoteScheduleActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".BeforeSplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.remove">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".appointment.create.LocationSettingActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".appointment.info.PlaceResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".appointment.create.AppointmentCreateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".appointment.create.SetVoteDeadlineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".appointment.entrance.EntranceAppointmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".appointment.info.AppointmentInfoBeforeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".appointment.info.AppointmentInfoAfterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".appointment.vote.VoteScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <meta-data android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="2zfxvunw8n"/>
+
     </application>
 
 </manifest>

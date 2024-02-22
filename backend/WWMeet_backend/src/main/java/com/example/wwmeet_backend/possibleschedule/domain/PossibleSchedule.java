@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 public class PossibleSchedule {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -24,8 +24,8 @@ public class PossibleSchedule {
     private PossibleSchedule(Long id, Appointment appointment, LocalDateTime startTime, LocalDateTime endTime) {
         this.id = id;
         this.appointment = appointment;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startTime = LocalDateTime.of(startTime.getYear(), startTime.getMonth(), startTime.getDayOfMonth(), startTime.getHour(), 0);
+        this.endTime = LocalDateTime.of(endTime.getYear(), endTime.getMonth(), endTime.getDayOfMonth(), endTime.getHour(), 0);
     }
 
     public static PossibleSchedule of(Long id, Appointment appointment, LocalDateTime startTime, LocalDateTime endTime) {

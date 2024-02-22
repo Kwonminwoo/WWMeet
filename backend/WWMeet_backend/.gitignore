@@ -1,6 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/intellij+all,macos,windows,java,gradle,android,androidstudio
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij+all,macos,windows,java,gradle,android,androidstudio
-
+.env
+./src/main/resources/application-prod.properties
 ### Android ###
 # Gradle files
 .gradle/

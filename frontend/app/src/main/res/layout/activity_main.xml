@@ -3,62 +3,103 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity"
+    android:background="#ffffff"
+    android:weightSum="10"
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/main_logo_small_img"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
         android:visibility="gone"
+        android:id="@+id/main_logo_small_img"
+        android:layout_width="70dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:scaleType="fitXY"
+        android:layout_marginTop="10dp"
         android:src="@drawable/mainlogo2" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/home_recyclerview"
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/main_apm_list_box"
         android:layout_width="match_parent"
-        android:layout_height="77dp" />
+        android:layout_height="0dp"
+        android:layout_weight="9">
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </ScrollView>
+    </LinearLayout>
+
 
     <ImageView
         android:id="@+id/main_logo_img"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="380dp"
+        android:layout_height="0dp"
         android:layout_gravity="center"
+        android:scaleType="fitXY"
+        android:layout_marginTop="120dp"
+        android:layout_weight="7"
         android:src="@drawable/mainlogo1" />
 
+    <View
+        android:id="@+id/main_view_1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="2.5"/>
 
-    <Button
-        android:id="@+id/home_enter_appoint_btn"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="150dp"
-        android:background="@drawable/button_design"
-        android:backgroundTint="@color/black"
-        android:letterSpacing="0.1"
-        android:text="입장하기"
-        android:textColor="#ffffff"
-        android:textSize="15dp"
-        android:textStyle="bold" />
+    <View
+        android:id="@+id/main_view_2"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"/>
 
-    <Button
-        android:id="@+id/home_create_appoint_btn"
-        android:background="@drawable/button_design"
-        android:textColor="#ffffff"
-        android:backgroundTint="#000000"
-        android:letterSpacing="0.1"
-        android:textSize="15dp"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        android:layout_marginHorizontal="20dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="약속  만들기"
-        android:layout_marginBottom="20dp"/>
+        android:layout_height="40dp"
+        android:layout_weight="0.5"
+        android:orientation="horizontal"
+        android:layout_marginBottom="30dp"
+        android:weightSum="10">
+
+        <Button
+            android:id="@+id/home_enter_appoint_btn"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4.8"
+            android:background="@drawable/button"
+            android:letterSpacing="0.3"
+            android:layout_marginLeft="10dp"
+            android:text="입장하기"
+            android:textColor="#000000"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/home_create_appoint_btn"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4.8"
+            android:background="@drawable/button"
+            android:letterSpacing="0.1"
+            android:text="약속  만들기"
+            android:layout_marginRight="30dp"
+            android:textColor="#000000"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </LinearLayout>

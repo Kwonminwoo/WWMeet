@@ -1,17 +1,14 @@
 package com.example.wwmeet_android.dto;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.time.LocalDateTime;
 
 public class PossibleScheduleRequest {
-    @SerializedName("start_date_time")
-    private LocalDateTime startDateTime;
+    private String startDateTime;
 
-    @SerializedName("end_date_time")
-    private LocalDateTime endDateTime;
+    private String endDateTime;
 
-    public PossibleScheduleRequest(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public PossibleScheduleRequest(String startDateTime, String endDateTime) {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
     }
@@ -19,19 +16,19 @@ public class PossibleScheduleRequest {
     public PossibleScheduleRequest() {
     }
 
-    public LocalDateTime getStartDateTime() {
+    public String getStartDateTime() {
         return startDateTime;
     }
 
-    public void setStartDateTime(LocalDateTime startDateTime) {
+    public void setStartDateTime(String startDateTime) {
         this.startDateTime = startDateTime;
     }
 
-    public LocalDateTime getEndDateTime() {
+    public String getEndDateTime() {
         return endDateTime;
     }
 
-    public void setEndDateTime(LocalDateTime endDateTime) {
+    public void setEndDateTime(String endDateTime) {
         this.endDateTime = endDateTime;
     }
 }
