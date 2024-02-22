@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/ww_meet?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    usernamme: root
+    password: rootroot
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
