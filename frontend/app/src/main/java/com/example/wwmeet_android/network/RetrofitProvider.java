@@ -10,7 +10,11 @@ public class RetrofitProvider {
     private Gson gson;
     private RetrofitService retrofitService;
 
-    private final String BASE_URL = "http//localhost:8080";
+    private final String BASE_URL = "http://10.0.2.2:8080";
+//    private final String BASE_URL = "http://10.0.2.1:8080";
+
+//    private final String BASE_URL = "http://10.2.19.84:8080";
+
     public RetrofitProvider() {
         gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
