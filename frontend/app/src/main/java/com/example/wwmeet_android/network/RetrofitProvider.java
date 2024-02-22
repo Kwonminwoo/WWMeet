@@ -12,9 +12,7 @@ public class RetrofitProvider {
 
     private final String BASE_URL = "http://10.0.2.2:8080";
 //    private final String BASE_URL = "http://10.0.2.1:8080";
-
 //    private final String BASE_URL = "http://10.2.19.84:8080";
-
 
     public RetrofitProvider() {
         gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
@@ -25,7 +23,6 @@ public class RetrofitProvider {
                 .build();
         retrofitService = retrofit.create(RetrofitService.class);
     }
-
 
     public RetrofitService getService(){
         return retrofitService;
