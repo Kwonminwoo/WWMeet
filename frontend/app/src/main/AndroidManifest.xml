@@ -18,7 +18,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".SignUpActivity"
+            android:name=".member.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".member.SignInActivity"
             android:exported="false" />
         <activity
             android:name=".appointment.info.restaurant.AIFoodResultActivity"
