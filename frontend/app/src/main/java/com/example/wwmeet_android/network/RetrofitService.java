@@ -59,4 +59,7 @@ public interface RetrofitService {
 
     @POST("/api/members")
     Call<Long> signIn(@Body SignInRequest signInRequest);
+
+    @POST("/api/members/signup")
+    Call<Void> signUp(@Body SignUpRequest signUpRequest);
 }
