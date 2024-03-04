@@ -21,6 +21,9 @@
             android:name=".member.SignUpActivity"
             android:exported="false" />
         <activity
+            android:name=".member.SignInActivity"
+            android:exported="false" />
+        <activity
             android:name=".appointment.info.restaurant.AIFoodResultActivity"
             android:exported="false" />
         <activity

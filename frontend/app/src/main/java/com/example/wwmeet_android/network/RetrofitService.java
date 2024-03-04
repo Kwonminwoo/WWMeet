@@ -10,6 +10,7 @@ import com.example.wwmeet_android.dto.SaveAddressRequest;
 import com.example.wwmeet_android.dto.SaveAppointmentRequest;
 import com.example.wwmeet_android.dto.VoteScheduleRequest;
 import com.example.wwmeet_android.member.dto.SignInRequest;
+import com.example.wwmeet_android.member.dto.SignUpRequest;
 
 import java.util.List;
 
@@ -57,7 +58,7 @@ public interface RetrofitService {
     @GET("/api/restaurants/images")
     Call<List<String>> getRestaurantImageList(@Query("urlList") List<String> urlList);
 
-    @POST("/api/members")
+    @POST("/api/members/signin")
     Call<Long> signIn(@Body SignInRequest signInRequest);
 
     @POST("/api/members/signup")
