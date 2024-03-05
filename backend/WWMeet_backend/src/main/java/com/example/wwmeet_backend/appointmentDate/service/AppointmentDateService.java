@@ -7,13 +7,11 @@ import com.example.wwmeet_backend.possibleschedule.domain.PossibleSchedule;
 import com.example.wwmeet_backend.possibleschedule.repository.PossibleScheduleRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

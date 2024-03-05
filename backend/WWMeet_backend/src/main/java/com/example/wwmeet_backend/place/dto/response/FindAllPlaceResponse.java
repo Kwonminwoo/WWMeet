@@ -1,11 +1,11 @@
-package com.example.wwmeet_backend.address.dto.response;
+package com.example.wwmeet_backend.place.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class FindAllAddressResponse {
+public class FindAllPlaceResponse {
     private String participantName;
     private String address;
     private double latitude;

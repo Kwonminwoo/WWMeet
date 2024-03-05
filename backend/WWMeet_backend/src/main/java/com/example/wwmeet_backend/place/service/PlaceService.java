@@ -1,13 +1,13 @@
-package com.example.wwmeet_backend.address.service;
+package com.example.wwmeet_backend.place.service;
 
-import com.example.wwmeet_backend.address.domain.Address;
-import com.example.wwmeet_backend.address.dto.request.SaveAddressRequest;
-import com.example.wwmeet_backend.address.dto.response.FindAllAddressResponse;
-import com.example.wwmeet_backend.address.repository.AddressRepository;
 import com.example.wwmeet_backend.appointment.domain.Appointment;
 import com.example.wwmeet_backend.appointment.repository.AppointmentRepository;
 import com.example.wwmeet_backend.participant.domain.Participant;
 import com.example.wwmeet_backend.participant.repository.ParticipantRepository;
+import com.example.wwmeet_backend.place.domain.Place;
+import com.example.wwmeet_backend.place.dto.request.SavePlaceRequest;
+import com.example.wwmeet_backend.place.dto.response.FindAllPlaceResponse;
+import com.example.wwmeet_backend.place.repository.PlaceRepository;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -17,42 +17,42 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class AddressService {
-    private final AddressRepository addressRepository;
+public class PlaceService {
+    private final PlaceRepository placeRepository;
     private final ParticipantRepository participantRepository;
     private final AppointmentRepository appointmentRepository;
 
-    public void saveAddress(SaveAddressRequest request){
+    public void saveAddress(SavePlaceRequest request){
         Appointment targetAppointment = appointmentRepository.findById(request.getAppointmentId())
             .orElseThrow(RuntimeException::new);
         Participant participant = participantRepository.findByParticipantName(targetAppointment,
                 request.getParticipantName())
             .orElseThrow(RuntimeException::new);
 
-        Address address = Address.builder()
+        Place place = Place.builder()
             .participant(participant)
             .address(request.getAddress())
             .latitude(request.getLatitude())
             .longitude(request.getLongitude())
             .build();
 
-        addressRepository.save(address);
+        placeRepository.save(place);
     }
 
     @Transactional(readOnly = true)
-    public List<FindAllAddressResponse> findAllAddress(Long appointmentId){
+    public List<FindAllPlaceResponse> findAllAddress(Long appointmentId){
         Appointment targetAppointment = appointmentRepository.findById(appointmentId)
             .orElseThrow(RuntimeException::new);
 
         List<Participant> participantList = targetAppointment.getParticipantList();
 
-        List<FindAllAddressResponse> response = new ArrayList<>();
+        List<FindAllPlaceResponse> response = new ArrayList<>();
         for (Participant participant : participantList) {
-            Address address = addressRepository.findByParticipantId(participant.getId())
+            Place place = placeRepository.findByParticipantId(participant.getId())
                 .orElseThrow(RuntimeException::new);
 
-            response.add(new FindAllAddressResponse(participant.getParticipantName(), address.getAddress()
-                , address.getLatitude(), address.getLongitude()));
+            response.add(new FindAllPlaceResponse(participant.getParticipantName(), place.getAddress()
+                , place.getLatitude(), place.getLongitude()));
         }
         
         return response;

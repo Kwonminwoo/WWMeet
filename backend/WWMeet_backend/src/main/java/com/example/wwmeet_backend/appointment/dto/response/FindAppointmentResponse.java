@@ -1,11 +1,9 @@
 package com.example.wwmeet_backend.appointment.dto.response;
 
 
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Getter
 public class FindAppointmentResponse {

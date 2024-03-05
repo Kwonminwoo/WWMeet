@@ -2,9 +2,14 @@ package com.example.wwmeet_backend.vote.domain;
 
 import com.example.wwmeet_backend.participant.domain.Participant;
 import com.example.wwmeet_backend.possibleschedule.domain.PossibleSchedule;
-import lombok.*;
-
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.Setter;
 
 @Entity
 public class Vote {

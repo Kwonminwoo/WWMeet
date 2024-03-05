@@ -1,7 +1,6 @@
 package com.example.wwmeet_backend.participant.controller;
 
 
-import com.example.wwmeet_backend.appointment.service.AppointmentService;
 import com.example.wwmeet_backend.participant.dto.AddParticipantRequest;
 import com.example.wwmeet_backend.participant.dto.FindParticipantResponse;
 import com.example.wwmeet_backend.participant.service.ParticipantService;
