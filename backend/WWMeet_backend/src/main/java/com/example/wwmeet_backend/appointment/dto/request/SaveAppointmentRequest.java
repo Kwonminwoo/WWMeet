@@ -2,10 +2,12 @@ package com.example.wwmeet_backend.appointment.dto.request;
 
 
 import com.example.wwmeet_backend.appointment.domain.Appointment;
-import lombok.*;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter

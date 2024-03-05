@@ -15,14 +15,12 @@ import com.example.wwmeet_backend.participant.repository.ParticipantRepository;
 import com.example.wwmeet_backend.vote.domain.Vote;
 import com.example.wwmeet_backend.vote.repository.VoteRepository;
 import java.util.ArrayList;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -42,8 +40,8 @@ public class AppointmentService {
         Optional<Appointment> foundAppointmentOptional = appointmentRepository.findById(id);
         Appointment foundAppointment = foundAppointmentOptional.orElseThrow(() -> new NoSuchElementException());
         return FindAppointmentResponse.builder()
-                .appointmentName(foundAppointment.getAppointmentName())
-                .appointmentPlace(foundAppointment.getAppointmentPlace())
+                .appointmentName(foundAppointment.getName())
+                .appointmentPlace(foundAppointment.getPlace())
                 .identificationCode(foundAppointment.getIdentificationCode())
                 .participantNum(foundAppointment.getParticipantNum())
                 .voteDeadline(foundAppointment.getVoteDeadline())
@@ -69,7 +67,7 @@ public class AppointmentService {
             }
             responseList.add(FindAppointmentListResponse.builder()
                 .id(foundAppointment.getId())
-                .appointmentName(foundAppointment.getAppointmentName())
+                .appointmentName(foundAppointment.getName())
                 .voteDeadline(foundAppointment.getVoteDeadline())
                 .voteFinish(checkVoteState(foundAppointment))
                 .appointmentDate(appointmentDate)

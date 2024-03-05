@@ -1,8 +1,16 @@
 package com.example.wwmeet_backend.appointment.domain;
 
 
+import com.example.wwmeet_backend.member.domain.Member;
 import com.example.wwmeet_backend.participant.domain.Participant;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +20,11 @@ public class Appointment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "appointment_name")
-    private String appointmentName;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "appointment_place")
-    private String appointmentPlace;
+    @Column(name = "place")
+    private String place;
 
     @Column(name = "identification_code")
     private String identificationCode;
@@ -27,17 +35,21 @@ public class Appointment {
     @Column(name = "vote_deadline")
     private LocalDateTime voteDeadline;
 
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
     @OneToMany(mappedBy = "appointment")
     private List<Participant> participantList = new ArrayList<>();
 
     protected Appointment() {
     }
 
-    private Appointment(Long id, String appointmentName, String appointmentPlace,
+    private Appointment(Long id, String name, String place,
         String identificationCode, int participantNum, LocalDateTime voteDeadline) {
         this.id = id;
-        this.appointmentName = appointmentName;
-        this.appointmentPlace = appointmentPlace;
+        this.name = name;
+        this.place = place;
         this.identificationCode = identificationCode;
         this.participantNum = participantNum;
         this.voteDeadline = voteDeadline;
@@ -52,12 +64,12 @@ public class Appointment {
         return id;
     }
 
-    public String getAppointmentName() {
-        return appointmentName;
+    public String getName() {
+        return name;
     }
 
-    public String getAppointmentPlace() {
-        return appointmentPlace;
+    public String getPlace() {
+        return place;
     }
 
     public String getIdentificationCode() {

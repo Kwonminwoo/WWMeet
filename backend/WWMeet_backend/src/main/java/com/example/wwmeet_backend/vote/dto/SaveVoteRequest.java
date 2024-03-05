@@ -3,10 +3,12 @@ package com.example.wwmeet_backend.vote.dto;
 
 import com.example.wwmeet_backend.possibleschedule.domain.PossibleSchedule;
 import com.example.wwmeet_backend.possibleschedule.dto.SavePossibleScheduleRequest;
-import lombok.*;
-
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter

@@ -8,11 +8,10 @@ import com.example.wwmeet_backend.participant.dto.FindParticipantResponse;
 import com.example.wwmeet_backend.participant.repository.ParticipantRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor

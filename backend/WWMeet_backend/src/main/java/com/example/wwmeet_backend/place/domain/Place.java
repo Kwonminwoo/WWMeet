@@ -1,4 +1,4 @@
-package com.example.wwmeet_backend.address.domain;
+package com.example.wwmeet_backend.place.domain;
 
 import com.example.wwmeet_backend.participant.domain.Participant;
 import jakarta.persistence.Entity;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Address {
+public class Place {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,7 +31,7 @@ public class Address {
     private double longitude;
 
     @Builder
-    public Address(Participant participant, String address, double latitude, double longitude) {
+    public Place(Participant participant, String address, double latitude, double longitude) {
         this.participant = participant;
         this.address = address;
         this.latitude = latitude;
