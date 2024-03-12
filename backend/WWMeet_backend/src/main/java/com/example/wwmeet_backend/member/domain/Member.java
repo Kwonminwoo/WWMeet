@@ -18,7 +18,7 @@ public class Member {
     private Long id;
     private String email;
     private String password;
-
+    private String authority;
 
     @Builder
     private Member(Long id, String email, String password) {
