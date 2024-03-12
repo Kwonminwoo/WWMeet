@@ -23,7 +23,7 @@ public class MemberService {
         Member targetMember = memberRepository.findByEmail(signInRequest.getEmail())
             .orElseThrow(() -> new RuntimeException());
 
-        if (targetMember.getPassword().equals(signInRequest.getPassword())) {
+        if(passwordEncoder.matches(signInRequest.getPassword(), targetMember.getPassword())) {
             return jwtProvider.createToken(targetMember);
         }
         throw new RuntimeException("사용자 정보가 일치하지 않습니다.");
