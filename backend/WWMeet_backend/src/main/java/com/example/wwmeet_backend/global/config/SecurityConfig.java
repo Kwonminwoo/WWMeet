@@ -1,7 +1,7 @@
 package com.example.wwmeet_backend.global.config;
 
-import com.example.wwmeet_backend.member.jwt.JwtAuthenticationFilter;
-import com.example.wwmeet_backend.member.jwt.JwtProvider;
+import com.example.wwmeet_backend.domain.member.jwt.JwtAuthenticationFilter;
+import com.example.wwmeet_backend.domain.member.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,7 +40,8 @@ public class SecurityConfig {
             )
             .formLogin(Customizer.withDefaults())
             .httpBasic(AbstractHttpConfigurer::disable)
-            .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(new JwtAuthenticationFilter(jwtProvider),
+                UsernamePasswordAuthenticationFilter.class)
             .build();
     }
 }
