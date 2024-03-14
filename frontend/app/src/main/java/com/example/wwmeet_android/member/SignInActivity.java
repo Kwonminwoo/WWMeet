@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.wwmeet_android.MainActivity;
 import com.example.wwmeet_android.R;
+import com.example.wwmeet_android.database.SharedPreferenceUtil;
 import com.example.wwmeet_android.member.dto.SignInRequest;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
@@ -42,7 +43,6 @@ public class SignInActivity extends AppCompatActivity {
                 String password = passwordInput.getText().toString();
 
                 if (verifyLoginInfo(email, password)) {
-                    Toast.makeText(SignInActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                     signIn(email, password);
                 }
             }
@@ -71,25 +71,30 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void signIn(String email, String password){
-        Call<Long> signInCall = retrofitService.signIn(new SignInRequest(email, password));
-        signInCall.enqueue(new Callback<Long>() {
+        Call<String> signInCall = retrofitService.signIn(new SignInRequest(email, password));
+        signInCall.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<Long> call, Response<Long> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(SignInActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                     try {
-                        Log.e("약속 리스트 조회 실패", response.errorBody().string());
+                        Log.e("로그인 실패", response.errorBody().string());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                     return;
                 }
+                SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+                sharedPreferenceUtil.putData("token", response.body());
+
+                Toast.makeText(SignInActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
+                finish();
             }
 
             @Override
-            public void onFailure(Call<Long> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 Toast.makeText(SignInActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
                 Log.e("서버 연결 실패", t.getMessage());
             }

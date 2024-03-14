@@ -21,10 +21,13 @@ import com.example.wwmeet_android.appointment.info.AppointmentInfoBeforeActivity
 import com.example.wwmeet_android.appointment.info.AppointmentListAdapter;
 import com.example.wwmeet_android.appointment.info.restaurant.AIFoodActivity;
 import com.example.wwmeet_android.appointment.vote.VoteScheduleActivity;
+import com.example.wwmeet_android.database.SharedPreferenceUtil;
 import com.example.wwmeet_android.domain.MyAppointment;
 import com.example.wwmeet_android.dto.AppointmentScheduleResponse;
 import com.example.wwmeet_android.dto.FindAppointmentListResponse;
 import com.example.wwmeet_android.dto.ScheduleResponse;
+import com.example.wwmeet_android.member.SignInActivity;
+import com.example.wwmeet_android.network.AuthRetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 import com.example.wwmeet_android.network.SseEventService;
@@ -142,8 +145,12 @@ public class MainActivity extends AppCompatActivity {
         mainLogo = findViewById(R.id.main_logo_img);
         smallLogo = findViewById(R.id.main_logo_small_img);
 
-        RetrofitProvider retrofitProvider = new RetrofitProvider();
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+        String token = sharedPreferenceUtil.getData("token", null);
+
+        AuthRetrofitProvider retrofitProvider = new AuthRetrofitProvider(token);
         retrofitService = retrofitProvider.getService();
+
     }
 
     private void getAppointmentList(){
@@ -166,9 +173,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return;
                 }
+                switch (response.code()) {
+                    case 401:
+                        Toast.makeText(MainActivity.this, "로그인 정보가 만료되었습니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                        startActivity(intent);
+                        break;
+                }
                 List<FindAppointmentListResponse> responseList = response.body();
                 if (responseList != null) {
-                    for (int i = 0;i < responseList.size(); i++) {
+                    for (int i = 0; i < responseList.size(); i++) {
                         FindAppointmentListResponse appointmentResponse = responseList.get(i);
                         appointmentResponse.setName(myAppointmentList.get(i).getName());
                     }
@@ -185,15 +199,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void setSSE(String key){
-        SseEventService sseEventService = new SseEventService();
-        try {
-            sseEventService.startSse(key);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void setLogoOrList(){
