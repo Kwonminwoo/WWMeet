@@ -12,5 +12,6 @@ public class BeforeSplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_before_splash);
         startActivity(new Intent(this, StartActivity.class));
+        finish();
     }
 }
