@@ -9,6 +9,7 @@ public class AuthRetrofitProvider extends RetrofitProvider{
     public AuthRetrofitProvider(String token) {
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         client.addInterceptor(new TokenInterceptor(token));
+        client.followRedirects(false).followSslRedirects(false);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
