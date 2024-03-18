@@ -19,10 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wwmeet_android.MainActivity;
 import com.example.wwmeet_android.R;
+import com.example.wwmeet_android.database.SharedPreferenceUtil;
 import com.example.wwmeet_android.domain.Appointment;
 import com.example.wwmeet_android.domain.Participant;
 import com.example.wwmeet_android.dto.FindAppointmentResponse;
 import com.example.wwmeet_android.dto.FindParticipantResponse;
+import com.example.wwmeet_android.network.AuthRetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 
@@ -101,7 +103,11 @@ public class AppointmentInfoBeforeActivity extends AppCompatActivity {
         createBtn = findViewById(R.id.appointment_info_before_create_btn);
         participantBox = findViewById(R.id.appointment_info_before_participant_box);
         participantRecyclerView = findViewById(R.id.appointment_info_before_participant_list);
-        RetrofitProvider retrofitProvider = new RetrofitProvider();
+
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+        String token = sharedPreferenceUtil.getData("token", null);
+
+        RetrofitProvider retrofitProvider = new AuthRetrofitProvider(token);
         retrofitService = retrofitProvider.getService();
     }
 

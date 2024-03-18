@@ -21,8 +21,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wwmeet_android.MainActivity;
 import com.example.wwmeet_android.R;
+import com.example.wwmeet_android.database.SharedPreferenceUtil;
 import com.example.wwmeet_android.domain.UserLocation;
 import com.example.wwmeet_android.dto.FindAllAddressResponse;
+import com.example.wwmeet_android.network.AuthRetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 import com.naver.maps.geometry.LatLng;
@@ -94,9 +96,12 @@ public class PlaceResultActivity extends AppCompatActivity implements OnMapReady
         mapView = findViewById(R.id.place_result_map_view);
         placeNameText = findViewById(R.id.place_result_name_text);
         placeNameText.setSelected(true);
-
         createBtn = findViewById(R.id.place_result_confirm_btn);
-        RetrofitProvider retrofitProvider = new RetrofitProvider();
+
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+        String token = sharedPreferenceUtil.getData("token", null);
+
+        RetrofitProvider retrofitProvider = new AuthRetrofitProvider(token);
         retrofitService = retrofitProvider.getService();
     }
 

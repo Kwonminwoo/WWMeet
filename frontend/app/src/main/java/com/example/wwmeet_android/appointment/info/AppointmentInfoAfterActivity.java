@@ -18,12 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wwmeet_android.MainActivity;
 import com.example.wwmeet_android.R;
 import com.example.wwmeet_android.appointment.info.restaurant.AIFoodActivity;
+import com.example.wwmeet_android.database.SharedPreferenceUtil;
 import com.example.wwmeet_android.domain.Participant;
 import com.example.wwmeet_android.dto.AppointmentScheduleResponse;
 import com.example.wwmeet_android.dto.FindAllAddressResponse;
 import com.example.wwmeet_android.dto.FindAppointmentResponse;
 import com.example.wwmeet_android.dto.FindParticipantResponse;
 import com.example.wwmeet_android.dto.ScheduleResponse;
+import com.example.wwmeet_android.network.AuthRetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 
@@ -111,7 +113,10 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
         participantRecyclerView = findViewById(R.id.appointment_info_after_participant_list);
         middleLocationBtn = findViewById(R.id.appointment_info_after_middle_location_btn);
 
-        RetrofitProvider retrofitProvider = new RetrofitProvider();
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+        String token = sharedPreferenceUtil.getData("token", null);
+
+        RetrofitProvider retrofitProvider = new AuthRetrofitProvider(token);
         retrofitService = retrofitProvider.getService();
     }
 

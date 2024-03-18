@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wwmeet_android.database.SharedPreferenceUtil;
+import com.example.wwmeet_android.network.AuthRetrofitProvider;
 import com.example.wwmeet_android.util.LocalDatabaseUtil;
 import com.example.wwmeet_android.R;
 import com.example.wwmeet_android.domain.MyAppointment;
@@ -48,7 +50,10 @@ public class EntranceAppointmentActivity extends AppCompatActivity {
         codeEdit = findViewById(R.id.entrance_code_edit);
         confirmBtn = findViewById(R.id.entrance_confirm_btn);
 
-        RetrofitProvider retrofitProvider = new RetrofitProvider();
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+        String token = sharedPreferenceUtil.getData("token", null);
+
+        RetrofitProvider retrofitProvider = new AuthRetrofitProvider(token);
         retrofitService = retrofitProvider.getService();
 
         database = new LocalDatabaseUtil(getApplicationContext());

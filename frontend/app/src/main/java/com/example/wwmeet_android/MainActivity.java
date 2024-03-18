@@ -32,6 +32,7 @@ import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 import com.example.wwmeet_android.network.SseEventService;
 import com.example.wwmeet_android.util.LocalDatabaseUtil;
+import com.example.wwmeet_android.util.TokenValidator;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
+                                TokenValidator.validateToken(response.code(), getApplicationContext());
                                 return;
                             }
                             Intent intent = null;
@@ -106,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("서버 연결에 실패했습니다.", t.getMessage());
                         }
                     });
-
-
                 }
             }
         });
@@ -147,21 +147,14 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
         String token = sharedPreferenceUtil.getData("token", null);
+        Log.e("token", token);
 
         AuthRetrofitProvider retrofitProvider = new AuthRetrofitProvider(token);
         retrofitService = retrofitProvider.getService();
-
     }
 
     private void getAppointmentList(){
-        LocalDatabaseUtil database = new LocalDatabaseUtil(getApplicationContext());
-
-        List<MyAppointment> myAppointmentList = database.findAllMyAppointment();
-
-        List<Long> idList = new ArrayList<>();
-        myAppointmentList.forEach((a) -> idList.add(a.getAppointmentId()));
-
-        Call<List<FindAppointmentListResponse>> findAppointmentCall = retrofitService.findAppointmentList(idList);
+        Call<List<FindAppointmentListResponse>> findAppointmentCall = retrofitService.findAppointmentList();
         findAppointmentCall.enqueue(new Callback<List<FindAppointmentListResponse>>() {
             @Override
             public void onResponse(Call<List<FindAppointmentListResponse>> call, Response<List<FindAppointmentListResponse>> response) {
@@ -171,25 +164,14 @@ public class MainActivity extends AppCompatActivity {
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
-                    return;
+                    TokenValidator.validateToken(response.code(), getApplicationContext());
                 }
-                switch (response.code()) {
-                    case 401:
-                        Toast.makeText(MainActivity.this, "로그인 정보가 만료되었습니다.", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
-                        startActivity(intent);
-                        break;
-                }
+
                 List<FindAppointmentListResponse> responseList = response.body();
                 if (responseList != null) {
-                    for (int i = 0; i < responseList.size(); i++) {
-                        FindAppointmentListResponse appointmentResponse = responseList.get(i);
-                        appointmentResponse.setName(myAppointmentList.get(i).getName());
-                    }
                     appointmentList = responseList;
                     setAppointmentList();
                 }
-
             }
 
             @Override
@@ -198,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("서버 연결에 실패했습니다.", t.getMessage());
             }
         });
-
     }
 
     private void setLogoOrList(){

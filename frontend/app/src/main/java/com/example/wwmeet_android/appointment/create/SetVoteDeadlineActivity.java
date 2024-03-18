@@ -19,6 +19,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wwmeet_android.appointment.vote.VoteScheduleActivity;
+import com.example.wwmeet_android.database.SharedPreferenceUtil;
+import com.example.wwmeet_android.network.AuthRetrofitProvider;
 import com.example.wwmeet_android.util.LocalDatabaseUtil;
 import com.example.wwmeet_android.R;
 import com.example.wwmeet_android.appointment.info.AppointmentInfoBeforeActivity;
@@ -156,7 +158,11 @@ public class SetVoteDeadlineActivity extends AppCompatActivity {
         afternoonText = timePickerBox.findViewById(R.id.time_picker_afternoon);
         morningText = timePickerBox.findViewById(R.id.time_picker_morning);
 
-        RetrofitProvider retrofitProvider = new RetrofitProvider();
+
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+        String token = sharedPreferenceUtil.getData("token", null);
+
+        RetrofitProvider retrofitProvider = new AuthRetrofitProvider(token);
         retrofitService = retrofitProvider.getService();
     }
 }

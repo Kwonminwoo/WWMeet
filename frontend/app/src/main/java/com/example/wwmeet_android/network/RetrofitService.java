@@ -33,7 +33,7 @@ public interface RetrofitService {
     Call<Long> voteSchedule(@Path("id") Long id, @Body VoteScheduleRequest voteScheduleRequest);
 
     @GET("/api/appointments")
-    Call<List<FindAppointmentListResponse>> findAppointmentList(@Query("appointmentIdList") List<Long> appointmentIdList);
+    Call<List<FindAppointmentListResponse>> findAppointmentList();
 
     @POST("/api/appointments")
     Call<Long> saveAppointment(@Body SaveAppointmentRequest saveAppointmentRequest);
