@@ -15,4 +15,6 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
         @Param("participantName") String participantName);
 
     List<Participant> findByAppointmentId(Long id);
+
+    Optional<Participant> findByAppointmentIdAndMemberId(Long appointmentId, Long memberId);
 }

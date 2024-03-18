@@ -10,6 +10,7 @@ import com.example.wwmeet_backend.domain.appointment.dto.response.FindAppointmen
 import com.example.wwmeet_backend.domain.appointment.repository.AppointmentRepository;
 import com.example.wwmeet_backend.domain.appointmentDate.domain.AppointmentDate;
 import com.example.wwmeet_backend.domain.appointmentDate.repository.AppointmentDateRepository;
+import com.example.wwmeet_backend.domain.member.domain.Member;
 import com.example.wwmeet_backend.domain.participant.domain.Participant;
 import com.example.wwmeet_backend.domain.participant.repository.ParticipantRepository;
 import com.example.wwmeet_backend.domain.vote.domain.Vote;
@@ -52,36 +53,27 @@ public class AppointmentService {
             .build();
     }
 
-    public List<FindAppointmentListResponse> findAllAppointment(List<Long> appointmentIdList) {
-        List<Appointment> foundAppointmentList = new ArrayList<>();
-        for (Long id : appointmentIdList) {
-            foundAppointmentList.add(
-                appointmentRepository.findById(id).orElseThrow(NoSuchElementException::new));
-        }
+    public List<FindAppointmentListResponse> findAllAppointment(Member member) {
+        Long memberId = member.getId();
+
+        List<Appointment> foundAppointmentList =
+            appointmentRepository.findAppointmentByMemberId(memberId);
 
         List<FindAppointmentListResponse> responseList = new ArrayList<>();
-        for (Appointment foundAppointment : foundAppointmentList) {
-            boolean voteState = checkVoteState(foundAppointment);
-            String appointmentDate = null;
-            if (voteState) {
-                List<AppointmentDate> foundAppointmentDate = appointmentDateRepository.findByAppointmentId(
-                    foundAppointment.getId());
-                AppointmentDate firstDate = foundAppointmentDate.get(0);
-                String startDate = firstDate.getStartDate().toString();
-                appointmentDate =
-                    startDate.substring(0, startDate.length() - 3) + "시 ~ " + firstDate.getEndDate()
-                        .toLocalTime();
+        for (Appointment appointment : foundAppointmentList) {
+            AppointmentDate appointmentDate = appointmentDateRepository.findByAppointmentId(
+                appointment.getId()).orElseThrow(RuntimeException::new);
+
+            if(checkVoteState(appointment)){
+                responseList.add(
+                    new FindAppointmentListResponse(appointment.getId(), appointment.getName(),
+                        appointment.getVoteDeadline(), checkVoteState(appointment),
+                        appointmentDate.toString())
+                );
             }
-            responseList.add(FindAppointmentListResponse.builder()
-                .id(foundAppointment.getId())
-                .appointmentName(foundAppointment.getName())
-                .voteDeadline(foundAppointment.getVoteDeadline())
-                .voteFinish(checkVoteState(foundAppointment))
-                .appointmentDate(appointmentDate)
-                .build());
         }
 
-        return responseList;
+        return new ArrayList<>();
     }
 
     public boolean getParticipantVoteStatus(Long appointmentId, String participantName) {
@@ -117,7 +109,7 @@ public class AppointmentService {
     }
 
     public AppointmentScheduleResponse getAppointmentDate(Long id) {
-        List<AppointmentDate> appointmentDateList = appointmentDateRepository.findByAppointmentId(
+        List<AppointmentDate> appointmentDateList = appointmentDateRepository.findAllByAppointmentId(
             id);
 
         List<DateRangeResponse> dateRangeResponseList = appointmentDateList.stream()
