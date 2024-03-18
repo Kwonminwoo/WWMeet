@@ -17,6 +17,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -32,7 +33,7 @@ public interface RetrofitService {
     Call<Long> voteSchedule(@Path("id") Long id, @Body VoteScheduleRequest voteScheduleRequest);
 
     @GET("/api/appointments")
-    Call<List<FindAppointmentListResponse>> findAppointmentList(@Query("appointmentIdList") List<Long> appointmentIdList);
+    Call<List<FindAppointmentListResponse>> findAppointmentList();
 
     @POST("/api/appointments")
     Call<Long> saveAppointment(@Body SaveAppointmentRequest saveAppointmentRequest);
@@ -59,7 +60,7 @@ public interface RetrofitService {
     Call<List<String>> getRestaurantImageList(@Query("urlList") List<String> urlList);
 
     @POST("/api/members/signin")
-    Call<Long> signIn(@Body SignInRequest signInRequest);
+    Call<String> signIn(@Body SignInRequest signInRequest);
 
     @POST("/api/members/signup")
     Call<Void> signUp(@Body SignUpRequest signUpRequest);

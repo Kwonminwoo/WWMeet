@@ -25,10 +25,12 @@ import androidx.core.content.ContextCompat;
 
 import com.example.wwmeet_android.R;
 import com.example.wwmeet_android.appointment.info.AppointmentInfoBeforeActivity;
+import com.example.wwmeet_android.database.SharedPreferenceUtil;
 import com.example.wwmeet_android.dto.AddressRequest;
 import com.example.wwmeet_android.dto.PossibleScheduleRequest;
 import com.example.wwmeet_android.dto.SaveAddressRequest;
 import com.example.wwmeet_android.dto.VoteScheduleRequest;
+import com.example.wwmeet_android.network.AuthRetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 
@@ -281,7 +283,10 @@ public class VoteScheduleActivity extends AppCompatActivity {
         endTimeAfternoonBtn = endTimePickerBox.findViewById(R.id.time_picker_afternoon);
         endTimeMorningBtn = endTimePickerBox.findViewById(R.id.time_picker_morning);
 
-        RetrofitProvider retrofitProvider = new RetrofitProvider();
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+        String token = sharedPreferenceUtil.getData("token", null);
+
+        RetrofitProvider retrofitProvider = new AuthRetrofitProvider(token);
         retrofitService = retrofitProvider.getService();
     }
 

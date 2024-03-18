@@ -21,14 +21,18 @@ import com.example.wwmeet_android.appointment.info.AppointmentInfoBeforeActivity
 import com.example.wwmeet_android.appointment.info.AppointmentListAdapter;
 import com.example.wwmeet_android.appointment.info.restaurant.AIFoodActivity;
 import com.example.wwmeet_android.appointment.vote.VoteScheduleActivity;
+import com.example.wwmeet_android.database.SharedPreferenceUtil;
 import com.example.wwmeet_android.domain.MyAppointment;
 import com.example.wwmeet_android.dto.AppointmentScheduleResponse;
 import com.example.wwmeet_android.dto.FindAppointmentListResponse;
 import com.example.wwmeet_android.dto.ScheduleResponse;
+import com.example.wwmeet_android.member.SignInActivity;
+import com.example.wwmeet_android.network.AuthRetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 import com.example.wwmeet_android.network.SseEventService;
 import com.example.wwmeet_android.util.LocalDatabaseUtil;
+import com.example.wwmeet_android.util.TokenValidator;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -82,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
+                                TokenValidator.validateToken(response.code(), getApplicationContext());
                                 return;
                             }
                             Intent intent = null;
@@ -103,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("서버 연결에 실패했습니다.", t.getMessage());
                         }
                     });
-
-
                 }
             }
         });
@@ -142,19 +145,16 @@ public class MainActivity extends AppCompatActivity {
         mainLogo = findViewById(R.id.main_logo_img);
         smallLogo = findViewById(R.id.main_logo_small_img);
 
-        RetrofitProvider retrofitProvider = new RetrofitProvider();
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+        String token = sharedPreferenceUtil.getData("token", null);
+        Log.e("token", token);
+
+        AuthRetrofitProvider retrofitProvider = new AuthRetrofitProvider(token);
         retrofitService = retrofitProvider.getService();
     }
 
     private void getAppointmentList(){
-        LocalDatabaseUtil database = new LocalDatabaseUtil(getApplicationContext());
-
-        List<MyAppointment> myAppointmentList = database.findAllMyAppointment();
-
-        List<Long> idList = new ArrayList<>();
-        myAppointmentList.forEach((a) -> idList.add(a.getAppointmentId()));
-
-        Call<List<FindAppointmentListResponse>> findAppointmentCall = retrofitService.findAppointmentList(idList);
+        Call<List<FindAppointmentListResponse>> findAppointmentCall = retrofitService.findAppointmentList();
         findAppointmentCall.enqueue(new Callback<List<FindAppointmentListResponse>>() {
             @Override
             public void onResponse(Call<List<FindAppointmentListResponse>> call, Response<List<FindAppointmentListResponse>> response) {
@@ -164,18 +164,14 @@ public class MainActivity extends AppCompatActivity {
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
-                    return;
+                    TokenValidator.validateToken(response.code(), getApplicationContext());
                 }
+
                 List<FindAppointmentListResponse> responseList = response.body();
                 if (responseList != null) {
-                    for (int i = 0;i < responseList.size(); i++) {
-                        FindAppointmentListResponse appointmentResponse = responseList.get(i);
-                        appointmentResponse.setName(myAppointmentList.get(i).getName());
-                    }
                     appointmentList = responseList;
                     setAppointmentList();
                 }
-
             }
 
             @Override
@@ -184,16 +180,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("서버 연결에 실패했습니다.", t.getMessage());
             }
         });
-
-    }
-
-    private void setSSE(String key){
-        SseEventService sseEventService = new SseEventService();
-        try {
-            sseEventService.startSse(key);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void setLogoOrList(){
