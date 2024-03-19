@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wwmeet_android.database.SharedPreferenceUtil;
 import com.example.wwmeet_android.member.SignInActivity;
 
 public class StartActivity extends AppCompatActivity {
@@ -28,7 +29,13 @@ public class StartActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+                String token = sharedPreferenceUtil.getData("token", null);
+                if(token == null){
+                    startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                } else {
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                }
                 finish();
             }
         }).start();
