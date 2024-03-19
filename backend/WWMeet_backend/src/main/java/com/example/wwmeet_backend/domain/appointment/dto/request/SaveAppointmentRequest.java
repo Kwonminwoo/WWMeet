@@ -1,17 +1,15 @@
 package com.example.wwmeet_backend.domain.appointment.dto.request;
 
 
-import com.example.wwmeet_backend.domain.appointment.domain.Appointment;
-import com.example.wwmeet_backend.domain.member.domain.Member;
 import java.time.LocalDateTime;
-import java.util.UUID;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class SaveAppointmentRequest {
 
     private String appointmentName;

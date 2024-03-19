@@ -61,25 +61,37 @@ public class AppointmentService {
 
     public List<FindAppointmentListResponse> findAllAppointment() {
         Long memberId = currentMemberService.getCurrentMember().getId();
-
         List<Appointment> foundAppointmentList =
             appointmentRepository.findAppointmentByMemberId(memberId);
 
         List<FindAppointmentListResponse> responseList = new ArrayList<>();
-        for (Appointment appointment : foundAppointmentList) {
-            AppointmentDate appointmentDate = appointmentDateRepository.findByAppointmentId(
-                appointment.getId()).orElseThrow(RuntimeException::new);
 
+        for (Appointment appointment : foundAppointmentList) {
+            FindAppointmentListResponse response = new FindAppointmentListResponse();
             if(checkVoteState(appointment)){
-                responseList.add(
-                    new FindAppointmentListResponse(appointment.getId(), appointment.getName(),
-                        appointment.getVoteDeadline(), checkVoteState(appointment),
-                        appointmentDate.toString())
-                );
+                AppointmentDate appointmentDate = appointmentDateRepository.findByAppointmentId(
+                    appointment.getId()).orElseThrow(RuntimeException::new);
+
+                response = FindAppointmentListResponse.builder()
+                    .id(appointment.getId())
+                    .appointmentName(appointment.getName())
+                    .voteFinish(true)
+                    .appointmentDate(appointmentDate.toString())
+                    .build();
+
+                continue;
+            } else {
+                response = FindAppointmentListResponse.builder()
+                    .id(appointment.getId())
+                    .appointmentName(appointment.getName())
+                    .voteDeadline(appointment.getVoteDeadline())
+                    .voteFinish(false)
+                    .build();
             }
+            responseList.add(response);
         }
 
-        return new ArrayList<>();
+        return responseList;
     }
 
     public boolean getParticipantVoteStatus(Long appointmentId, String participantName) {
