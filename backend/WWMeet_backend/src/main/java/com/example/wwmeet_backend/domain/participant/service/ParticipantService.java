@@ -6,6 +6,8 @@ import com.example.wwmeet_backend.domain.participant.domain.Participant;
 import com.example.wwmeet_backend.domain.participant.dto.AddParticipantRequest;
 import com.example.wwmeet_backend.domain.participant.dto.FindParticipantResponse;
 import com.example.wwmeet_backend.domain.participant.repository.ParticipantRepository;
+import com.example.wwmeet_backend.domain.participant.util.ParticipantDtoMapper;
+import com.example.wwmeet_backend.global.util.CurrentMemberService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -20,20 +22,26 @@ public class ParticipantService {
 
     private final ParticipantRepository participantRepository;
     private final AppointmentRepository appointmentRepository;
+    private final CurrentMemberService currentMemberService;
 
     public Long addParticipantByIdentificationCode(AddParticipantRequest addParticipantRequest) {
         Appointment foundAppointment = appointmentRepository.findByIdentificationCode(
             addParticipantRequest.getIdentificationCode()).orElseThrow(NoSuchElementException::new);
         participantRepository.save(
-            Participant.of(foundAppointment, addParticipantRequest.getParticipantName()));
+            Participant.builder()
+                .appointment(foundAppointment)
+                .participantName(addParticipantRequest.getParticipantName())
+                .build()
+        );
         return foundAppointment.getId();
     }
 
     public void addParticipantByAppointmentId(String participantName, Long id) {
-        Participant participant = Participant.of(
-            appointmentRepository.findById(id).orElseThrow(NoSuchElementException::new),
-            participantName);
-        participantRepository.save(participant);
+        Appointment targetAppointment = appointmentRepository.findById(id)
+            .orElseThrow(RuntimeException::new);
+
+        participantRepository.save(ParticipantDtoMapper.toEntity(participantName, targetAppointment,
+            currentMemberService.getCurrentMember()));
     }
 
     public List<FindParticipantResponse> getParticipantList(Long id) {

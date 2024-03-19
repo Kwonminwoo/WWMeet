@@ -13,10 +13,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Participant {
 
     @Id
@@ -36,16 +40,11 @@ public class Participant {
     @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY)
     private final List<Vote> voteList = new ArrayList<>();
 
-    protected Participant() {
-    }
-
-    private Participant(Appointment appointment, String participantName) {
+    @Builder
+    private Participant(Long id, Appointment appointment, String participantName, Member member) {
+        this.id = id;
         this.appointment = appointment;
         this.participantName = participantName;
+        this.member = member;
     }
-
-    public static Participant of(Appointment appointment, String participantName) {
-        return new Participant(appointment, participantName);
-    }
-
 }
