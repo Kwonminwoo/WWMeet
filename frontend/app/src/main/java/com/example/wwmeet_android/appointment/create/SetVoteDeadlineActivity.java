@@ -113,13 +113,9 @@ public class SetVoteDeadlineActivity extends AppCompatActivity {
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
+                            return;
                         }
                         Long appointmentId = response.body();
-
-                        // local db에 저장
-                        MyAppointment myAppointment = new MyAppointment(appointmentId, appointment.getParticipantName());
-                        LocalDatabaseUtil database = new LocalDatabaseUtil(getApplicationContext());
-                        database.saveMyAppointment(myAppointment);
 
                         Intent intent = new Intent(getApplicationContext(), AppointmentInfoBeforeActivity.class);
                         intent.putExtra("appointmentId", appointmentId);
