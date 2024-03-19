@@ -67,7 +67,9 @@ public class AppointmentService {
         List<FindAppointmentListResponse> responseList = new ArrayList<>();
 
         for (Appointment appointment : foundAppointmentList) {
-            FindAppointmentListResponse response = new FindAppointmentListResponse();
+            Participant participant = participantRepository.findByAppointmentIdAndMemberId(
+                    appointment.getId(), memberId).orElseThrow(RuntimeException::new);
+            FindAppointmentListResponse response;
             if(checkVoteState(appointment)){
                 AppointmentDate appointmentDate = appointmentDateRepository.findByAppointmentId(
                     appointment.getId()).orElseThrow(RuntimeException::new);
@@ -77,15 +79,15 @@ public class AppointmentService {
                     .appointmentName(appointment.getName())
                     .voteFinish(true)
                     .appointmentDate(appointmentDate.toString())
+                    .participantName(participant.getParticipantName())
                     .build();
-
-                continue;
             } else {
                 response = FindAppointmentListResponse.builder()
                     .id(appointment.getId())
                     .appointmentName(appointment.getName())
                     .voteDeadline(appointment.getVoteDeadline())
                     .voteFinish(false)
+                    .participantName(participant.getParticipantName())
                     .build();
             }
             responseList.add(response);

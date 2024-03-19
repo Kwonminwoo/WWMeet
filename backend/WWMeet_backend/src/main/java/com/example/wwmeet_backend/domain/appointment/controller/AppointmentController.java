@@ -46,9 +46,9 @@ public class AppointmentController {
         return appointmentService.findAllAppointment();
     }
 
-    @GetMapping("/{id}/{name}/vote-status")
+    @GetMapping("/{id}/{participantName}/vote-status")
     public boolean getParticipantWithVoteStatus(
-        @PathVariable("id") Long appointmentId, @PathVariable("name") String participantName) {
+        @PathVariable("id") Long appointmentId, @PathVariable String participantName) {
         System.out.println(participantName);
         return appointmentService.getParticipantVoteStatus(appointmentId, participantName);
     }
