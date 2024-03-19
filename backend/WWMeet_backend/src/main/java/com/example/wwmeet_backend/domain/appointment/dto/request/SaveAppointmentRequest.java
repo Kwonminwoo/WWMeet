@@ -1,18 +1,15 @@
 package com.example.wwmeet_backend.domain.appointment.dto.request;
 
 
-import com.example.wwmeet_backend.domain.appointment.domain.Appointment;
 import java.time.LocalDateTime;
-import java.util.UUID;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@Builder
+@NoArgsConstructor
 public class SaveAppointmentRequest {
 
     private String appointmentName;
@@ -21,18 +18,14 @@ public class SaveAppointmentRequest {
     private String participantName;
     private LocalDateTime voteDeadline;
 
-    public SaveAppointmentRequest() {
-    }
-
-    public Appointment toEntity() {
-        String appointmentCode = createIdentificationCode();
-        return Appointment.of(null, appointmentName, appointmentPlace, appointmentCode,
-            participantNum, voteDeadline);
-    }
-
-    private String createIdentificationCode() {
-        UUID identificationCodeUUID = UUID.randomUUID();
-        String identificationCode = identificationCodeUUID.toString().substring(0, 15);
-        return identificationCode;
+    @Builder
+    public SaveAppointmentRequest(String appointmentName, String appointmentPlace,
+        int participantNum,
+        String participantName, LocalDateTime voteDeadline) {
+        this.appointmentName = appointmentName;
+        this.appointmentPlace = appointmentPlace;
+        this.participantNum = participantNum;
+        this.participantName = participantName;
+        this.voteDeadline = voteDeadline;
     }
 }

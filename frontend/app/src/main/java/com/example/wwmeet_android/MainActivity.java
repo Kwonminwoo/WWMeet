@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     // 전체 투표 끝나기 전
                     Call<Boolean> voteStatusCall = retrofitService.getVoteStatusOfParticipant(
-                            appointmentList.get(position).getId(), appointmentList.get(position).getName());
+                            appointmentList.get(position).getId(), appointmentList.get(position).getParticipantName());
+
                     voteStatusCall.enqueue(new Callback<Boolean>() {
                         @Override
                         public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                             }else{
                                 intent = new Intent(getApplicationContext(), LocationSettingActivity.class);
                                 intent.putExtra("appointmentId", appointmentList.get(position).getId());
-                                intent.putExtra("participantName", appointmentList.get(position).getName());
+                                intent.putExtra("participantName", appointmentList.get(position).getParticipantName());
                             }
                             startActivity(intent);
                         }

@@ -14,8 +14,15 @@ import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Appointment {
 
     @Id
@@ -44,50 +51,20 @@ public class Appointment {
     @OneToMany(mappedBy = "appointment")
     private final List<Participant> participantList = new ArrayList<>();
 
-    protected Appointment() {
-    }
-
+    @Builder
     private Appointment(Long id, String name, String place,
-        String identificationCode, int participantNum, LocalDateTime voteDeadline) {
+        String identificationCode, int participantNum, LocalDateTime voteDeadline, Member member) {
         this.id = id;
         this.name = name;
         this.place = place;
         this.identificationCode = identificationCode;
         this.participantNum = participantNum;
         this.voteDeadline = voteDeadline;
+        this.member = member;
     }
 
-    public static Appointment of(Long id, String appointmentName, String appointmentPlace,
-        String identificationCode, int participantNum, LocalDateTime voteDeadline) {
-        return new Appointment(id, appointmentName, appointmentPlace, identificationCode,
-            participantNum, voteDeadline);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPlace() {
-        return place;
-    }
-
-    public String getIdentificationCode() {
-        return identificationCode;
-    }
-
-    public int getParticipantNum() {
-        return participantNum;
-    }
-
-    public LocalDateTime getVoteDeadline() {
-        return voteDeadline;
-    }
-
-    public List<Participant> getParticipantList() {
-        return participantList;
+    public void createIdentificationCode() {
+        UUID identificationCodeUUID = UUID.randomUUID();
+        this.identificationCode = identificationCodeUUID.toString().substring(0, 15);
     }
 }

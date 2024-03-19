@@ -11,7 +11,6 @@ public class FindAppointmentListResponse {
     private boolean voteFinish;
     private String appointmentDate;
 
-    @Expose(serialize = false, deserialize = false)
     private String participantName;
 
 
@@ -48,14 +47,6 @@ public class FindAppointmentListResponse {
         this.voteDeadline = voteDeadline;
     }
 
-    public void setName(String name){
-        this.participantName = name;
-    }
-
-    public String getName(){
-        return participantName;
-    }
-
     public String getAppointmentDate(){
         return appointmentDate;
     }
@@ -70,5 +61,13 @@ public class FindAppointmentListResponse {
 
     public void setVoteFinish(boolean voteFinish) {
         this.voteFinish = voteFinish;
+    }
+
+    public String getParticipantName() {
+        return participantName;
+    }
+
+    public void setParticipantName(String participantName) {
+        this.participantName = participantName;
     }
 }

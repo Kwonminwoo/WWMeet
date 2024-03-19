@@ -14,14 +14,16 @@ public class FindAppointmentListResponse {
     private LocalDateTime voteDeadline;
     private boolean voteFinish;
     private String appointmentDate;
+    private String participantName;
 
     @Builder
     public FindAppointmentListResponse(Long id, String appointmentName, LocalDateTime voteDeadline,
-        boolean voteFinish, String appointmentDate) {
+        boolean voteFinish, String appointmentDate, String participantName) {
         this.id = id;
         this.appointmentName = appointmentName;
         this.voteDeadline = voteDeadline;
         this.voteFinish = voteFinish;
         this.appointmentDate = appointmentDate;
+        this.participantName = participantName;
     }
 }
