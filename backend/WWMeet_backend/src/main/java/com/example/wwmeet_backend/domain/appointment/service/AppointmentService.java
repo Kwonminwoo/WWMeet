@@ -8,6 +8,7 @@ import com.example.wwmeet_backend.domain.appointment.dto.response.DateRangeRespo
 import com.example.wwmeet_backend.domain.appointment.dto.response.FindAppointmentListResponse;
 import com.example.wwmeet_backend.domain.appointment.dto.response.FindAppointmentResponse;
 import com.example.wwmeet_backend.domain.appointment.repository.AppointmentRepository;
+import com.example.wwmeet_backend.domain.appointment.util.AppointmentDtoMapper;
 import com.example.wwmeet_backend.domain.appointmentDate.domain.AppointmentDate;
 import com.example.wwmeet_backend.domain.appointmentDate.repository.AppointmentDateRepository;
 import com.example.wwmeet_backend.domain.member.domain.Member;
@@ -15,6 +16,7 @@ import com.example.wwmeet_backend.domain.participant.domain.Participant;
 import com.example.wwmeet_backend.domain.participant.repository.ParticipantRepository;
 import com.example.wwmeet_backend.domain.vote.domain.Vote;
 import com.example.wwmeet_backend.domain.vote.repository.VoteRepository;
+import com.example.wwmeet_backend.global.util.CurrentMemberService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -32,11 +34,15 @@ public class AppointmentService {
     private final AppointmentDateRepository appointmentDateRepository;
     private final ParticipantRepository participantRepository;
     private final VoteRepository voteRepository;
+    private final CurrentMemberService currentMemberService;
 
     @Transactional
     public Long saveAppointment(SaveAppointmentRequest saveAppointmentRequest) {
+        Member currentMember = currentMemberService.getCurrentMember();
+
         Appointment savedAppointment = appointmentRepository.save(
-            saveAppointmentRequest.toEntity());
+            AppointmentDtoMapper.toEntity(saveAppointmentRequest, currentMember));
+
         return savedAppointment.getId();
     }
 
@@ -53,8 +59,8 @@ public class AppointmentService {
             .build();
     }
 
-    public List<FindAppointmentListResponse> findAllAppointment(Member member) {
-        Long memberId = member.getId();
+    public List<FindAppointmentListResponse> findAllAppointment() {
+        Long memberId = currentMemberService.getCurrentMember().getId();
 
         List<Appointment> foundAppointmentList =
             appointmentRepository.findAppointmentByMemberId(memberId);

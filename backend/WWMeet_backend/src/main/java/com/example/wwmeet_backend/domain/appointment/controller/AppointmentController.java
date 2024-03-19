@@ -10,6 +10,7 @@ import com.example.wwmeet_backend.domain.participant.service.ParticipantService;
 import com.example.wwmeet_backend.global.util.CurrentMemberService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,13 +27,15 @@ public class AppointmentController {
 
     private final AppointmentService appointmentService;
     private final ParticipantService participantService;
-    private final CurrentMemberService currentMemberService;
 
     @PostMapping
     public Long saveAppointment(@RequestBody SaveAppointmentRequest saveAppointmentRequest) {
         Long savedAppointmentId = appointmentService.saveAppointment(saveAppointmentRequest);
+
         participantService.addParticipantByAppointmentId(
-            saveAppointmentRequest.getParticipantName(), savedAppointmentId);
+            saveAppointmentRequest.getParticipantName(), savedAppointmentId
+        );
+
         return savedAppointmentId;
     }
 
@@ -43,7 +46,7 @@ public class AppointmentController {
 
     @GetMapping
     public List<FindAppointmentListResponse> findAllAppointment() {
-        return appointmentService.findAllAppointment(currentMemberService.getCurrentMember());
+        return appointmentService.findAllAppointment();
     }
 
     @GetMapping("/{id}/{name}/vote-status")
