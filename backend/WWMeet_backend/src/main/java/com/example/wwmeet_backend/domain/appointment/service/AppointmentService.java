@@ -61,14 +61,14 @@ public class AppointmentService {
 
     public List<FindAppointmentListResponse> findAllAppointment() {
         Long memberId = currentMemberService.getCurrentMember().getId();
-        List<Appointment> foundAppointmentList =
-            appointmentRepository.findAppointmentByMemberId(memberId);
+
+        List<Participant> participantList = participantRepository.findAllByMemberId(memberId);
 
         List<FindAppointmentListResponse> responseList = new ArrayList<>();
 
-        for (Appointment appointment : foundAppointmentList) {
-            Participant participant = participantRepository.findByAppointmentIdAndMemberId(
-                    appointment.getId(), memberId).orElseThrow(RuntimeException::new);
+        for (Participant participant : participantList) {
+            Appointment appointment = participant.getAppointment();
+
             FindAppointmentListResponse response;
             if(checkVoteState(appointment)){
                 AppointmentDate appointmentDate = appointmentDateRepository.findByAppointmentId(
