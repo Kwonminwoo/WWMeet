@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView mainLogo;
     ImageView smallLogo;
     AppointmentListAdapter listAdapter = new AppointmentListAdapter();
+    private SharedPreferenceUtil sharedPreferenceUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +130,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        findViewById(R.id.home_logout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "로그아웃하였습니다.", Toast.LENGTH_SHORT).show();
+                sharedPreferenceUtil.remove("token");
+                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                finish();
+            }
+        });
     }
 
     @Override
@@ -146,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         mainLogo = findViewById(R.id.main_logo_img);
         smallLogo = findViewById(R.id.main_logo_small_img);
 
-        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+        sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
         String token = sharedPreferenceUtil.getData("token", null);
         Log.e("token", token);
 
