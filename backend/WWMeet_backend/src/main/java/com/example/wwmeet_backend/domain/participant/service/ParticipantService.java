@@ -2,6 +2,7 @@ package com.example.wwmeet_backend.domain.participant.service;
 
 import com.example.wwmeet_backend.domain.appointment.domain.Appointment;
 import com.example.wwmeet_backend.domain.appointment.repository.AppointmentRepository;
+import com.example.wwmeet_backend.domain.member.domain.Member;
 import com.example.wwmeet_backend.domain.participant.domain.Participant;
 import com.example.wwmeet_backend.domain.participant.dto.AddParticipantRequest;
 import com.example.wwmeet_backend.domain.participant.dto.FindParticipantResponse;
@@ -11,6 +12,7 @@ import com.example.wwmeet_backend.global.util.CurrentMemberService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,10 +29,21 @@ public class ParticipantService {
     public Long addParticipantByIdentificationCode(AddParticipantRequest addParticipantRequest) {
         Appointment foundAppointment = appointmentRepository.findByIdentificationCode(
             addParticipantRequest.getIdentificationCode()).orElseThrow(NoSuchElementException::new);
+
+        Member currentMember = currentMemberService.getCurrentMember();
+
+        Optional<Participant> participantOptional = participantRepository.findByMemberIdAndAppointment(
+            currentMember.getId(), foundAppointment);
+
+        if(participantOptional.isPresent()) {
+            throw new RuntimeException("이미 참여한 약속입니다.");
+        }
+
         participantRepository.save(
             Participant.builder()
                 .appointment(foundAppointment)
                 .participantName(addParticipantRequest.getParticipantName())
+                .member(currentMember)
                 .build()
         );
         return foundAppointment.getId();

@@ -109,12 +109,6 @@ public class AppointmentService {
         return false;
     }
 
-    public Long findAppointmentByCode(String code) {
-        Appointment appointment = appointmentRepository.findByIdentificationCode(code)
-            .orElseThrow(RuntimeException::new);
-        return appointment.getId();
-    }
-
     public boolean checkVoteState(Appointment appointment) {
         List<Participant> participantList = appointment.getParticipantList();
         if (participantList.size() != appointment.getParticipantNum()) {

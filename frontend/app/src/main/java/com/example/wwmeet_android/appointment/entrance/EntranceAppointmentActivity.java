@@ -41,7 +41,7 @@ public class EntranceAppointmentActivity extends AppCompatActivity {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkDuplicateAppointmentAndEnter(codeEdit.getText().toString());
+                enterAppointment();
             }
         });
     }
@@ -59,42 +59,9 @@ public class EntranceAppointmentActivity extends AppCompatActivity {
         database = new LocalDatabaseUtil(getApplicationContext());
     }
 
-    private void checkDuplicateAppointmentAndEnter(String targetCode){
-        Call<Long> findAppointmentCall = retrofitService.findAppointmentByCode(targetCode);
-        findAppointmentCall.enqueue(new Callback<Long>() {
-            @Override
-            public void onResponse(Call<Long> call, Response<Long> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(EntranceAppointmentActivity.this, "중복 체크 조회 실패", Toast.LENGTH_SHORT).show();
-                    try {
-                        Log.e("중복 체크 조회 실패", response.errorBody().string());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    return;
-                }
-                List<MyAppointment> allMyAppointment = database.findAllMyAppointment();
-                for(MyAppointment myAppointment : allMyAppointment){
-                    if(myAppointment.getAppointmentId() == response.body()) {
-                        // 중복이 존재 한다면
-                        Toast.makeText(EntranceAppointmentActivity.this, "이미 입장한 약속입니다.", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
-                enterAppointment();
-            }
-
-            @Override
-            public void onFailure(Call<Long> call, Throwable t) {
-                Toast.makeText(EntranceAppointmentActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                Log.e("서버 연결에 실패했습니다.", t.getMessage());
-            }
-        });
-
-    }
-
-    public void enterAppointment(){
-        AddParticipantRequest addParticipantRequest = new AddParticipantRequest(nameEdit.getText().toString(), codeEdit.getText().toString());
+    public void enterAppointment() {
+        AddParticipantRequest addParticipantRequest = new AddParticipantRequest(
+                nameEdit.getText().toString(), codeEdit.getText().toString());
 
         Call<Long> entranceCall = retrofitService.addParticipantByCode(addParticipantRequest);
         entranceCall.enqueue(new Callback<Long>() {
@@ -109,12 +76,6 @@ public class EntranceAppointmentActivity extends AppCompatActivity {
                     }
                     return;
                 }
-                Long appointmentId = response.body();
-                String participantName = nameEdit.getText().toString();
-
-                MyAppointment myAppointment = new MyAppointment(appointmentId, participantName);
-                LocalDatabaseUtil database = new LocalDatabaseUtil(getApplicationContext());
-                database.saveMyAppointment(myAppointment);
 
                 finish();
             }
