@@ -41,9 +41,6 @@ public interface RetrofitService {
     @GET("/api/appointments/{id}/{participantName}/vote-status")
     Call<Boolean> getVoteStatusOfParticipant(@Path("id") Long id, @Path("participantName") String participantName);
 
-    @GET("/api/appointments/code")
-    Call<Long> findAppointmentByCode(@Query("code") String code);
-
     @GET("/api/appointments/{id}/date")
     Call<AppointmentScheduleResponse> getAppointmentSchedule(@Path("id") Long id);
 
