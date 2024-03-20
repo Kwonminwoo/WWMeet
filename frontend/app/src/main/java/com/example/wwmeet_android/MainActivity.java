@@ -159,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
         String token = sharedPreferenceUtil.getData("token", null);
-        Log.e("token", token);
 
         AuthRetrofitProvider retrofitProvider = new AuthRetrofitProvider(token);
         retrofitService = retrofitProvider.getService();

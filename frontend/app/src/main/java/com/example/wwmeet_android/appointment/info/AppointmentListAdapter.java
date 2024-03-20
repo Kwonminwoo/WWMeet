@@ -82,7 +82,6 @@ public class AppointmentListAdapter extends RecyclerView.Adapter<AppointmentList
             String date = dateList[0] + "년 " + dateList[1] + "월 " + dateList[2] + "일";
             String[] timeList = dateAndTime[1].split(":");
             String time = timeList[0] + "시 ";
-            System.out.println(timeList[0]);
 
             dateTimeText = "약속 일: " + date + " " + time;
         }else{

@@ -71,8 +71,8 @@ public class AppointmentService {
 
             FindAppointmentListResponse response;
             if(checkVoteState(appointment)){
-                AppointmentDate appointmentDate = appointmentDateRepository.findByAppointmentId(
-                    appointment.getId()).orElseThrow(RuntimeException::new);
+                String appointmentDate = getAppointmentDate(appointment.getId()).getFirstSchedule()
+                    .getStartDateTime().toString();
 
                 response = FindAppointmentListResponse.builder()
                     .id(appointment.getId())

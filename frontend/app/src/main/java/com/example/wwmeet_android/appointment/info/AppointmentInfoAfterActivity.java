@@ -79,7 +79,6 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
         arrowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AppointmentInfoAfterActivity.this, participantBtn + "", Toast.LENGTH_SHORT).show();
                 if(participantBtn){
                     participantBox.setVisibility(View.GONE);
                     participantBtn = false;
