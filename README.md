@@ -19,8 +19,8 @@ When Where Meet
 * Spring Boot 3.1.5
 * JPA
 * Spring Security + JWT
-* Mysql
-* gradle
+* MySQL
+* Android - java
 
 ## 구현 내용
 - 전체 적인 기획
