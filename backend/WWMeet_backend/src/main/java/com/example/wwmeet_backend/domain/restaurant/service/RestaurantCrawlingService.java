@@ -1,4 +1,4 @@
-package com.example.wwmeet_backend.domain.restaurant;
+package com.example.wwmeet_backend.domain.restaurant.service;
 
 import java.time.Duration;
 import java.util.ArrayList;

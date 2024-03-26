@@ -9,6 +9,7 @@ import com.example.wwmeet_backend.domain.appointment.service.AppointmentService;
 import com.example.wwmeet_backend.domain.participant.service.ParticipantService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,36 +26,34 @@ public class AppointmentController {
     private final ParticipantService participantService;
 
     @PostMapping
-    public Long saveAppointment(@RequestBody SaveAppointmentRequest saveAppointmentRequest) {
+    public ResponseEntity<Long> saveAppointment(@RequestBody SaveAppointmentRequest saveAppointmentRequest) {
         Long savedAppointmentId = appointmentService.saveAppointment(saveAppointmentRequest);
 
         participantService.addParticipantByAppointmentId(
             saveAppointmentRequest.getParticipantName(), savedAppointmentId
         );
-
-        return savedAppointmentId;
+        return ResponseEntity.ok(savedAppointmentId);
     }
 
     @GetMapping("/{id}")
-    public FindAppointmentResponse findAppointmentById(@PathVariable(name = "id") Long id) {
-        return appointmentService.findAppointmentById(id);
+    public ResponseEntity<FindAppointmentResponse> findAppointmentById(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok(appointmentService.findAppointmentById(id));
     }
 
     @GetMapping
-    public List<FindAppointmentListResponse> findAllAppointment() {
-        return appointmentService.findAllAppointment();
+    public ResponseEntity<List<FindAppointmentListResponse>> findAllAppointment() {
+        return ResponseEntity.ok(appointmentService.findAllAppointment());
     }
 
     @GetMapping("/{id}/{participantName}/vote-status")
-    public boolean getParticipantWithVoteStatus(
+    public ResponseEntity<Boolean> getParticipantWithVoteStatus(
         @PathVariable("id") Long appointmentId, @PathVariable String participantName) {
-        System.out.println(participantName);
-        return appointmentService.getParticipantVoteStatus(appointmentId, participantName);
+        return ResponseEntity.ok(appointmentService.getParticipantVoteStatus(appointmentId, participantName));
     }
 
     @GetMapping("/{id}/date")
-    public AppointmentScheduleResponse getAppointmentDate(@PathVariable("id") Long id) {
-        return appointmentService.getAppointmentDate(id);
+    public ResponseEntity<AppointmentScheduleResponse> getAppointmentDate(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(appointmentService.getAppointmentDate(id));
     }
 
 }

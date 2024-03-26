@@ -1,7 +1,7 @@
 package com.example.wwmeet_backend.domain.participant.repository;
 
-import com.example.wwmeet_backend.domain.appointment.domain.Appointment;
-import com.example.wwmeet_backend.domain.participant.domain.Participant;
+import com.example.wwmeet_backend.domain.appointment.entity.Appointment;
+import com.example.wwmeet_backend.domain.participant.entity.Participant;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

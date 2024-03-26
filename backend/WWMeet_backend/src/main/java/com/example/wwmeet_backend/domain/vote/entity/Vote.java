@@ -1,7 +1,7 @@
-package com.example.wwmeet_backend.domain.vote.domain;
+package com.example.wwmeet_backend.domain.vote.entity;
 
-import com.example.wwmeet_backend.domain.participant.domain.Participant;
-import com.example.wwmeet_backend.domain.possibleschedule.domain.PossibleSchedule;
+import com.example.wwmeet_backend.domain.participant.entity.Participant;
+import com.example.wwmeet_backend.domain.possibleschedule.entity.PossibleSchedule;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

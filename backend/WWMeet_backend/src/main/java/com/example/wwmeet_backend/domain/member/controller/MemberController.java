@@ -4,6 +4,7 @@ import com.example.wwmeet_backend.domain.member.dto.SignInRequest;
 import com.example.wwmeet_backend.domain.member.dto.SignUpRequest;
 import com.example.wwmeet_backend.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,18 +19,14 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/signin")
-    public String signIn(@RequestBody SignInRequest signInRequest) {
-        return memberService.signIn(signInRequest);
+    public ResponseEntity<String> signIn(@RequestBody SignInRequest signInRequest) {
+        return ResponseEntity.ok(memberService.signIn(signInRequest));
     }
 
     @PostMapping("/signup")
-    public void signUp(@RequestBody SignUpRequest signUpRequest) {
+    public ResponseEntity<Void> signUp(@RequestBody SignUpRequest signUpRequest) {
         memberService.signUp(signUpRequest);
-    }
-
-    @GetMapping
-    public String test() {
-        return "test";
+        return ResponseEntity.ok().build();
     }
 
 }

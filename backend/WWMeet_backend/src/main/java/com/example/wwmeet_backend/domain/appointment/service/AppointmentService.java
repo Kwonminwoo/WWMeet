@@ -1,7 +1,7 @@
 package com.example.wwmeet_backend.domain.appointment.service;
 
 
-import com.example.wwmeet_backend.domain.appointment.domain.Appointment;
+import com.example.wwmeet_backend.domain.appointment.entity.Appointment;
 import com.example.wwmeet_backend.domain.appointment.dto.request.SaveAppointmentRequest;
 import com.example.wwmeet_backend.domain.appointment.dto.response.AppointmentScheduleResponse;
 import com.example.wwmeet_backend.domain.appointment.dto.response.DateRangeResponse;
@@ -9,12 +9,12 @@ import com.example.wwmeet_backend.domain.appointment.dto.response.FindAppointmen
 import com.example.wwmeet_backend.domain.appointment.dto.response.FindAppointmentResponse;
 import com.example.wwmeet_backend.domain.appointment.repository.AppointmentRepository;
 import com.example.wwmeet_backend.domain.appointment.util.AppointmentDtoMapper;
-import com.example.wwmeet_backend.domain.appointmentDate.domain.AppointmentDate;
+import com.example.wwmeet_backend.domain.appointmentDate.entity.AppointmentDate;
 import com.example.wwmeet_backend.domain.appointmentDate.repository.AppointmentDateRepository;
-import com.example.wwmeet_backend.domain.member.domain.Member;
-import com.example.wwmeet_backend.domain.participant.domain.Participant;
+import com.example.wwmeet_backend.domain.member.entity.Member;
+import com.example.wwmeet_backend.domain.participant.entity.Participant;
 import com.example.wwmeet_backend.domain.participant.repository.ParticipantRepository;
-import com.example.wwmeet_backend.domain.vote.domain.Vote;
+import com.example.wwmeet_backend.domain.vote.entity.Vote;
 import com.example.wwmeet_backend.domain.vote.repository.VoteRepository;
 import com.example.wwmeet_backend.global.util.CurrentMemberService;
 import java.util.ArrayList;

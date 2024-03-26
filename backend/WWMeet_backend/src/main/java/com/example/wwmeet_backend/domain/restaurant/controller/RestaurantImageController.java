@@ -1,6 +1,7 @@
-package com.example.wwmeet_backend.domain.restaurant;
+package com.example.wwmeet_backend.domain.restaurant.controller;
 
 
+import com.example.wwmeet_backend.domain.restaurant.service.RestaurantCrawlingService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

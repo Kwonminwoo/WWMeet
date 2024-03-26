@@ -1,7 +1,7 @@
 package com.example.wwmeet_backend.domain.member.jwt;
 
-import com.example.wwmeet_backend.domain.member.domain.Member;
-import com.example.wwmeet_backend.domain.member.domain.SecurityMember;
+import com.example.wwmeet_backend.domain.member.entity.Member;
+import com.example.wwmeet_backend.domain.member.entity.SecurityMember;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;

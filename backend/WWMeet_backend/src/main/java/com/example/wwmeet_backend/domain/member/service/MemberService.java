@@ -1,6 +1,6 @@
 package com.example.wwmeet_backend.domain.member.service;
 
-import com.example.wwmeet_backend.domain.member.domain.Member;
+import com.example.wwmeet_backend.domain.member.entity.Member;
 import com.example.wwmeet_backend.domain.member.dto.SignInRequest;
 import com.example.wwmeet_backend.domain.member.dto.SignUpRequest;
 import com.example.wwmeet_backend.domain.member.jwt.JwtProvider;

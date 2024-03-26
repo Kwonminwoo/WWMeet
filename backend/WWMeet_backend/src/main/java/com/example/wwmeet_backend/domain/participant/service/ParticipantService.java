@@ -1,9 +1,9 @@
 package com.example.wwmeet_backend.domain.participant.service;
 
-import com.example.wwmeet_backend.domain.appointment.domain.Appointment;
+import com.example.wwmeet_backend.domain.appointment.entity.Appointment;
 import com.example.wwmeet_backend.domain.appointment.repository.AppointmentRepository;
-import com.example.wwmeet_backend.domain.member.domain.Member;
-import com.example.wwmeet_backend.domain.participant.domain.Participant;
+import com.example.wwmeet_backend.domain.member.entity.Member;
+import com.example.wwmeet_backend.domain.participant.entity.Participant;
 import com.example.wwmeet_backend.domain.participant.dto.AddParticipantRequest;
 import com.example.wwmeet_backend.domain.participant.dto.FindParticipantResponse;
 import com.example.wwmeet_backend.domain.participant.repository.ParticipantRepository;
