@@ -1,7 +1,7 @@
 package com.example.wwmeet_backend.domain.vote.repository;
 
-import com.example.wwmeet_backend.domain.participant.domain.Participant;
-import com.example.wwmeet_backend.domain.vote.domain.Vote;
+import com.example.wwmeet_backend.domain.participant.entity.Participant;
+import com.example.wwmeet_backend.domain.vote.entity.Vote;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

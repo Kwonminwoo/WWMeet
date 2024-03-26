@@ -1,6 +1,6 @@
 package com.example.wwmeet_backend.global.util;
 
-import com.example.wwmeet_backend.domain.member.domain.Member;
+import com.example.wwmeet_backend.domain.member.entity.Member;
 import com.example.wwmeet_backend.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

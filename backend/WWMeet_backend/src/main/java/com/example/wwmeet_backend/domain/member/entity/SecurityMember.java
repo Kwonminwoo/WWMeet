@@ -1,4 +1,4 @@
-package com.example.wwmeet_backend.domain.member.domain;
+package com.example.wwmeet_backend.domain.member.entity;
 
 import java.util.Collection;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.example.wwmeet_backend.domain.appointment.util;
 
-import com.example.wwmeet_backend.domain.appointment.domain.Appointment;
+import com.example.wwmeet_backend.domain.appointment.entity.Appointment;
 import com.example.wwmeet_backend.domain.appointment.dto.request.SaveAppointmentRequest;
-import com.example.wwmeet_backend.domain.member.domain.Member;
+import com.example.wwmeet_backend.domain.member.entity.Member;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

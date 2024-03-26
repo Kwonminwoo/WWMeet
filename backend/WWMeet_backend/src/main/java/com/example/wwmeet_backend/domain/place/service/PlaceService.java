@@ -1,10 +1,10 @@
 package com.example.wwmeet_backend.domain.place.service;
 
-import com.example.wwmeet_backend.domain.appointment.domain.Appointment;
+import com.example.wwmeet_backend.domain.appointment.entity.Appointment;
 import com.example.wwmeet_backend.domain.appointment.repository.AppointmentRepository;
-import com.example.wwmeet_backend.domain.participant.domain.Participant;
+import com.example.wwmeet_backend.domain.participant.entity.Participant;
 import com.example.wwmeet_backend.domain.participant.repository.ParticipantRepository;
-import com.example.wwmeet_backend.domain.place.domain.Place;
+import com.example.wwmeet_backend.domain.place.entity.Place;
 import com.example.wwmeet_backend.domain.place.dto.request.SavePlaceRequest;
 import com.example.wwmeet_backend.domain.place.dto.response.FindAllPlaceResponse;
 import com.example.wwmeet_backend.domain.place.repository.PlaceRepository;

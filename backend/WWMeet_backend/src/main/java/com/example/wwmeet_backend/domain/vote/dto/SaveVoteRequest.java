@@ -1,7 +1,7 @@
 package com.example.wwmeet_backend.domain.vote.dto;
 
 
-import com.example.wwmeet_backend.domain.possibleschedule.domain.PossibleSchedule;
+import com.example.wwmeet_backend.domain.possibleschedule.entity.PossibleSchedule;
 import com.example.wwmeet_backend.domain.possibleschedule.dto.SavePossibleScheduleRequest;
 import java.util.ArrayList;
 import java.util.List;

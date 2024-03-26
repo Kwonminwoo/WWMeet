@@ -1,16 +1,16 @@
 package com.example.wwmeet_backend.domain.vote.service;
 
 
-import com.example.wwmeet_backend.domain.appointment.domain.Appointment;
+import com.example.wwmeet_backend.domain.appointment.entity.Appointment;
 import com.example.wwmeet_backend.domain.appointment.repository.AppointmentRepository;
 import com.example.wwmeet_backend.domain.appointment.service.AppointmentService;
 import com.example.wwmeet_backend.domain.appointmentDate.service.AppointmentDateService;
-import com.example.wwmeet_backend.domain.participant.domain.Participant;
+import com.example.wwmeet_backend.domain.participant.entity.Participant;
 import com.example.wwmeet_backend.domain.participant.repository.ParticipantRepository;
-import com.example.wwmeet_backend.domain.possibleschedule.domain.PossibleSchedule;
+import com.example.wwmeet_backend.domain.possibleschedule.entity.PossibleSchedule;
 import com.example.wwmeet_backend.domain.possibleschedule.dto.SavePossibleScheduleRequest;
 import com.example.wwmeet_backend.domain.possibleschedule.repository.PossibleScheduleRepository;
-import com.example.wwmeet_backend.domain.vote.domain.Vote;
+import com.example.wwmeet_backend.domain.vote.entity.Vote;
 import com.example.wwmeet_backend.domain.vote.dto.SaveVoteRequest;
 import com.example.wwmeet_backend.domain.vote.repository.VoteRepository;
 import java.util.ArrayList;

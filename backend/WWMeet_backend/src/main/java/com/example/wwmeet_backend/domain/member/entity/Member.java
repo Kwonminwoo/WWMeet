@@ -1,4 +1,4 @@
-package com.example.wwmeet_backend.domain.member.domain;
+package com.example.wwmeet_backend.domain.member.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

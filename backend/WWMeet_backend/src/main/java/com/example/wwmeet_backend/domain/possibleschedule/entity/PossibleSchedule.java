@@ -1,6 +1,6 @@
-package com.example.wwmeet_backend.domain.possibleschedule.domain;
+package com.example.wwmeet_backend.domain.possibleschedule.entity;
 
-import com.example.wwmeet_backend.domain.appointment.domain.Appointment;
+import com.example.wwmeet_backend.domain.appointment.entity.Appointment;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

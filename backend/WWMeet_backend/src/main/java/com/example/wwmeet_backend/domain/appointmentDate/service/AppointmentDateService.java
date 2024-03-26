@@ -1,9 +1,9 @@
 package com.example.wwmeet_backend.domain.appointmentDate.service;
 
-import com.example.wwmeet_backend.domain.appointment.domain.Appointment;
-import com.example.wwmeet_backend.domain.appointmentDate.domain.AppointmentDate;
+import com.example.wwmeet_backend.domain.appointment.entity.Appointment;
+import com.example.wwmeet_backend.domain.appointmentDate.entity.AppointmentDate;
 import com.example.wwmeet_backend.domain.appointmentDate.repository.AppointmentDateRepository;
-import com.example.wwmeet_backend.domain.possibleschedule.domain.PossibleSchedule;
+import com.example.wwmeet_backend.domain.possibleschedule.entity.PossibleSchedule;
 import com.example.wwmeet_backend.domain.possibleschedule.repository.PossibleScheduleRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

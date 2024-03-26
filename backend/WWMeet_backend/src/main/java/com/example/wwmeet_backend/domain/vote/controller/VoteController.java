@@ -4,6 +4,7 @@ package com.example.wwmeet_backend.domain.vote.controller;
 import com.example.wwmeet_backend.domain.vote.dto.SaveVoteRequest;
 import com.example.wwmeet_backend.domain.vote.service.VoteService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,9 +19,9 @@ public class VoteController {
     private final VoteService voteService;
 
     @PostMapping
-    public Long voteAppointmentSchedule(@PathVariable Long id,
+    public ResponseEntity<Long> voteAppointmentSchedule(@PathVariable Long id,
         @RequestBody SaveVoteRequest saveVoteRequest) {
-        return voteService.saveVoteSchedule(id, saveVoteRequest);
+        return ResponseEntity.ok(voteService.saveVoteSchedule(id, saveVoteRequest));
     }
 
 }

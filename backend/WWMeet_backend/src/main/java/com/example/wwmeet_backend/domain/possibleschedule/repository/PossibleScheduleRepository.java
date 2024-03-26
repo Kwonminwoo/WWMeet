@@ -1,6 +1,6 @@
 package com.example.wwmeet_backend.domain.possibleschedule.repository;
 
-import com.example.wwmeet_backend.domain.possibleschedule.domain.PossibleSchedule;
+import com.example.wwmeet_backend.domain.possibleschedule.entity.PossibleSchedule;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
