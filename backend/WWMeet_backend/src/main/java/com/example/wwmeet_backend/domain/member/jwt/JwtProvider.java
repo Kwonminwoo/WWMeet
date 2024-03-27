@@ -8,6 +8,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,7 +45,7 @@ public class JwtProvider {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
     }
 
-    public String createToken(Member member) {
+    public String createAccessToken(Member member) {
         SecurityMember securityMember = new SecurityMember(member);
 
         Date now = new Date();
@@ -56,5 +57,10 @@ public class JwtProvider {
             .signWith(SignatureAlgorithm.HS256, key)
             .setIssuedAt(now)
             .compact();
+    }
+
+    public String createRefreshToken(){
+        String refreshToken = UUID.randomUUID().toString();
+        return refreshToken;
     }
 }
