@@ -1,4 +1,4 @@
-package com.example.wwmeet_backend.domain.member.dto;
+package com.example.wwmeet_backend.domain.member.dto.request;
 
 import lombok.Builder;
 import lombok.Getter;
