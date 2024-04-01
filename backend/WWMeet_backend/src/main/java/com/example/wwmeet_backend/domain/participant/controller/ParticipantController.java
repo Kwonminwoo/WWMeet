@@ -2,9 +2,8 @@ package com.example.wwmeet_backend.domain.participant.controller;
 
 
 import com.example.wwmeet_backend.domain.participant.dto.AddParticipantRequest;
-import com.example.wwmeet_backend.domain.participant.dto.FindParticipantResponse;
 import com.example.wwmeet_backend.domain.participant.service.ParticipantService;
-import java.util.List;
+import com.example.wwmeet_backend.global.response.ResponseAPI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,15 +19,16 @@ public class ParticipantController {
     private final ParticipantService participantService;
 
     @PostMapping("/api/appointments/participant")
-    public ResponseEntity<Long> saveParticipantOfAppointment(
+    public ResponseEntity<ResponseAPI> saveParticipantOfAppointment(
         @RequestBody AddParticipantRequest addParticipantRequest) {
-        return ResponseEntity.ok(
-            participantService.addParticipantByIdentificationCode(addParticipantRequest));
+        return ResponseEntity.ok(ResponseAPI.response("참가자 추가 성공",
+            participantService.addParticipantByIdentificationCode(addParticipantRequest)));
     }
 
     @GetMapping("/api/participants/{appointment_id}")
-    public ResponseEntity<List<FindParticipantResponse>> findAllParticipantOfAppointment(
+    public ResponseEntity<ResponseAPI> findAllParticipantOfAppointment(
         @PathVariable("appointment_id") Long id) {
-        return ResponseEntity.ok(participantService.getParticipantList(id));
+        return ResponseEntity.ok(ResponseAPI.response("모든 참가자 조회 성공",
+            participantService.getParticipantList(id)));
     }
 }

@@ -3,6 +3,7 @@ package com.example.wwmeet_backend.domain.place.controller;
 import com.example.wwmeet_backend.domain.place.dto.request.SavePlaceRequest;
 import com.example.wwmeet_backend.domain.place.dto.response.FindAllPlaceResponse;
 import com.example.wwmeet_backend.domain.place.service.PlaceService;
+import com.example.wwmeet_backend.global.response.ResponseAPI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +22,15 @@ public class PlaceController {
     private final PlaceService placeService;
 
     @PostMapping
-    public ResponseEntity<Void> saveAddress(@RequestBody SavePlaceRequest savePlaceRequest) {
+    public ResponseEntity<ResponseAPI> saveAddress(@RequestBody SavePlaceRequest savePlaceRequest) {
         placeService.saveAddress(savePlaceRequest);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ResponseAPI.response("주소 저장 성공"));
     }
 
     @GetMapping("/{appointment_id}")
-    public ResponseEntity<List<FindAllPlaceResponse>> findAllAddress(
+    public ResponseEntity<ResponseAPI> findAllAddress(
         @PathVariable(name = "appointment_id") Long appointmentId) {
-        return ResponseEntity.ok(placeService.findAllAddress(appointmentId));
+        return ResponseEntity.ok(ResponseAPI.response("모든 주소 조회 성공",
+            placeService.findAllAddress(appointmentId)));
     }
 }
