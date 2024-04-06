@@ -13,6 +13,9 @@ import com.example.wwmeet_android.MainActivity;
 import com.example.wwmeet_android.R;
 import com.example.wwmeet_android.database.SharedPreferenceUtil;
 import com.example.wwmeet_android.member.dto.SignInRequest;
+import com.example.wwmeet_android.member.dto.SignInResponse;
+import com.example.wwmeet_android.member.dto.SignUpRequest;
+import com.example.wwmeet_android.network.ResponseAPI;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 
@@ -71,10 +74,10 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void signIn(String email, String password){
-        Call<String> signInCall = retrofitService.signIn(new SignInRequest(email, password));
-        signInCall.enqueue(new Callback<String>() {
+        Call<ResponseAPI<SignInResponse>> signInCall = retrofitService.signIn(new SignInRequest(email, password));
+        signInCall.enqueue(new Callback<ResponseAPI<SignInResponse>>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<ResponseAPI<SignInResponse>> call, Response<ResponseAPI<SignInResponse>> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(SignInActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                     try {
@@ -85,7 +88,7 @@ public class SignInActivity extends AppCompatActivity {
                     return;
                 }
                 SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
-                sharedPreferenceUtil.putData("token", response.body());
+                sharedPreferenceUtil.putData("token", response.body().getData().getAccessToken());
 
                 Toast.makeText(SignInActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -94,11 +97,12 @@ public class SignInActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<ResponseAPI<SignInResponse>> call, Throwable t) {
                 Toast.makeText(SignInActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                Log.e("서버 연결 실패", t.getMessage());
+                Log.e("(로그인) 서버 연결 실패", t.getMessage());
             }
         });
+
     }
 
 }
