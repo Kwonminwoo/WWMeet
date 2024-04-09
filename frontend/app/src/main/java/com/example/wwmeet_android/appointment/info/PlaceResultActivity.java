@@ -25,6 +25,7 @@ import com.example.wwmeet_android.database.SharedPreferenceUtil;
 import com.example.wwmeet_android.domain.UserLocation;
 import com.example.wwmeet_android.dto.FindAllAddressResponse;
 import com.example.wwmeet_android.network.AuthRetrofitProvider;
+import com.example.wwmeet_android.network.ResponseAPI;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 import com.naver.maps.geometry.LatLng;
@@ -108,10 +109,10 @@ public class PlaceResultActivity extends AppCompatActivity implements OnMapReady
     private void findAllAddress(){
         Intent intent = getIntent();
         long appointmentId = intent.getLongExtra("appointmentId", -1);
-        Call<List<FindAllAddressResponse>> findAddressCall = retrofitService.findAllAddress(appointmentId);
-        findAddressCall.enqueue(new Callback<List<FindAllAddressResponse>>() {
+        Call<ResponseAPI<List<FindAllAddressResponse>>> findAddressCall = retrofitService.findAllAddress(appointmentId);
+        findAddressCall.enqueue(new Callback<ResponseAPI<List<FindAllAddressResponse>>>() {
             @Override
-            public void onResponse(Call<List<FindAllAddressResponse>> call, Response<List<FindAllAddressResponse>> response) {
+            public void onResponse(Call<ResponseAPI<List<FindAllAddressResponse>>> call, Response<ResponseAPI<List<FindAllAddressResponse>>> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(PlaceResultActivity.this, "주소 조회 실패했습니다.", Toast.LENGTH_SHORT).show();
                     try {
@@ -122,7 +123,7 @@ public class PlaceResultActivity extends AppCompatActivity implements OnMapReady
                     return;
                 }
 
-                for(FindAllAddressResponse findAddress : response.body()){
+                for(FindAllAddressResponse findAddress : response.body().getData()){
                     userLocationList.add(new UserLocation(findAddress.getParticipantName(),
                             findAddress.getAddress(), findAddress.getLatitude(), findAddress.getLongitude()));
                 }
@@ -131,7 +132,7 @@ public class PlaceResultActivity extends AppCompatActivity implements OnMapReady
             }
 
             @Override
-            public void onFailure(Call<List<FindAllAddressResponse>> call, Throwable t) {
+            public void onFailure(Call<ResponseAPI<List<FindAllAddressResponse>>> call, Throwable t) {
                 Toast.makeText(PlaceResultActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
                 Log.e("서버 연결에 실패", t.getMessage());
             }

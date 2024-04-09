@@ -3,6 +3,7 @@ package com.example.wwmeet_backend.domain.member.controller;
 import com.example.wwmeet_backend.domain.member.dto.request.RefreshTokenRequest;
 import com.example.wwmeet_backend.domain.member.dto.request.SignInRequest;
 import com.example.wwmeet_backend.domain.member.dto.request.SignUpRequest;
+import com.example.wwmeet_backend.domain.member.dto.response.SignInResponse;
 import com.example.wwmeet_backend.domain.member.service.MemberService;
 import com.example.wwmeet_backend.global.response.ResponseAPI;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,8 @@ public class MemberController {
 
     @PostMapping("/signin")
     public ResponseEntity<ResponseAPI> signIn(@RequestBody SignInRequest signInRequest) {
-        return ResponseEntity.ok(ResponseAPI.response("로그인 성공",
-            memberService.signIn(signInRequest)));
+        return ResponseEntity.ok(
+            ResponseAPI.response("로그인 성공", memberService.signIn(signInRequest)));
     }
 
     @PostMapping("/signup")

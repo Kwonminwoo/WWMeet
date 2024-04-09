@@ -26,6 +26,7 @@ import com.example.wwmeet_android.dto.FindAppointmentResponse;
 import com.example.wwmeet_android.dto.FindParticipantResponse;
 import com.example.wwmeet_android.dto.ScheduleResponse;
 import com.example.wwmeet_android.network.AuthRetrofitProvider;
+import com.example.wwmeet_android.network.ResponseAPI;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 
@@ -121,10 +122,10 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
 
     private void setAppointmentData(){
         long appointmentId = getIntent().getLongExtra("appointmentId", 0L);
-        Call<FindAppointmentResponse> getAppointmentCall = retrofitService.findAppointmentById(appointmentId);
-        getAppointmentCall.enqueue(new Callback<FindAppointmentResponse>() {
+        Call<ResponseAPI<FindAppointmentResponse>> getAppointmentCall = retrofitService.findAppointmentById(appointmentId);
+        getAppointmentCall.enqueue(new Callback<ResponseAPI<FindAppointmentResponse>>() {
             @Override
-            public void onResponse(Call<FindAppointmentResponse> call, Response<FindAppointmentResponse> response) {
+            public void onResponse(Call<ResponseAPI<FindAppointmentResponse>> call, Response<ResponseAPI<FindAppointmentResponse>> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(AppointmentInfoAfterActivity.this, "약속 조회에 실패했습니다.", Toast.LENGTH_SHORT).show();
                     try {
@@ -134,7 +135,7 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
                     }
                     return;
                 }
-                FindAppointmentResponse appointment = response.body();
+                FindAppointmentResponse appointment = response.body().getData();
 
                 nameText.setText(appointment.getAppointmentName());
                 placeText.setText(appointment.getAppointmentPlace());
@@ -142,7 +143,7 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<FindAppointmentResponse> call, Throwable t) {
+            public void onFailure(Call<ResponseAPI<FindAppointmentResponse>> call, Throwable t) {
                 Toast.makeText(AppointmentInfoAfterActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
                 Log.e("서버 연결에 실패했습니다.", t.getMessage());
             }
@@ -153,10 +154,10 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
 
     private void setAppointmentSchedule(){
         long appointmentId = getIntent().getLongExtra("appointmentId", 0L);
-        Call<AppointmentScheduleResponse> appointmentSchedule = retrofitService.getAppointmentSchedule(appointmentId);
-        appointmentSchedule.enqueue(new Callback<AppointmentScheduleResponse>() {
+        Call<ResponseAPI<AppointmentScheduleResponse>> appointmentSchedule = retrofitService.getAppointmentSchedule(appointmentId);
+        appointmentSchedule.enqueue(new Callback<ResponseAPI<AppointmentScheduleResponse>>() {
             @Override
-            public void onResponse(Call<AppointmentScheduleResponse> call, Response<AppointmentScheduleResponse> response) {
+            public void onResponse(Call<ResponseAPI<AppointmentScheduleResponse>> call, Response<ResponseAPI<AppointmentScheduleResponse>> response) {
                 if(!response.isSuccessful()){
                     Toast.makeText(AppointmentInfoAfterActivity.this, "약속 날짜 조회를 실패했습니다.", Toast.LENGTH_SHORT).show();
                     try {
@@ -166,7 +167,7 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
                     }
                     return;
                 }
-                AppointmentScheduleResponse appointmentSchedule = response.body();
+                AppointmentScheduleResponse appointmentSchedule = response.body().getData();
                 ScheduleResponse firstSchedule = appointmentSchedule.getFirstSchedule();
                 ScheduleResponse secondSchedule = appointmentSchedule.getSecondSchedule();
                 ScheduleResponse thirdSchedule = appointmentSchedule.getThirdSchedule();
@@ -189,9 +190,9 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AppointmentScheduleResponse> call, Throwable t) {
+            public void onFailure(Call<ResponseAPI<AppointmentScheduleResponse>> call, Throwable t) {
                 Toast.makeText(AppointmentInfoAfterActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                Log.e("서버 연결 실패", t.getMessage());
+                Log.e("(약속 날짜 조회) 서버 연결 실패", t.getMessage());
             }
         });
     }
@@ -209,11 +210,11 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
 
     private void setParticipantData(){
         long appointmentId = getIntent().getLongExtra("appointmentId", 0L);
-        Call<List<FindParticipantResponse>> findAllParticipantCall =
+        Call<ResponseAPI<List<FindParticipantResponse>>> findAllParticipantCall =
                 retrofitService.getAllParticipantOfAppointment(appointmentId);
-        findAllParticipantCall.enqueue(new Callback<List<FindParticipantResponse>>() {
+        findAllParticipantCall.enqueue(new Callback<ResponseAPI<List<FindParticipantResponse>>>() {
             @Override
-            public void onResponse(Call<List<FindParticipantResponse>> call, Response<List<FindParticipantResponse>> response) {
+            public void onResponse(Call<ResponseAPI<List<FindParticipantResponse>>> call, Response<ResponseAPI<List<FindParticipantResponse>>> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(AppointmentInfoAfterActivity.this, "참가자 조회에 실패했습니다.", Toast.LENGTH_SHORT).show();
                     try {
@@ -223,7 +224,7 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
                     }
                     return;
                 }
-                for (FindParticipantResponse participantResponse : response.body()) {
+                for (FindParticipantResponse participantResponse : response.body().getData()) {
                     Participant participant = new Participant(participantResponse.getParticipantName(), participantResponse.getVoteState());
                     participantList.add(participant);
                 }
@@ -231,9 +232,9 @@ public class AppointmentInfoAfterActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<FindParticipantResponse>> call, Throwable t) {
+            public void onFailure(Call<ResponseAPI<List<FindParticipantResponse>>> call, Throwable t) {
                 Toast.makeText(AppointmentInfoAfterActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                Log.e("서버 연결 실패", t.getMessage());
+                Log.e("(참가자 조회) 서버 연결 실패", t.getMessage());
             }
         });
     }

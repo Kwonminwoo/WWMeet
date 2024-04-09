@@ -1,5 +1,8 @@
 package com.example.wwmeet_backend.global.response;
 
+import lombok.Getter;
+
+@Getter
 public class ResponseAPI {
     private String message;
     private int code;
