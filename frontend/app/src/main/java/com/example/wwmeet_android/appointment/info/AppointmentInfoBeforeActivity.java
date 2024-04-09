@@ -157,10 +157,10 @@ public class AppointmentInfoBeforeActivity extends AppCompatActivity {
 
     private void setParticipantList(){
         long appointmentId = getIntent().getLongExtra("appointmentId", 0L);
-        Call<List<FindParticipantResponse>> findParticipantListCall = retrofitService.getAllParticipantOfAppointment(appointmentId);
-        findParticipantListCall.enqueue(new Callback<List<FindParticipantResponse>>() {
+        Call<ResponseAPI<List<FindParticipantResponse>>> findParticipantListCall = retrofitService.getAllParticipantOfAppointment(appointmentId);
+        findParticipantListCall.enqueue(new Callback<ResponseAPI<List<FindParticipantResponse>>>() {
             @Override
-            public void onResponse(Call<List<FindParticipantResponse>> call, Response<List<FindParticipantResponse>> response) {
+            public void onResponse(Call<ResponseAPI<List<FindParticipantResponse>>> call, Response<ResponseAPI<List<FindParticipantResponse>>> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(AppointmentInfoBeforeActivity.this, "참가자 조회에 실패했습니다.", Toast.LENGTH_SHORT).show();
                     try {
@@ -170,7 +170,7 @@ public class AppointmentInfoBeforeActivity extends AppCompatActivity {
                     }
                     return;
                 }
-                for (FindParticipantResponse participantResponse : response.body()) {
+                for (FindParticipantResponse participantResponse : response.body().getData()) {
                     Participant participant = new Participant(participantResponse.getParticipantName(), participantResponse.getVoteState());
                     participantList.add(participant);
                 }
@@ -178,7 +178,7 @@ public class AppointmentInfoBeforeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<FindParticipantResponse>> call, Throwable t) {
+            public void onFailure(Call<ResponseAPI<List<FindParticipantResponse>>> call, Throwable t) {
                 Toast.makeText(AppointmentInfoBeforeActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
                 Log.e("서버 연결 실패", t.getMessage());
             }

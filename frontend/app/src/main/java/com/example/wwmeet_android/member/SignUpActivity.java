@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.wwmeet_android.R;
 import com.example.wwmeet_android.member.dto.SignUpRequest;
+import com.example.wwmeet_android.network.ResponseAPI;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 
@@ -90,10 +91,10 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void signUp(String email, String password){
-        Call<Void> signUp = retrofitService.signUp(new SignUpRequest(email, password));
-        signUp.enqueue(new Callback<Void>() {
+        Call<ResponseAPI<Void>> signUp = retrofitService.signUp(new SignUpRequest(email, password));
+        signUp.enqueue(new Callback<ResponseAPI<Void>>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<ResponseAPI<Void>> call, Response<ResponseAPI<Void>> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(SignUpActivity.this, "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show();
                     try {
@@ -107,7 +108,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<ResponseAPI<Void>> call, Throwable t) {
                 Toast.makeText(SignUpActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
                 Log.e("서버 연결 실패", t.getMessage());
             }

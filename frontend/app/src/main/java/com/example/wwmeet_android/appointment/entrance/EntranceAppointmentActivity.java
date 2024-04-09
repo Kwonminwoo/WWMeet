@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wwmeet_android.database.SharedPreferenceUtil;
 import com.example.wwmeet_android.network.AuthRetrofitProvider;
+import com.example.wwmeet_android.network.ResponseAPI;
 import com.example.wwmeet_android.util.LocalDatabaseUtil;
 import com.example.wwmeet_android.R;
 import com.example.wwmeet_android.domain.MyAppointment;
@@ -63,10 +64,10 @@ public class EntranceAppointmentActivity extends AppCompatActivity {
         AddParticipantRequest addParticipantRequest = new AddParticipantRequest(
                 nameEdit.getText().toString(), codeEdit.getText().toString());
 
-        Call<Long> entranceCall = retrofitService.addParticipantByCode(addParticipantRequest);
-        entranceCall.enqueue(new Callback<Long>() {
+        Call<ResponseAPI<Long>> entranceCall = retrofitService.addParticipantByCode(addParticipantRequest);
+        entranceCall.enqueue(new Callback<ResponseAPI<Long>>() {
             @Override
-            public void onResponse(Call<Long> call, Response<Long> response) {
+            public void onResponse(Call<ResponseAPI<Long>> call, Response<ResponseAPI<Long>> response) {
                 if(!response.isSuccessful()){
                     Toast.makeText(EntranceAppointmentActivity.this, "약속 입장에 실패했습니다.", Toast.LENGTH_SHORT).show();
                     try {
@@ -81,7 +82,7 @@ public class EntranceAppointmentActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Long> call, Throwable t) {
+            public void onFailure(Call<ResponseAPI<Long>> call, Throwable t) {
                 Toast.makeText(EntranceAppointmentActivity.this, "서버와의 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
                 Log.e("약속 입장 실패", t.getMessage());
             }

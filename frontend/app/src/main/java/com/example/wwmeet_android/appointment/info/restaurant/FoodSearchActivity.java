@@ -21,6 +21,7 @@ import com.example.wwmeet_android.dto.kakao.KakoSearchResponse;
 import com.example.wwmeet_android.dto.kakao.SearchRestaurantResponse;
 import com.example.wwmeet_android.network.KakaoApiRetrofitProvider;
 import com.example.wwmeet_android.network.KakaoService;
+import com.example.wwmeet_android.network.ResponseAPI;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 import com.example.wwmeet_android.util.KaKaoAPI;
@@ -143,10 +144,10 @@ public class FoodSearchActivity extends AppCompatActivity {
 
     private void getCrawlingRestaurantImage(List<String> urlList) {
 
-        Call<List<String>> getImageUrlListCall = retrofitService.getRestaurantImageList(urlList);
-        getImageUrlListCall.enqueue(new Callback<List<String>>() {
+        Call<ResponseAPI<List<String>>> getImageUrlListCall = retrofitService.getRestaurantImageList(urlList);
+        getImageUrlListCall.enqueue(new Callback<ResponseAPI<List<String>>>() {
             @Override
-            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+            public void onResponse(Call<ResponseAPI<List<String>>> call, Response<ResponseAPI<List<String>>> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(FoodSearchActivity.this, "이미지 조회에 실패했습니다.", Toast.LENGTH_SHORT).show();
                     try {
@@ -159,7 +160,7 @@ public class FoodSearchActivity extends AppCompatActivity {
 
                 for (int i = 0;i < restaurantListFromServer.size();i++) {
                     Restaurant restaurant = restaurantListFromServer.get(i);
-                    List<String> imageUrlList = response.body();
+                    List<String> imageUrlList = response.body().getData();
                     restaurant.setImageUrl(imageUrlList.get(i));
                 }
 
@@ -169,7 +170,7 @@ public class FoodSearchActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<String>> call, Throwable t) {
+            public void onFailure(Call<ResponseAPI<List<String>>> call, Throwable t) {
                 Toast.makeText(FoodSearchActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
                 Log.e("서버 연결에 실패", t.getMessage());
             }
@@ -202,9 +203,9 @@ public class FoodSearchActivity extends AppCompatActivity {
         placeThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Call<List<FindAllAddressResponse>> findAddressCall = retrofitService.findAllAddress(getIntent().getLongExtra("appointmentId", -1));
+                Call<ResponseAPI<List<FindAllAddressResponse>>> findAddressCall = retrofitService.findAllAddress(getIntent().getLongExtra("appointmentId", -1));
                 try {
-                    Response<List<FindAllAddressResponse>> response = findAddressCall.execute();
+                    Response<ResponseAPI<List<FindAllAddressResponse>>> response = findAddressCall.execute();
                     if (!response.isSuccessful()) {
                         Toast.makeText(FoodSearchActivity.this, "주소 조회에 실패했습니다.", Toast.LENGTH_SHORT).show();
                         try {
@@ -214,7 +215,7 @@ public class FoodSearchActivity extends AppCompatActivity {
                         }
                         return;
                     }
-                    List<FindAllAddressResponse> addressList = response.body();
+                    List<FindAllAddressResponse> addressList = response.body().getData();
                     double latitudeSum = 0.0;
                     double longitudeSum = 0.0;
                     for (FindAllAddressResponse address : addressList) {

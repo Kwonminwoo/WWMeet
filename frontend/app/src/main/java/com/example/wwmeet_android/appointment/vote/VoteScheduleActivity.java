@@ -31,6 +31,7 @@ import com.example.wwmeet_android.dto.PossibleScheduleRequest;
 import com.example.wwmeet_android.dto.SaveAddressRequest;
 import com.example.wwmeet_android.dto.VoteScheduleRequest;
 import com.example.wwmeet_android.network.AuthRetrofitProvider;
+import com.example.wwmeet_android.network.ResponseAPI;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 
@@ -207,10 +208,10 @@ public class VoteScheduleActivity extends AppCompatActivity {
 
         VoteScheduleRequest voteScheduleRequest = new VoteScheduleRequest(participantName, voteDateTimeList);
 
-        Call<Long> voteCall = retrofitService.voteSchedule(appointmentId, voteScheduleRequest);
-        voteCall.enqueue(new Callback<Long>() {
+        Call<ResponseAPI<Long>> voteCall = retrofitService.voteSchedule(appointmentId, voteScheduleRequest);
+        voteCall.enqueue(new Callback<ResponseAPI<Long>>() {
             @Override
-            public void onResponse(Call<Long> call, Response<Long> response) {
+            public void onResponse(Call<ResponseAPI<Long>> call, Response<ResponseAPI<Long>> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(VoteScheduleActivity.this, "일정 투표에 실패했습니다.", Toast.LENGTH_SHORT).show();
                     try {
@@ -221,13 +222,13 @@ public class VoteScheduleActivity extends AppCompatActivity {
                     return;
                 }
                 Intent intent = new Intent(getApplicationContext(), AppointmentInfoBeforeActivity.class);
-                intent.putExtra("appointmentId", response.body());
+                intent.putExtra("appointmentId", response.body().getData());
                 startActivity(intent);
                 finish();
             }
 
             @Override
-            public void onFailure(Call<Long> call, Throwable t) {
+            public void onFailure(Call<ResponseAPI<Long>> call, Throwable t) {
                 Toast.makeText(VoteScheduleActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
                 Log.e("서버 연결에 실패했습니다.", t.getMessage());
             }
@@ -240,11 +241,11 @@ public class VoteScheduleActivity extends AppCompatActivity {
         AddressRequest address = intent.getSerializableExtra("address", AddressRequest.class);
         long appointmentId = intent.getLongExtra("appointmentId", -1);
         String participantName = intent.getStringExtra("participantName");
-        Call<Void> saveAddressCall = retrofitService.saveAddress(new SaveAddressRequest(appointmentId,
+        Call<ResponseAPI<Void>> saveAddressCall = retrofitService.saveAddress(new SaveAddressRequest(appointmentId,
                 participantName, address.getAddressName(), address.getLatitude(), address.getLongitude()));
-        saveAddressCall.enqueue(new Callback<Void>() {
+        saveAddressCall.enqueue(new Callback<ResponseAPI<Void>>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<ResponseAPI<Void>> call, Response<ResponseAPI<Void>> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(VoteScheduleActivity.this, "주소 저장에 실패했습니다.", Toast.LENGTH_SHORT).show();
                     try {
@@ -256,9 +257,9 @@ public class VoteScheduleActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<ResponseAPI<Void>> call, Throwable t) {
                 Toast.makeText(VoteScheduleActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                Log.e("서버 연결 실패", t.getMessage());
+                Log.e("(주소 투표) 서버 연결 실패", t.getMessage());
             }
         });
 

@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.wwmeet_android.appointment.vote.VoteScheduleActivity;
 import com.example.wwmeet_android.database.SharedPreferenceUtil;
 import com.example.wwmeet_android.network.AuthRetrofitProvider;
+import com.example.wwmeet_android.network.ResponseAPI;
 import com.example.wwmeet_android.util.LocalDatabaseUtil;
 import com.example.wwmeet_android.R;
 import com.example.wwmeet_android.appointment.info.AppointmentInfoBeforeActivity;
@@ -102,10 +103,10 @@ public class SetVoteDeadlineActivity extends AppCompatActivity {
                 SaveAppointmentRequest appointment = (SaveAppointmentRequest) getIntent.getSerializableExtra("appointment");
                 appointment.setVoteDeadline(deadline);
 
-                Call<Long> saveAppointmentCall = retrofitService.saveAppointment(appointment);
-                saveAppointmentCall.enqueue(new Callback<Long>() {
+                Call<ResponseAPI<Long>> saveAppointmentCall = retrofitService.saveAppointment(appointment);
+                saveAppointmentCall.enqueue(new Callback<ResponseAPI<Long>>() {
                     @Override
-                    public void onResponse(Call<Long> call, Response<Long> response) {
+                    public void onResponse(Call<ResponseAPI<Long>> call, Response<ResponseAPI<Long>> response) {
                         if (!response.isSuccessful()) {
                             Toast.makeText(SetVoteDeadlineActivity.this, "약속 저장 실패", Toast.LENGTH_SHORT).show();
                             try {
@@ -115,7 +116,7 @@ public class SetVoteDeadlineActivity extends AppCompatActivity {
                             }
                             return;
                         }
-                        Long appointmentId = response.body();
+                        Long appointmentId = response.body().getData();
 
                         Intent intent = new Intent(getApplicationContext(), AppointmentInfoBeforeActivity.class);
                         intent.putExtra("appointmentId", appointmentId);
@@ -124,7 +125,7 @@ public class SetVoteDeadlineActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<Long> call, Throwable t) {
+                    public void onFailure(Call<ResponseAPI<Long>> call, Throwable t) {
                         Toast.makeText(SetVoteDeadlineActivity.this, "약속 저장 실패", Toast.LENGTH_SHORT).show();
                         Log.e("약속 저장 실패", t.getMessage());
                     }

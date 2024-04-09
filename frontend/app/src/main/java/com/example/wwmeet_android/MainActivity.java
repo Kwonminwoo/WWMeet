@@ -28,6 +28,7 @@ import com.example.wwmeet_android.dto.FindAppointmentListResponse;
 import com.example.wwmeet_android.dto.ScheduleResponse;
 import com.example.wwmeet_android.member.SignInActivity;
 import com.example.wwmeet_android.network.AuthRetrofitProvider;
+import com.example.wwmeet_android.network.ResponseAPI;
 import com.example.wwmeet_android.network.RetrofitProvider;
 import com.example.wwmeet_android.network.RetrofitService;
 import com.example.wwmeet_android.network.SseEventService;
@@ -75,12 +76,12 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }else{
                     // 전체 투표 끝나기 전
-                    Call<Boolean> voteStatusCall = retrofitService.getVoteStatusOfParticipant(
+                    Call<ResponseAPI<Boolean>> voteStatusCall = retrofitService.getVoteStatusOfParticipant(
                             appointmentList.get(position).getId(), appointmentList.get(position).getParticipantName());
 
-                    voteStatusCall.enqueue(new Callback<Boolean>() {
+                    voteStatusCall.enqueue(new Callback<ResponseAPI<Boolean>>() {
                         @Override
-                        public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        public void onResponse(Call<ResponseAPI<Boolean>> call, Response<ResponseAPI<Boolean>> response) {
                             if(!response.isSuccessful()){
                                 Toast.makeText(MainActivity.this, "투표 상태 조회에 실패했습니다.", Toast.LENGTH_SHORT).show();
                                 try {
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             Intent intent = null;
                             // 내가 투표를 했는지 / 안했는지
-                            if (response.body()) {
+                            if (response.body().getData()) {
                                 intent = new Intent(getApplicationContext(), AppointmentInfoBeforeActivity.class);
                                 intent.putExtra("appointmentId", appointmentList.get(position).getId());
                             }else{
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<Boolean> call, Throwable t) {
+                        public void onFailure(Call<ResponseAPI<Boolean>> call, Throwable t) {
                             Toast.makeText(MainActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
                             Log.e("서버 연결에 실패했습니다.", t.getMessage());
                         }
@@ -165,10 +166,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getAppointmentList(){
-        Call<List<FindAppointmentListResponse>> findAppointmentCall = retrofitService.findAppointmentList();
-        findAppointmentCall.enqueue(new Callback<List<FindAppointmentListResponse>>() {
+        Call<ResponseAPI<List<FindAppointmentListResponse>>> findListCall = retrofitService.findAppointmentList();
+        findListCall.enqueue(new Callback<ResponseAPI<List<FindAppointmentListResponse>>>() {
             @Override
-            public void onResponse(Call<List<FindAppointmentListResponse>> call, Response<List<FindAppointmentListResponse>> response) {
+            public void onResponse(Call<ResponseAPI<List<FindAppointmentListResponse>>> call,
+                                   Response<ResponseAPI<List<FindAppointmentListResponse>>> response) {
                 if(!response.isSuccessful()) {
                     try {
                         Log.e("약속 리스트 조회 실패", response.errorBody().string());
@@ -178,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                     TokenValidator.validateToken(response.code(), getApplicationContext());
                 }
 
-                List<FindAppointmentListResponse> responseList = response.body();
+                List<FindAppointmentListResponse> responseList = response.body().getData();
                 if (responseList != null) {
                     appointmentList = responseList;
                     setAppointmentList();
@@ -186,9 +188,9 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<FindAppointmentListResponse>> call, Throwable t) {
+            public void onFailure(Call<ResponseAPI<List<FindAppointmentListResponse>>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                Log.e("서버 연결에 실패했습니다.", t.getMessage());
+                Log.e("(약속 리스트 조회) 서버 연결에 실패했습니다.", t.getMessage());
             }
         });
     }
