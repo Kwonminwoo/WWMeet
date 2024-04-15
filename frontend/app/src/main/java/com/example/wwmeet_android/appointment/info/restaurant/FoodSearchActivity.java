@@ -15,10 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wwmeet_android.R;
+import com.example.wwmeet_android.database.SharedPreferenceUtil;
 import com.example.wwmeet_android.domain.Restaurant;
 import com.example.wwmeet_android.dto.FindAllAddressResponse;
 import com.example.wwmeet_android.dto.kakao.KakoSearchResponse;
 import com.example.wwmeet_android.dto.kakao.SearchRestaurantResponse;
+import com.example.wwmeet_android.network.AuthRetrofitProvider;
 import com.example.wwmeet_android.network.KakaoApiRetrofitProvider;
 import com.example.wwmeet_android.network.KakaoService;
 import com.example.wwmeet_android.network.ResponseAPI;
@@ -72,7 +74,10 @@ public class FoodSearchActivity extends AppCompatActivity {
         KakaoApiRetrofitProvider kakaoApiRetrofitProvider = new KakaoApiRetrofitProvider();
         kakaoService = kakaoApiRetrofitProvider.getService();
 
-        RetrofitProvider retrofitProvider = new RetrofitProvider();
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(getApplicationContext());
+        String token = sharedPreferenceUtil.getData("token", null);
+
+        RetrofitProvider retrofitProvider = new AuthRetrofitProvider(token);
         retrofitService = retrofitProvider.getService();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -97,7 +102,6 @@ public class FoodSearchActivity extends AppCompatActivity {
                 try {
                     Response<KakoSearchResponse> response = searchRestaurantCall.execute();
                     if (!response.isSuccessful()) {
-                        Toast.makeText(FoodSearchActivity.this, "검색에 실패했습니다.", Toast.LENGTH_SHORT).show();
                         try {
                             Log.e("검색 실패", response.errorBody().string());
                         } catch (IOException e) {
@@ -172,7 +176,7 @@ public class FoodSearchActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseAPI<List<String>>> call, Throwable t) {
                 Toast.makeText(FoodSearchActivity.this, "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                Log.e("서버 연결에 실패", t.getMessage());
+                Log.e("(이미지 조회) 서버 연결에 실패", t.getMessage());
             }
         });
     }

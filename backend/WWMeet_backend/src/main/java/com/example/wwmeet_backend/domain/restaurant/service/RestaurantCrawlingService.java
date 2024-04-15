@@ -23,7 +23,7 @@ public class RestaurantCrawlingService {
         chromeOptions.addArguments("--disable--gpu");
         chromeOptions.addArguments("--disable-popup-blocking");
         System.setProperty("webdriver.chrome.driver",
-            "/Users/qwert/Downloads/chromedriver-mac-arm64/chromedriver");
+            "./driver/chromedriver");
         ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
 
         for (String url : urlList) {

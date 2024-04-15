@@ -7,6 +7,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AuthRetrofitProvider extends RetrofitProvider{
 
     public AuthRetrofitProvider(String token) {
+        if(token == null) {
+            throw new RuntimeException();
+        }
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         client.addInterceptor(new TokenInterceptor(token));
         client.followRedirects(false).followSslRedirects(false);

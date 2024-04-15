@@ -120,7 +120,7 @@
                 android:id="@+id/vote_schedule_create_btn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="@drawable/button_design"
+                android:background="@drawable/button"
                 android:backgroundTint="@color/black"
                 android:textColor="#ffffff"
                 android:letterSpacing="0.1"
