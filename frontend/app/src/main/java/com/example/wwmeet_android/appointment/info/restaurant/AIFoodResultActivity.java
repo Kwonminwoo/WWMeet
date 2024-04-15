@@ -68,7 +68,7 @@ public class AIFoodResultActivity extends AppCompatActivity {
         foodTypeImageMap.put("스테이크", "https://img.freepik.com/premium-psd/slices-of-beef-steak-on-a-fork-isolated-on-transparent-background-png-psd_888962-628.jpg");
         foodTypeImageMap.put("파스타", "https://w7.pngwing.com/pngs/260/114/png-transparent-pasta.png");
         foodTypeImageMap.put("피자", "https://e7.pngegg.com/pngimages/935/770/png-clipart-pizza-pizza.png");
-        foodTypeImageMap.put("카레", "https://w7.pngwing.com/pngs/804/454/png-transparent-yellow-curry-japanese-curry-red-curry-rice-and-curry-gulai-veg-curries-food-recipe-white-rice.png");
+        foodTypeImageMap.put("카레", "https://cdn.univ20.com/wp-content/uploads/2016/07/b553aaf1827008c5a6bea00ceeac9dc2.png");
         foodTypeImageMap.put("아이스크림", "https://w7.pngwing.com/pngs/392/515/png-transparent-ice-cream-ice-cream-cones-ice.png");
         foodTypeImageMap.put("초콜릿", "https://w1.pngwing.com/pngs/103/553/png-transparent-chocolate-bar-hershey-bar-hershey-company-kinder-chocolate-white-chocolate-reeses-peanut-butter-cups-candy-types-of-chocolate.png");
         foodTypeImageMap.put("파스타", "https://e7.pngegg.com/pngimages/390/162/png-clipart-pasta-pasta.png");

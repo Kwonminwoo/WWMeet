@@ -91,6 +91,7 @@
 
             <Button
                 android:id="@+id/ai_food_option_all"
+                android:background="@drawable/button"
                 android:text="전체"
                 android:textSize="20sp"
                 android:layout_marginLeft="70dp"
@@ -112,6 +113,7 @@
             <Button
                 android:id="@+id/ai_food_option_korean"
                 android:text="한식"
+                android:background="@drawable/button"
                 android:textSize="20sp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"
@@ -122,6 +124,7 @@
             <Button
                 android:id="@+id/ai_food_option_chinese"
                 android:text="중식"
+                android:background="@drawable/button"
                 android:textSize="20sp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
@@ -131,6 +134,7 @@
             <Button
                 android:id="@+id/ai_food_option_western"
                 android:text="양식"
+                android:background="@drawable/button"
                 android:textSize="20sp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
@@ -140,6 +144,7 @@
             <Button
                 android:id="@+id/ai_food_option_japanese"
                 android:text="일식"
+                android:background="@drawable/button"
                 android:textSize="20sp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
@@ -159,7 +164,7 @@
         android:layout_height="60dp"
         android:layout_gravity="bottom"
         android:layout_marginHorizontal="20dp"
-        android:background="@drawable/button_design"
+        android:background="@drawable/button"
         android:backgroundTint="@color/black"
         android:letterSpacing="0.5"
         android:text="확인"
