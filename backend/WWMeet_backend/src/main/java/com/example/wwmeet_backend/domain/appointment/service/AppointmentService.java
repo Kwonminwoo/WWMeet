@@ -16,6 +16,7 @@ import com.example.wwmeet_backend.domain.participant.entity.Participant;
 import com.example.wwmeet_backend.domain.participant.repository.ParticipantRepository;
 import com.example.wwmeet_backend.domain.vote.entity.Vote;
 import com.example.wwmeet_backend.domain.vote.repository.VoteRepository;
+import com.example.wwmeet_backend.global.exception.DataNotFoundException;
 import com.example.wwmeet_backend.global.util.CurrentMemberService;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,8 @@ public class AppointmentService {
     public FindAppointmentResponse findAppointmentById(Long id) {
         Optional<Appointment> foundAppointmentOptional = appointmentRepository.findById(id);
         Appointment foundAppointment = foundAppointmentOptional.orElseThrow(
-            () -> new NoSuchElementException());
+            DataNotFoundException::new);
+
         return FindAppointmentResponse.builder()
             .appointmentName(foundAppointment.getName())
             .appointmentPlace(foundAppointment.getPlace())
@@ -98,7 +100,8 @@ public class AppointmentService {
 
     public boolean getParticipantVoteStatus(Long appointmentId, String participantName) {
         Appointment appointment = appointmentRepository.findById(appointmentId)
-            .orElseThrow(NoSuchElementException::new);
+            .orElseThrow(DataNotFoundException::new);
+
         List<Participant> participantList = appointment.getParticipantList();
         for (Participant participant : participantList) {
             if (participant.getParticipantName().equals(participantName)) {
@@ -106,6 +109,7 @@ public class AppointmentService {
                 return vote.isPresent();
             }
         }
+
         return false;
     }
 

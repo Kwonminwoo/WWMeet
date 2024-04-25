@@ -9,6 +9,7 @@ import com.example.wwmeet_backend.domain.member.dto.request.SignUpRequest;
 import com.example.wwmeet_backend.domain.member.jwt.JwtProvider;
 import com.example.wwmeet_backend.domain.member.repository.MemberRepository;
 import com.example.wwmeet_backend.domain.member.repository.RefreshTokenRepository;
+import com.example.wwmeet_backend.global.exception.DataNotFoundException;
 import com.example.wwmeet_backend.global.util.CurrentMemberService;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class MemberService {
 
     public SignInResponse signIn(SignInRequest signInRequest) {
         Member targetMember = memberRepository.findByEmail(signInRequest.getEmail())
-            .orElseThrow(() -> new RuntimeException());
+            .orElseThrow(DataNotFoundException::new);
 
         if (passwordEncoder.matches(signInRequest.getPassword(), targetMember.getPassword())) {
             return new SignInResponse(jwtProvider.createAccessToken(targetMember),

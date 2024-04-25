@@ -13,6 +13,7 @@ import com.example.wwmeet_backend.domain.possibleschedule.repository.PossibleSch
 import com.example.wwmeet_backend.domain.vote.entity.Vote;
 import com.example.wwmeet_backend.domain.vote.dto.SaveVoteRequest;
 import com.example.wwmeet_backend.domain.vote.repository.VoteRepository;
+import com.example.wwmeet_backend.global.exception.DataNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -36,10 +37,10 @@ public class VoteService {
 
     public Long saveVoteSchedule(Long id, SaveVoteRequest saveVoteRequest) {
         Appointment foundAppointment = appointmentRepository.findById(id)
-            .orElseThrow(NoSuchElementException::new);
+            .orElseThrow(DataNotFoundException::new);
         Participant foundParticipant = participantRepository.findByParticipantName(foundAppointment,
                 saveVoteRequest.getParticipantName())
-            .orElseThrow(NoSuchElementException::new);
+            .orElseThrow(DataNotFoundException::new);
 
         List<PossibleSchedule> possibleScheduleList = new ArrayList<>();
         for (SavePossibleScheduleRequest possibleScheduleRequest : saveVoteRequest.getPossibleScheduleList()) {

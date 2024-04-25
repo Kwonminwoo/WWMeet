@@ -8,6 +8,7 @@ import com.example.wwmeet_backend.domain.place.entity.Place;
 import com.example.wwmeet_backend.domain.place.dto.request.SavePlaceRequest;
 import com.example.wwmeet_backend.domain.place.dto.response.FindAllPlaceResponse;
 import com.example.wwmeet_backend.domain.place.repository.PlaceRepository;
+import com.example.wwmeet_backend.global.exception.DataNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +26,10 @@ public class PlaceService {
 
     public void saveAddress(SavePlaceRequest request) {
         Appointment targetAppointment = appointmentRepository.findById(request.getAppointmentId())
-            .orElseThrow(RuntimeException::new);
+            .orElseThrow(DataNotFoundException::new);
+
         Participant participant = participantRepository.findByParticipantName(targetAppointment,
-                request.getParticipantName())
-            .orElseThrow(RuntimeException::new);
+                request.getParticipantName()).orElseThrow(DataNotFoundException::new);
 
         Place place = Place.builder()
             .participant(participant)
@@ -43,14 +44,14 @@ public class PlaceService {
     @Transactional(readOnly = true)
     public List<FindAllPlaceResponse> findAllAddress(Long appointmentId) {
         Appointment targetAppointment = appointmentRepository.findById(appointmentId)
-            .orElseThrow(RuntimeException::new);
+            .orElseThrow(DataNotFoundException::new);
 
         List<Participant> participantList = targetAppointment.getParticipantList();
 
         List<FindAllPlaceResponse> response = new ArrayList<>();
         for (Participant participant : participantList) {
             Place place = placeRepository.findByParticipantId(participant.getId())
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(DataNotFoundException::new);
 
             response.add(
                 new FindAllPlaceResponse(participant.getParticipantName(), place.getAddress()

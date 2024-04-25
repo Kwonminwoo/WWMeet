@@ -8,6 +8,7 @@ import com.example.wwmeet_backend.domain.participant.dto.AddParticipantRequest;
 import com.example.wwmeet_backend.domain.participant.dto.FindParticipantResponse;
 import com.example.wwmeet_backend.domain.participant.repository.ParticipantRepository;
 import com.example.wwmeet_backend.domain.participant.util.ParticipantDtoMapper;
+import com.example.wwmeet_backend.global.exception.DataNotFoundException;
 import com.example.wwmeet_backend.global.util.CurrentMemberService;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class ParticipantService {
 
     public Long addParticipantByIdentificationCode(AddParticipantRequest addParticipantRequest) {
         Appointment foundAppointment = appointmentRepository.findByIdentificationCode(
-            addParticipantRequest.getIdentificationCode()).orElseThrow(NoSuchElementException::new);
+            addParticipantRequest.getIdentificationCode()).orElseThrow(DataNotFoundException::new);
 
         Member currentMember = currentMemberService.getCurrentMember();
 
@@ -46,6 +47,7 @@ public class ParticipantService {
                 .member(currentMember)
                 .build()
         );
+
         return foundAppointment.getId();
     }
 
