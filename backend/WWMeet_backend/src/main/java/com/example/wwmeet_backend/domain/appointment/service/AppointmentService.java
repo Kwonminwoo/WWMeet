@@ -20,7 +20,6 @@ import com.example.wwmeet_backend.global.exception.DataNotFoundException;
 import com.example.wwmeet_backend.global.util.CurrentMemberService;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -67,7 +66,6 @@ public class AppointmentService {
         List<Participant> participantList = participantRepository.findAllByMemberId(memberId);
 
         List<FindAppointmentListResponse> responseList = new ArrayList<>();
-
         for (Participant participant : participantList) {
             Appointment appointment = participant.getAppointment();
 
@@ -90,7 +88,7 @@ public class AppointmentService {
                     .voteDeadline(appointment.getVoteDeadline())
                     .voteFinish(false)
                     .participantName(participant.getParticipantName())
-                    .build();
+                    .build();   // ToDo: voteFinish만 if else 문에서 해결
             }
             responseList.add(response);
         }
@@ -113,9 +111,9 @@ public class AppointmentService {
         return false;
     }
 
-    public boolean checkVoteState(Appointment appointment) {
+    public boolean checkVoteState(Appointment appointment) { // ToDo: public 으로 되어 있는거 private으로 변경
         List<Participant> participantList = appointment.getParticipantList();
-        if (participantList.size() != appointment.getParticipantNum()) {
+        if (participantList.size() != appointment.getParticipantNum()) { // TODO: 약속 투표 상태 조회 시 성능 하락
             return false;
         }
         for (Participant participant : participantList) {

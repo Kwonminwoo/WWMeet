@@ -6,10 +6,12 @@ import com.example.wwmeet_backend.domain.member.dto.response.SignInResponse;
 import com.example.wwmeet_backend.domain.member.entity.Member;
 import com.example.wwmeet_backend.domain.member.dto.request.SignInRequest;
 import com.example.wwmeet_backend.domain.member.dto.request.SignUpRequest;
+import com.example.wwmeet_backend.domain.member.exception.LoginValidateException;
 import com.example.wwmeet_backend.domain.member.jwt.JwtProvider;
 import com.example.wwmeet_backend.domain.member.repository.MemberRepository;
 import com.example.wwmeet_backend.domain.member.repository.RefreshTokenRepository;
 import com.example.wwmeet_backend.global.exception.DataNotFoundException;
+import com.example.wwmeet_backend.global.exception.ErrorCode;
 import com.example.wwmeet_backend.global.util.CurrentMemberService;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +39,7 @@ public class MemberService {
             return new SignInResponse(jwtProvider.createAccessToken(targetMember),
                 jwtProvider.createRefreshToken());
         }
-        throw new RuntimeException("사용자 정보가 일치하지 않습니다.");
+        throw new LoginValidateException(ErrorCode.LOGIN_INFO_NOT_MATCH);
     }
 
     public void signUp(SignUpRequest signUpRequest) {
@@ -51,7 +53,7 @@ public class MemberService {
 
     public RefreshTokenResponse refreshAccessToken(RefreshTokenRequest refreshTokenRequest) {
         refreshTokenRepository.findByRefreshToken(refreshTokenRequest.getRefreshToken())
-            .orElseThrow(() -> new RuntimeException());// TODO jwt 만료 커스텀 예외 추가
+            .orElseThrow(() -> new LoginValidateException(ErrorCode.LOGIN_INFO_EXPIRED));
 
         return new RefreshTokenResponse(
             jwtProvider.createAccessToken(currentMemberService.getCurrentMember()));

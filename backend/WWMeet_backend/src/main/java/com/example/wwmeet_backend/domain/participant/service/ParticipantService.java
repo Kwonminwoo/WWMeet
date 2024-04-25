@@ -6,11 +6,14 @@ import com.example.wwmeet_backend.domain.member.entity.Member;
 import com.example.wwmeet_backend.domain.participant.entity.Participant;
 import com.example.wwmeet_backend.domain.participant.dto.AddParticipantRequest;
 import com.example.wwmeet_backend.domain.participant.dto.FindParticipantResponse;
+import com.example.wwmeet_backend.domain.participant.exception.DuplicateAppointmentException;
 import com.example.wwmeet_backend.domain.participant.repository.ParticipantRepository;
 import com.example.wwmeet_backend.domain.participant.util.ParticipantDtoMapper;
 import com.example.wwmeet_backend.global.exception.DataNotFoundException;
+import com.example.wwmeet_backend.global.exception.ErrorCode;
 import com.example.wwmeet_backend.global.util.CurrentMemberService;
 import java.util.ArrayList;
+import java.util.DuplicateFormatFlagsException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -34,10 +37,10 @@ public class ParticipantService {
         Member currentMember = currentMemberService.getCurrentMember();
 
         Optional<Participant> participantOptional = participantRepository.findByMemberIdAndAppointment(
-            currentMember.getId(), foundAppointment);
+            currentMember.getId(), foundAppointment); // ToDo: ifPresent로 줄여보기
 
         if(participantOptional.isPresent()) {
-            throw new RuntimeException("이미 참여한 약속입니다.");
+            throw new DuplicateAppointmentException(ErrorCode.DUPLICATE_APPOINTMENT);
         }
 
         participantRepository.save(
@@ -53,10 +56,10 @@ public class ParticipantService {
 
     public void addParticipantByAppointmentId(String participantName, Long id) {
         Appointment targetAppointment = appointmentRepository.findById(id)
-            .orElseThrow(RuntimeException::new);
+            .orElseThrow(DataNotFoundException::new);
 
         participantRepository.save(ParticipantDtoMapper.toEntity(participantName, targetAppointment,
-            currentMemberService.getCurrentMember()));
+            currentMemberService.getCurrentMember())); // ToDo mapper 다른것도 만들기 or 삭제
     }
 
     public List<FindParticipantResponse> getParticipantList(Long id) {
@@ -64,8 +67,7 @@ public class ParticipantService {
         List<FindParticipantResponse> responseList = new ArrayList<>();
         for (Participant participant : foundParticipantList) {
             FindParticipantResponse response = new FindParticipantResponse(
-                participant.getParticipantName(),
-                participant.getVoteList().size() != 0);
+                participant.getParticipantName(),participant.getVoteList().size() != 0); // ToDo: isEmpty로 변경
             responseList.add(response);
         }
 

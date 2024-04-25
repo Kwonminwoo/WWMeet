@@ -46,7 +46,7 @@ public class RestaurantCrawlingService {
 
         long end = System.currentTimeMillis();
 
-        log.error(end - start + " ms");
+        log.error(end - start + " ms"); // ToDo: 로그 삭제
         return imageUrlList;
     }
 }
