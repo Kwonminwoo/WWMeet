@@ -16,10 +16,10 @@ import com.example.wwmeet_backend.domain.participant.entity.Participant;
 import com.example.wwmeet_backend.domain.participant.repository.ParticipantRepository;
 import com.example.wwmeet_backend.domain.vote.entity.Vote;
 import com.example.wwmeet_backend.domain.vote.repository.VoteRepository;
+import com.example.wwmeet_backend.global.exception.DataNotFoundException;
 import com.example.wwmeet_backend.global.util.CurrentMemberService;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -49,7 +49,8 @@ public class AppointmentService {
     public FindAppointmentResponse findAppointmentById(Long id) {
         Optional<Appointment> foundAppointmentOptional = appointmentRepository.findById(id);
         Appointment foundAppointment = foundAppointmentOptional.orElseThrow(
-            () -> new NoSuchElementException());
+            DataNotFoundException::new);
+
         return FindAppointmentResponse.builder()
             .appointmentName(foundAppointment.getName())
             .appointmentPlace(foundAppointment.getPlace())
@@ -65,7 +66,6 @@ public class AppointmentService {
         List<Participant> participantList = participantRepository.findAllByMemberId(memberId);
 
         List<FindAppointmentListResponse> responseList = new ArrayList<>();
-
         for (Participant participant : participantList) {
             Appointment appointment = participant.getAppointment();
 
@@ -88,7 +88,7 @@ public class AppointmentService {
                     .voteDeadline(appointment.getVoteDeadline())
                     .voteFinish(false)
                     .participantName(participant.getParticipantName())
-                    .build();
+                    .build();   // ToDo: voteFinish만 if else 문에서 해결
             }
             responseList.add(response);
         }
@@ -98,7 +98,8 @@ public class AppointmentService {
 
     public boolean getParticipantVoteStatus(Long appointmentId, String participantName) {
         Appointment appointment = appointmentRepository.findById(appointmentId)
-            .orElseThrow(NoSuchElementException::new);
+            .orElseThrow(DataNotFoundException::new);
+
         List<Participant> participantList = appointment.getParticipantList();
         for (Participant participant : participantList) {
             if (participant.getParticipantName().equals(participantName)) {
@@ -106,12 +107,13 @@ public class AppointmentService {
                 return vote.isPresent();
             }
         }
+
         return false;
     }
 
-    public boolean checkVoteState(Appointment appointment) {
+    public boolean checkVoteState(Appointment appointment) { // ToDo: public 으로 되어 있는거 private으로 변경
         List<Participant> participantList = appointment.getParticipantList();
-        if (participantList.size() != appointment.getParticipantNum()) {
+        if (participantList.size() != appointment.getParticipantNum()) { // TODO: 약속 투표 상태 조회 시 성능 하락
             return false;
         }
         for (Participant participant : participantList) {

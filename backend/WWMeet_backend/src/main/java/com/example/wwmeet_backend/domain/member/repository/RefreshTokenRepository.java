@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class RefreshTokenRepository {
     private final String KEY_PREFIX = "refreshToken";
-    private final Long REFRESH_TOKEN_EXPIRED = 30L;
+    private final Long REFRESH_TOKEN_EXPIRED = 30L; // ToDo: Day로 이름 바꾸기
     private final RedisTemplate redisTemplate;
 
     public void save(String refreshToken){

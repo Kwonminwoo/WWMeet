@@ -31,8 +31,8 @@ public class AppointmentController {
         Long savedAppointmentId = appointmentService.saveAppointment(saveAppointmentRequest);
 
         participantService.addParticipantByAppointmentId(
-            saveAppointmentRequest.getParticipantName(), savedAppointmentId
-        );
+            saveAppointmentRequest.getParticipantName(), savedAppointmentId);
+
         return ResponseEntity.ok(ResponseAPI.response("약속 저장 성공", savedAppointmentId));
     }
 
