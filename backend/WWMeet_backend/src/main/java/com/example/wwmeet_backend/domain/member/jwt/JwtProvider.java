@@ -2,7 +2,10 @@ package com.example.wwmeet_backend.domain.member.jwt;
 
 import com.example.wwmeet_backend.domain.member.entity.Member;
 import com.example.wwmeet_backend.domain.member.entity.SecurityMember;
+import com.example.wwmeet_backend.domain.member.exception.LoginValidateException;
+import com.example.wwmeet_backend.global.exception.ErrorCode;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -21,17 +24,27 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class JwtProvider {
 
-    private final long expiredTime = 1000L * 60 * 60;
+//    private final long expiredTime = 1000L * 60 * 60;
+    private final long expiredTime = 1000L;
     private final UserDetailsService userDetailsService;
     @Value("${jwt.secret.key}")
     private String key;
+
 
     public String resolveToken(HttpServletRequest request) {
         return request.getHeader("Authorization");
     }
 
-    public boolean validateToken(String token) {
-        return !getClaims(token).getBody().getExpiration().before(new Date());
+    public boolean validateToken(String token, HttpServletRequest request) {
+        try {
+            Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build().parseClaimsJws(token);
+        } catch (ExpiredJwtException e) {
+            request.setAttribute("exceptionType", ErrorCode.LOGIN_INFO_EXPIRED.getMessage());
+            throw new LoginValidateException(ErrorCode.LOGIN_INFO_EXPIRED);
+        }
+        return true;
     }
 
     public Authentication getAuthentication(String token) {
@@ -52,7 +65,7 @@ public class JwtProvider {
 
         return Jwts.builder()
             .setSubject(securityMember.getUsername())
-            .claim("authorities", securityMember.getAuthorities()) // ToDo: 권한 여러개인 경우 수정
+            .claim("authorities", securityMember.getAuthorities())
             .setExpiration(new Date(now.getTime() + expiredTime))
             .signWith(SignatureAlgorithm.HS256, key)
             .setIssuedAt(now)
