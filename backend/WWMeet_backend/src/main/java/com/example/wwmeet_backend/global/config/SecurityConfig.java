@@ -1,7 +1,9 @@
 package com.example.wwmeet_backend.global.config;
 
+import com.example.wwmeet_backend.domain.member.jwt.JWTAuthenticationEntryPoint;
 import com.example.wwmeet_backend.domain.member.jwt.JwtAuthenticationFilter;
 import com.example.wwmeet_backend.domain.member.jwt.JwtProvider;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtProvider jwtProvider;
+    private final ObjectMapper objectMapper;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -42,6 +45,7 @@ public class SecurityConfig {
             .httpBasic(AbstractHttpConfigurer::disable)
             .addFilterBefore(new JwtAuthenticationFilter(jwtProvider),
                 UsernamePasswordAuthenticationFilter.class)
+            .exceptionHandling((eh) -> eh.authenticationEntryPoint(new JWTAuthenticationEntryPoint(objectMapper)))
             .build();
     }
 }
